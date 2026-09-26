@@ -66,3 +66,37 @@ The committed comparison grid at `t=a n log_2 n` gives, for `a=0.75`, estimates 
 All committed numerical output is accompanied by sidecar metadata and an entry
 in `data/experiment_log.jsonl`.  Sampling estimates should always be read with
 finite-trial uncertainty in mind.
+
+
+## Session 2: path deficit dynamics and scale discrimination
+
+A path-specific evaluator now implements the exact left/right scalar message
+recurrences and is exhaustively cross-checked against the general tree
+evaluator.  A proved irreversible-deficit lemma permits exact early stopping:
+if an active one-sided message plus all mass remaining beyond the cut is
+nonpositive, every root beyond that cut has nonpositive score.  The resulting
+front-pruned decision procedure agrees with the full path recurrence on every
+weak composition through `n<=9,t<=10`.
+
+The longest-zero-run mechanism was tested directly and is too crude.  At
+`(n,t)=(3,3)`, configurations `(2,1,0)` and `(2,0,1)` have the same
+longest zero run and the same longest run with occupancy at most one, but only
+the first is stackable.  In a 600-trial run at `n=10000,t=104887`, mean
+longest zero runs were 3.399 for successes and 3.538 for failures, whereas
+overlapping irreversible deficit fronts certified 178 of 292 failures.
+
+A correction grid at
+`t=n(log2(n)-c log2(log2(n)))` improved alignment over a fixed coefficient of
+`n log n` through `n=40000`, but the best apparent `c` moved by
+`n=160000`.  More importantly, the exact deficit recurrence motivated a
+competing stretched-log density
+`mu=t/n = a*2^sqrt(log2(n))`.  At `a=0.84` the seeded estimates were
+0.560, 0.480, 0.540, 0.573 and 0.450 for
+`n=640,2560,10000,40000,160000`, respectively (40 trials at the last size,
+150 at `n=40000`, 200 otherwise).  Multipliers 0.75 and 0.95 stayed on the
+lower and upper sides of the transition over the same range.
+
+This materially weakens the interpretation of the earlier `n log n`
+alignment as asymptotic evidence.  The strongest current numerical signal is
+the recurrence-motivated stretched-log scale, but it is not yet promoted to a
+conjecture.  See `notes/path-dynamics.md` for the exact lemmas and heuristic.
