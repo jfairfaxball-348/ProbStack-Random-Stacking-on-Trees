@@ -80,3 +80,46 @@ would naturally lead to the observed stretched-log candidate scale when
 balanced over `n` possible locations.  Only after this product-law step should
 conditioning on `sum X_i=t` be handled, via a local-limit or
 de-Poissonisation argument that preserves the rare-event scale.
+
+
+## Session 3 proof progress
+
+The one-sided product-law problem now has a rigorous logarithmic-rate answer.
+For integer mean `mu`, `L=ceil(log_2 mu)`, and initial message
+`m in [mu,2mu]`, define
+
+`q_mu(m)=P_m[min_{1<=j<=4L} M_j <= -mu]`.
+
+The proved bounds are
+
+`2^{-L^2-O(L log L)} <= q_mu(m) <= 2^{-L^2+O(L)}`,
+
+uniformly in that starting window. Thus
+`-log_2 q_mu(m)~(log_2 mu)^2`. The proof decomposes the excursion into a
+positive-phase descent to `{0,1}` and a low-phase amplification from deficit
+`O(1)` to deficit `Theta(mu)`. Each phase contributes half of the quadratic
+logarithmic cost.
+
+Three exact reductions now accompany this estimate:
+
+- in the low phase, `W_j=Z_j/2^j` is a dyadic weighted budget with an exact
+  nested inequality for remaining low-phase;
+- before the low phase, `2F(y)=y-3*1_{y odd}` couples the message within an
+  additive constant of `Y_j=(Y_{j-1}+X_j)/2`;
+- for a fixed local block under the conditioned composition model, the exact
+  conditioned/product likelihood ratio depends only on the block mass and is
+  uniformly `1+o(1)` for the canonical witness at every stretched-log density.
+
+The full product message chain has no stationary probability distribution:
+from every state there is positive probability of runaway to `-infinity`.
+Accordingly, future starting-state work should use a killed/quasi-stationary
+positive phase or regeneration description rather than assume a stationary
+message law.
+
+The leading remaining proof target is global. Prove a renewal/block theorem
+that turns the finite-block hazard `q_mu` into the probability and spatial
+location of an irreversible one-sided front over a path of length `n`, with
+matching bounds up to `2^{o(L^2)}` factors. Then combine the two directions
+without assuming independence and quantify the failures not captured by front
+overlap. The exact local equivalence-of-ensembles bound can then transfer the
+result to fixed total.
