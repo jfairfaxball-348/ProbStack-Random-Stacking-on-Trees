@@ -46,3 +46,15 @@ GitHub Actions failed before job creation.
 
 Both files have metadata sidecars giving the generating command and the
 Session 5 source commit.
+
+## Session 6 additions
+
+- second_order_local_bounds.csv: rigorous formula evaluations for the
+  dyadic-simplex second-order bounds at selected dyadic means, together with
+  exact rational dynamic-programming probabilities for the two witness
+  components through L=10.
+- second_order_local_bounds.csv.meta.json: command, source revision, exactness
+  statement, parameters, and interpretation for that table.
+
+The Session 6 table is diagnostic support for an analytic theorem. It is not
+Monte Carlo and is not used to infer the L log L coefficient by fitting.
