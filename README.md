@@ -1,6 +1,6 @@
 # ProbStack — Random Stacking on Trees
 
-**Status: conjecture-discovery / work in progress.**
+**Status: frozen path theorem; formalisation design / verification in progress.**
 
 ProbStack studies random pebble configurations on deterministic trees.  The
 first target is the path sequence \(P_n\).  This repository is intentionally
@@ -125,15 +125,17 @@ machine-readable experiment ledger is `data/experiment_log.jsonl`.
 
 ## Research discipline and scope
 
-The current stage is: **discover the correct probabilistic statement and prove
-it informally**.  Full Lean formalization, extensive originality/prior-art
-audit, Palomar packaging, a standalone paper, and arXiv submission are later
-stages and are deliberately not started here.  See `docs/ROADMAP.md`.
+The path theorem is now frozen at the intended fixed-offset precision. The
+current stage is **formalisation and complete verification**. The project
+should not reopen the theorem merely for a finer critical window, zero-offset
+law, finite-n monotonicity, Poisson front process, or arbitrary-tree extension.
 
-The immediate mathematical task is to convert the proved finite-block
-one-sided hazard into a renewal/block description of irreversible fronts over
-a path of length `n`, combine the two scan directions without assuming
-independence, and then transfer that global comparison through conditioning.
+Session 9 records the formal dependency architecture in
+`notes/session-9-formalisation-design.md`. The immediate implementation task
+is to configure the exact pinned Lean/TreeStack/Mathlib boundary and compile
+the deterministic path-message scaffold. A comprehensive public-record
+prior-art/originality audit and standalone paper come only after complete
+formal verification. See `docs/ROADMAP.md`.
 
 ## Session 7 theorem status
 

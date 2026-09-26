@@ -1,71 +1,65 @@
 # ProbStack roadmap
 
-## Stage 1 — current: conjecture discovery and proof
+## Stage 1 — complete: conjecture discovery and mathematical proof
 
-Maintain independent deterministic solvers, exact small-instance enumeration,
-seeded uniform-composition sampling, and auditable experiment logs.  For paths,
-identify the correct growing-regime probability statement and prove it before
-expanding to secondary deterministic tree families.
+The path theorem was frozen in Session 8 at fixed (O(1)) offsets. The target
+center is
 
-Secondary families (stars, balanced binary trees, complete b-ary trees,
-bounded-height trees) enter only after the path machinery is functioning.
-Random trees and `G(n,p)` are successor projects unless they become essentially
-free consequences.
+[
+sqrt{log_2 n}
+-rac12log_2log_2 n
++log_2(3e),
+]
 
-## Stage 2 — formalization, only after a stable informal theorem
+with probability tending to 0 below every fixed negative offset and to 1 above
+every fixed positive offset. No zero-offset claim is made.
 
-Pin a Lean and mathlib revision; formalize the finite combinatorial probability
-space and the theorem's probabilistic ingredients; either import a clean
-trusted TreeStack theorem boundary or restate it with explicit provenance;
-formalize the finite identities and asymptotics needed by the final result;
-expose one clear headline theorem; remove all admits/sorries from the trusted
-path; and run complete Lean CI.
+Do not reopen Stage 1 merely to obtain a critical-window law, finer (o(1))
+centering, finite-(n) monotonicity, Poisson front processes, or other tree
+families.
 
-If the asymptotic probability theory is substantially harder to formalize than
-the deterministic TreeStack result, record that honestly rather than weakening
-the mathematics to fit the prover.
+## Stage 2 — current: formalisation and complete verification
+
+Session 9 fixed the formal dependency architecture. The authoritative plan is
+`notes/session-9-formalisation-design.md`.
+
+Immediate priorities:
+
+1. pin and compile the exact TreeStack/Mathlib/Lean dependency boundary;
+2. formalise deterministic path messages/fronts/regeneration;
+3. formalise finite weak-composition and geometric conditioning;
+4. formalise finite dyadic/binary-partition combinatorics;
+5. discharge the isolated compact-uniform binary-partition (o(L))
+   asymptotic;
+6. assemble local and global asymptotics;
+7. expose one small no-sorry headline theorem and run complete Lean CI.
+
+Do not weaken the mathematical theorem to fit the prover. Keep mathematical
+proof status, Python validation status, and Lean compilation status separate.
 
 ## Stage 3 — comprehensive public-record prior-art/originality audit
 
-Only after the theorem and proof are mature, search well beyond arXiv:
-MathSciNet/zbMATH references where accessible, journals, Scholar-style citation
-trails, graph-pebbling bibliographies, author pages, proceedings, theses,
-terminology variants, cited/citing papers, and equivalent formulations.  Log
-search terms, dates, databases, and findings.  A negative public-record audit
-cannot rule out private, unpublished, or unindexed work.
+Only after complete formal verification, search well beyond arXiv:
+MathSciNet/zbMATH where accessible, journals, Scholar-style citation trails,
+graph-pebbling bibliographies, author pages, proceedings, theses, terminology
+variants, cited/citing papers, and mathematically equivalent formulations.
+Log search terms, dates, databases, and findings.
 
-## Stage 4 — Palomar
+A negative public-record audit cannot rule out private, unpublished, or
+unindexed work.
 
-Only after proof and formalization are complete: freeze the verified commit,
-inspect the then-current Palomar specification, prepare Comparator/Challenge
-packaging, run repository CI and official preflight, fix every blocker, and
-register the immutable verified revision.  Do not reuse TreeStack's old schema
-or toolchain without rechecking current requirements.
+## Stage 4 — standalone paper
 
-## Stage 5 — standalone paper
+Write a self-contained article explaining the model, deterministic TreeStack
+input, uniform weak-composition probability space, frozen theorem, proof,
+formal verification, only mathematically useful experiments, and the
+public-record literature audit. Do not oversell.
 
-Write a self-contained article explaining the model, deterministic input,
-probability space, theorem(s), proof, only mathematically useful experiments,
-relation to probabilistic pebbling, formal-verification statement,
-reproducibility, and—only if justified by the later audit—carefully qualified
-prior-art language.  Do not oversell.
+## Stage 5 — submission and packaging decisions
 
-## Stage 6 — arXiv
+Only after the theorem is proved, formally verified, audited, and written as a
+standalone paper should the project decide on arXiv, Palomar, journal
+submission, or other packaging.
 
-Prepare canonical LaTeX and a separately tested arXiv source bundle; audit
-metadata, references, category, MSC, and keywords; compile from the upload
-bundle; then submit the final checked source.  Category choice should follow the
-actual mathematics (likely `math.CO` only if the completed work remains
-primarily probabilistic combinatorics).
-
-
-## Session 8 convergence decision
-
-The path headline theorem is now frozen at fixed O(1) offsets. The next project
-stage is formalisation design, followed by complete formal verification,
-public-record prior-art/originality audit, and paper writing.
-
-Do not make finer critical-window asymptotics a prerequisite for moving
-forward. The immediate task is to produce the Lean dependency graph, isolate
-the binary-partition asymptotic layer, and formalise the elementary
-TreeStack/reset/regeneration/front lemmas first.
+At that time, inspect the then-current specifications rather than reusing old
+TreeStack packaging assumptions.
