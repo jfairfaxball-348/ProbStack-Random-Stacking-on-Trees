@@ -1,5 +1,7 @@
 import ProbStack.PathBranch
 
+-- Session 11 path-specific bridge development.
+
 namespace ProbStack
 
 namespace LeftPath
