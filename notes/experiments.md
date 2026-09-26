@@ -100,3 +100,58 @@ This materially weakens the interpretation of the earlier `n log n`
 alignment as asymptotic evidence.  The strongest current numerical signal is
 the recurrence-motivated stretched-log scale, but it is not yet promoted to a
 conjecture.  See `notes/path-dynamics.md` for the exact lemmas and heuristic.
+
+
+## Session 3: product-law excursion and conditioning experiments
+
+The Session 3 computations were designed only to test consequences of the
+analytic finite-block event; no generic larger path grid was generated.
+
+The product-law Monte Carlo command was
+
+```text
+python scripts/analyze_product_excursion.py --means 4,8,16 --trials 200000 --seed-base 2026092660 --output data/product_deep_excursion_mc.csv
+```
+
+For `q_mu=P_{M_0=mu}[min_{j<=4 ceil(log2 mu)} M_j<=-mu]`, the seeded estimates
+were:
+
+| `mu` | hits / trials | estimate | Wilson 95% interval | `-log2(qhat)/L^2` |
+|---:|---:|---:|---:|---:|
+| 4 | 28161 / 200000 | 0.140805 | [0.139288, 0.142336] | 0.7071 |
+| 8 | 2031 / 200000 | 0.010155 | [0.009725, 0.010604] | 0.7357 |
+| 16 | 22 / 200000 | 0.000110 | [0.0000726, 0.0001666] | 0.8219 |
+
+The statistic was defined before running the experiment. Its purpose was to
+check whether finite means move in the direction of the proved limiting
+constant `1`, not to estimate that constant from a fit. The rare `mu=16` row
+has only 22 hits and should be read with its interval.
+
+The rigorous finite-parameter bounds were tabulated with
+
+```text
+python scripts/tabulate_product_excursion_bounds.py --levels 8,10,12,16,20,30,40 --output data/product_excursion_rigorous_bounds.csv
+```
+
+At `L=8,10,12,16,20,30,40`, the normalized cost of the explicit lower-bound
+witness decreases from `2.048` to `1.348`, while the normalized cost associated
+with the rigorous upper probability bound increases from `0.466` to `0.904`.
+The bounds converge slowly but squeeze toward the analytic exponent `1` from
+opposite sides; this table is a computation of proved formulas, not simulation.
+
+The exact conditioned-versus-product comparison used
+
+```text
+python scripts/compare_conditioned_product_local.py --mean 16 --n-values 100,500,2000,10000 --output data/conditioned_product_local_exact.csv
+```
+
+The canonical `mu=16` witness has 12 coordinates, caps
+`(2,1,0,0,0,0,0,0,0,1,2,4)`, and total cap mass 10. Its matching product
+probability is `2.2977271062e-13`. The exact conditioned/product ratios are
+`0.4808, 0.8686, 0.9656, 0.9930` at `n=100,500,2000,10000`. At `n=10000`,
+`log R=-0.006984`, while the elementary rigorous bound gives
+`|log R|<=0.019139`. This directly sanity-checks the local equivalence-of-
+ensembles estimate on the witness used in the proof.
+
+All three outputs record the code commit, exact command, parameters, and seeds
+where applicable in sidecar metadata and `data/experiment_log.jsonl`.
