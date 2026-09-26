@@ -95,8 +95,7 @@ theorem childMessageSum_eq_uniqueChild
   · have h :
         T.graph.Adj B.root c.vertex ∧ c.vertex ≠ B.parent :=
       ⟨c.adj, c.ne_parent⟩
-    simp only [h]
-    rw [if_neg c.ne_parent]
+    rw [dite_eq_left h]
     let d : B.Child :=
       { vertex := c.vertex
         adj := h.1
@@ -143,7 +142,7 @@ theorem branchMessage_eq_pathStep_of_uniqueChild
         rw [B.branchMessage_eq_some_of_occupied C hocc]
         rw [TreeStack.OrientedBranch.effectiveInput,
           childMessageSum_eq_uniqueChild C B c huniq, hchild]
-        simp [pathStep, hx]
+        simp [pathStep, TreeStack.OrientedBranch.messageContribution, hx]
   | some z =>
       have hchildOcc : (B.childBranch c).Occupied C := by
         by_contra hnot
