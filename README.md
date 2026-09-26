@@ -134,3 +134,56 @@ The immediate mathematical task is to convert the proved finite-block
 one-sided hazard into a renewal/block description of irreversible fronts over
 a path of length `n`, combine the two scan directions without assuming
 independence, and then transfer that global comparison through conditioning.
+
+## Session 7 theorem status
+
+The path programme now has a linear-order theorem for the one-sided
+deep-deficit probability.  If `L=ceil(log_2 mu)`,
+`theta=mu/2^L`, and `m in [mu,2mu]`, then
+
+```
+-log2 q_mu(m)
+= L^2 + 2 L log2 L
+  + [2 log2(theta) - 2 log2(3e)] L + o(L).
+```
+
+Thus there is no universal linear coefficient in the ceiling variable `L`;
+the coefficient depends on dyadic phase.  Rewriting with `x=log_2 mu`
+removes that phase at linear order:
+
+```
+-log2 q_mu(m)
+= x^2 + 2 x log2 x - 2 log2(3e) x + o(x).
+```
+
+The global bounded-offset regime is narrowed but not closed.  The refined
+deep-message upper cover proves stackability above
+
+```
+sqrt(log2 n) - 0.5 log2 log2 n + log2(3e)
+```
+
+by any fixed positive offset.  The best current state-independent certified
+front proves nonstackability below
+
+```
+sqrt(log2 n) - 0.5 log2 log2 n + log2(e sqrt(3))
+```
+
+by any fixed negative offset.  The remaining rigorous gap is
+`0.5 log2(3)` in `log_2 mu`.
+
+See `notes/session-7-linear-order.md`.  The new exact diagnostic table is
+reproduced by:
+
+```bash
+python scripts/tabulate_linear_order.py \
+  --levels 6,8,10,12 \
+  --phase-numerators 9,12,14,16 \
+  --phase-denominator 16 \
+  --entry-step-offset 0 \
+  --output data/linear_order_entry_counts.csv
+```
+
+No Monte Carlo was used for Session 7.  The targeted Session 7 test file
+passes 8 tests locally; this is not a claim of a post-Session-7 full-suite run.
