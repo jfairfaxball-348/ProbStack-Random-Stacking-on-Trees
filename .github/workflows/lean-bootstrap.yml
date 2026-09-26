@@ -5,7 +5,6 @@ on:
     branches:
       - main
       - session-10-lean-bootstrap
-      - session-11-formalisation
   pull_request:
     branches:
       - main
@@ -26,12 +25,6 @@ jobs:
           set -euxo pipefail
           curl -sSf https://elan.lean-lang.org/elan-init.sh | sh -s -- -y --default-toolchain none
           echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
-      - name: Cache Session 11 dependencies
-        uses: actions/cache@v4
-        with:
-          path: .lake/packages
-          key: probstack-session11-deps-linux-f4112f08d42a37c0941bf469ac124621b1f54f22-065356127b1dc0016f66b7283ce0ce2c4055aa55
-
       - name: Toolchain versions
         shell: bash
         run: |
