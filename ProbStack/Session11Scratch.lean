@@ -96,16 +96,6 @@ theorem childMessageSum_eq_uniqueChild
         T.graph.Adj B.root c.vertex ∧ c.vertex ≠ B.parent :=
       ⟨c.adj, c.ne_parent⟩
     rw [dite_eq_left h]
-    let d : B.Child :=
-      { vertex := c.vertex
-        adj := h.1
-        ne_parent := h.2 }
-    have hd : d = c := huniq d
-    exact
-      congrArg
-        (fun e : B.Child =>
-          TreeStack.OrientedBranch.messageContribution
-            ((B.childBranch e).branchMessage C)) hd
   · intro v hvc
     by_cases h : T.graph.Adj B.root v ∧ v ≠ B.parent
     · let d : B.Child :=
