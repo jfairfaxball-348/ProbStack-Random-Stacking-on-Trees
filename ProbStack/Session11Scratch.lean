@@ -68,6 +68,7 @@ theorem leftBranch_succ_uniqueChild
   apply Fin.ext
   have hadj := d.adj
   rw [pathTree_graph, SimpleGraph.pathGraph_adj] at hadj
+  simp only [leftBranch_root_val] at hadj
   rcases hadj with hright | hleft
   · change (j + 1) + 1 = d.vertex.val at hright
     exfalso
