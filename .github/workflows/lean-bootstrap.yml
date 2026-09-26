@@ -1,0 +1,63 @@
+name: Lean bootstrap
+
+on:
+  push:
+    branches:
+      - main
+      - session-10-lean-bootstrap
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+concurrency:
+  group: lean-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lean:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install exact Lean toolchain
+        shell: bash
+        run: |
+          set -euxo pipefail
+          curl -sSf https://elan.lean-lang.org/elan-init.sh | sh -s -- -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Toolchain versions
+        shell: bash
+        run: |
+          set -euxo pipefail
+          lean --version
+          lake --version
+          elan --version
+          lake update
+          cat lake-manifest.json
+      - name: Cache TreeStack build
+        uses: actions/cache@v4
+        with:
+          path: .lake/packages/treestack/.lake/build
+          key: treestack-f4112f08d42a37c0941bf469ac124621b1f54f22-lean-4.35.0-rc2
+      - name: Dependency and package build
+        shell: bash
+        run: |
+          set -euxo pipefail
+          lake build @treestack/+TreeStack.RootScore
+          lake build
+          if grep -R -n -E '(^|[^A-Za-z])(sorry|axiom)([^A-Za-z]|$)' --include='*.lean' ProbStack ProbStack.lean; then
+            echo "Found forbidden sorry/axiom in ProbStack Lean sources"
+            exit 1
+          fi
+      - name: Compile scratch source
+        if: startsWith(github.event.head_commit.message, 'PROBSTACK_SCRATCH:')
+        shell: bash
+        env:
+          SCRATCH_SOURCE_B64: ${{ github.event.head_commit.message }}
+        run: |
+          set -euxo pipefail
+          msg="$SCRATCH_SOURCE_B64"
+          encoded="${msg#PROBSTACK_SCRATCH:}"
+          printf '%s' "$encoded" | base64 -d > /tmp/ProbStackScratch.lean
+          echo "SCRATCH_BYTES=$(wc -c < /tmp/ProbStackScratch.lean)"
+          lake env lean /tmp/ProbStackScratch.lean
