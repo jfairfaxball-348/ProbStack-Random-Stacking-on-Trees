@@ -1,0 +1,2 @@
+family,n,correction_c,scaling,t,mean_density,trials,successes,estimate,failures,front_certified_failures,front_certificate_fraction_of_failures,mean_longest_zero_run_success,mean_longest_zero_run_failure,mean_longest_leq1_run_success,mean_longest_leq1_run_failure,mean_uncovered_front_gap_failure,seed
+path,10000,0.75,n*(log2(n)-c*log2(log2(n))),104887,10.4887,600,308,0.51333333333333331,292,178,0.6095890410958904,3.3993506493506493,3.5376712328767121,4.7240259740259738,5.0547945205479454,12.239726027397261,2126093380
