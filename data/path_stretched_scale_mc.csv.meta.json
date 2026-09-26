@@ -1,0 +1,12 @@
+{
+  "code_commit": "8a70122dd7fe94eda7bc7225364f24e64fee2511",
+  "model": "uniform weak compositions of t into n nonnegative parts",
+  "predicate": "exact front-pruned path TreeStack recurrence, exhaustively cross-checked against full path/general evaluator",
+  "interpretation": "The recurrence-motivated scale n*2^sqrt(log2 n) has substantially less drift over n=640,...,160000; multiplier 0.84 stays in the transition region. This is a working hypothesis only.",
+  "commands": [
+    "PYTHONPATH=. python scripts/compare_path_stretched_scale.py --n-values 640,2560 --multipliers 0.75,0.84,0.95 --trials 200 --seed-base 2026092640 --output data/path_stretched_scale_small_mc.csv",
+    "PYTHONPATH=. python scripts/compare_path_stretched_scale.py --n-values 10000 --multipliers 0.75,0.84,0.95 --trials 200 --seed-base 2026092640 --output data/path_stretched_scale_10000_mc.csv",
+    "PYTHONPATH=. python scripts/compare_path_stretched_scale.py --n-values 40000 --multipliers 0.75,0.84,0.95 --trials 150 --seed-base 2026092640 --output data/path_stretched_scale_40000_mc.csv",
+    "PYTHONPATH=. python scripts/compare_path_stretched_scale.py --n-values 160000 --multipliers 0.75,0.84,0.95 --trials 40 --seed-base 2026092640 --output data/path_stretched_scale_160000_mc.csv"
+  ]
+}
