@@ -804,3 +804,30 @@ does not determine a limiting critical-window law, a beta coefficient in a
 linear-in-L refinement, or finite-n monotonicity in total mass.
 
 Full derivation and validation details are in notes/session-6-second-order.md.
+
+## Session 7: exact linear rare-excursion term
+
+The one-sided finite-block probability now has a full linear
+asymptotic.  For `L=ceil(log_2 mu)`,
+`theta=mu/2^L`, and `m in [mu,2mu]`,
+
+`-log_2 q_mu(m)
+ = L^2+2L log_2 L
+   +[2 log_2 theta-2 log_2(3e)]L+o(L)`.
+
+The positive phase admits an exact reverse-slack representation.  If the
+terminal state is `a in {0,1}`, each reverse slack `y` has multiplicity
+one for `y=0,1,2` and two for `y>=3`.  Its generating factor is
+`(1+z^3)/(1-z)`, and across dyadic weights the numerator telescopes.
+Combined with binary-partition asymptotics, this shows that parity contributes
+no additional unknown linear constant.
+
+In the natural variable `x=log_2 mu` the dyadic phase cancels:
+
+`-log_2 q_mu(m)
+ = x^2+2x log_2 x-2 log_2(3e)x+o(x)`.
+
+The global translation is not yet a single center: the refined upper cover and
+the best current state-independent lower certificate leave an explicit
+`0.5 log_2 3` gap in `log_2 mu`.  See
+`notes/session-7-linear-order.md` for the proof and validation details.
