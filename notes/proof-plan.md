@@ -281,3 +281,46 @@ oscillations. The correct next tools are a sharp lattice/saddle-point analysis
 of the weighted simplex together with the exact positive-phase parity
 penalties. Only after that local refinement should the bounded-offset spatial
 clumping law be attacked.
+
+## Session 7 proof progress
+
+The Session 6 `O(L)` ambiguity in the one-sided excursion rate is closed.
+
+The dyadic simplex is reduced to the cumulative binary-partition function.
+For `B=lambda 2^L+O(1)`, de Bruijn's expansion gives
+
+`log_2 N_{k,B}
+ = L^2/2-L log_2 L
+   +[log_2 lambda+1/2+log_2 e]L+o(L)`
+
+for `k=L+O(1)` in the relevant regime.  Geometric atom weighting changes
+only `O(1)) at fixed offsets.
+
+Positive-phase parity is handled exactly in reverse.  The slack multiplicity
+generating function at weight `2^j` is
+`(1+z^(3*2^j))/(1-z^(2^j))`; the numerators telescope.  Terminal-specific
+entry into 0 or 1 and the exact low-phase run then have matching linear
+asymptotics.  The cheapest complete local route is 0-to-0, yielding
+
+`beta(theta)=2 log_2 theta-2 log_2(3e)`.
+
+After writing `x=log_2 mu`, the phase term cancels and the linear coefficient
+is universally `-2 log_2(3e)`.
+
+Globally, the Session 5 necessity/upper-cover argument sharpens to the
+corresponding supercritical center
+`sqrt(log_2 n)-0.5 log_2 log_2 n+log_2(3e)`.
+The subcritical certificate cannot yet use the optimal local start-window
+theorem because the reset only guarantees `M<=2mu`.  Optimizing the
+state-independent `F(x)<=x/2` descent and combining it with the sharp
+terminal-zero low run gives the certified center
+`sqrt(log_2 n)-0.5 log_2 log_2 n+log_2(e sqrt(3))`.
+The remaining gap is `0.5 log_2 3`.
+
+### Highest-priority next proof target
+
+Close that `0.5 log_2 3` spatial gap.  Either construct a constant-cost
+regeneration that takes every non-front reset output into the
+`[mu,2mu]` start window without a linear penalty, or find a
+state-independent front witness with the optimal local coefficient.  Do not
+move to a limiting law until this gap is closed.
