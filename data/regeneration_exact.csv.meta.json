@@ -1,0 +1,9 @@
+{
+  "command": "PYTHONPATH=. python scripts/tabulate_regeneration.py --means 16,17,24,32 --output data/regeneration_exact.csv",
+  "source_revision": "b63036340e8c57d42126145b7b6c306e5e25f6d5",
+  "model": "iid geometric occupancies of integer mean mu",
+  "exactness": "The probability numerator and denominator are exact integer values from Fraction arithmetic. Decimal columns are deterministic presentations only.",
+  "theorem_check": "For every nondeep reset message -mu<M<=2mu, X in [2mu+2-M,4mu-M] forces the exact TreeStack output into [mu,2mu]. The worst message is M=-mu+1.",
+  "interpretation": "The worst one-step regeneration probability is already about 0.043 at these means and is uniformly at least 8/(17 e^3) for mu>=16. This constant cost creates no linear-in-L exponent penalty.",
+  "monte_carlo": false
+}
