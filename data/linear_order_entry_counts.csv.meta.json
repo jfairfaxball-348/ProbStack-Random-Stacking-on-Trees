@@ -1,0 +1,8 @@
+{
+  "command": "python scripts/tabulate_linear_order.py --levels 6,8,10,12 --phase-numerators 9,12,14,16 --phase-denominator 16 --entry-step-offset 0 --output data/linear_order_entry_counts.csv",
+  "git_commit": "8042b464a63edbab49e5c3adbdc62f1b5bf79ab9",
+  "exactness": "All positive-entry and colored-slack counts are exact integers. Displayed logarithms and ratios are floating-point transforms of exact integers.",
+  "seed": null,
+  "monte_carlo": false,
+  "interpretation": "The table validates the Session 7 positive-phase reverse recurrence and the finite colored-slack lower subset across several dyadic phases. The asymptotic beta formula is proved analytically and is not inferred by regression from this table."
+}
