@@ -91,18 +91,7 @@ theorem childMessageSum_eq_uniqueChild
         ((B.childBranch c).branchMessage C) := by
   classical
   rw [TreeStack.OrientedBranch.childMessageSum]
-  apply Finset.sum_eq_single c.vertex
-  · intro v hv hvc
-    by_cases h : T.graph.Adj B.root v ∧ v ≠ B.parent
-    · let d : B.Child :=
-        { vertex := v
-          adj := h.1
-          ne_parent := h.2 }
-      have hd : d = c := huniq d
-      have hvertex : v = c.vertex := by
-        simpa [d] using congrArg (fun e : B.Child => e.vertex) hd
-      exact (hvc hvertex).elim
-    · simp [h]
+  rw [Fintype.sum_eq_single c.vertex]
   · have h :
         T.graph.Adj B.root c.vertex ∧ c.vertex ≠ B.parent :=
       ⟨c.adj, c.ne_parent⟩
@@ -117,8 +106,17 @@ theorem childMessageSum_eq_uniqueChild
         (fun e : B.Child =>
           TreeStack.OrientedBranch.messageContribution
             ((B.childBranch e).branchMessage C)) hd
-  · intro hnot
-    exact (hnot (Finset.mem_univ c.vertex)).elim
+  · intro v hvc
+    by_cases h : T.graph.Adj B.root v ∧ v ≠ B.parent
+    · let d : B.Child :=
+        { vertex := v
+          adj := h.1
+          ne_parent := h.2 }
+      have hd : d = c := huniq d
+      have hvertex : v = c.vertex := by
+        simpa [d] using congrArg (fun e : B.Child => e.vertex) hd
+      exact (hvc hvertex).elim
+    · simp [h]
 
 theorem branchMessage_eq_pathStep_of_uniqueChild
     (C : TreeStack.Configuration V) (B : TreeStack.OrientedBranch T)
@@ -137,7 +135,6 @@ theorem branchMessage_eq_pathStep_of_uniqueChild
           rw [occupied_iff_root_or_uniqueChild C B c huniq]
           simp [hx, hchildNot]
         rw [B.branchMessage_eq_empty_of_not_occupied C hnot]
-        rw [hchild]
         simp [pathStep, TreeStack.EMPTY, hx]
       · have hpos : 0 < C B.root := Nat.pos_of_ne_zero hx
         have hocc : B.Occupied C :=
@@ -145,7 +142,6 @@ theorem branchMessage_eq_pathStep_of_uniqueChild
         rw [B.branchMessage_eq_some_of_occupied C hocc]
         rw [TreeStack.OrientedBranch.effectiveInput,
           childMessageSum_eq_uniqueChild C B c huniq, hchild]
-        rw [hchild]
         rw [pathStep_empty_pos hpos]
         simp
   | some z =>
@@ -160,7 +156,6 @@ theorem branchMessage_eq_pathStep_of_uniqueChild
       rw [B.branchMessage_eq_some_of_occupied C hocc]
       rw [TreeStack.OrientedBranch.effectiveInput,
         childMessageSum_eq_uniqueChild C B c huniq, hchild]
-      rw [hchild]
       simp [pathStep, add_comm]
 
 end PathBranch
