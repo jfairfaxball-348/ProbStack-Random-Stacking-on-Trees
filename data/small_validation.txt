@@ -1,0 +1,1 @@
+validated 146 labeled trees, 33711 configurations, 166116 rooted cases; no disagreements
