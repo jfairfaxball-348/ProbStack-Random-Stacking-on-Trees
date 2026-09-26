@@ -57,3 +57,50 @@ bibliographies, author pages, proceedings, theses, terminology variants, and
 mathematically equivalent formulations.  A negative later audit can support
 only a qualified public-record statement; it cannot rule out unpublished or
 unindexed work.
+
+
+## Session 3 orientation: dyadic small deviations and Mahler partitions
+
+Date of pass: 2026-09-26. This was a narrow mechanism-oriented search, not a
+novelty audit.
+
+The exact dyadic low-phase budget suggested checking classical work on powers-
+of-two partitions and modern weighted-small-deviation results.
+
+1. Kurt Mahler, *On a Special Functional Equation*, Journal of the London
+   Mathematical Society 15 (1940), 115–123,
+   DOI `10.1112/jlms/s1-15.2.115`. Bibliographic record inspected at the
+   publisher. This is the source cited by de Bruijn for Mahler's partition
+   problem.
+
+2. N. G. de Bruijn, *On Mahler's partition problem*, Proceedings of the Section
+   of Sciences of the Koninklijke Nederlandse Akademie van Wetenschappen te
+   Amsterdam 51(6) (1948), 659–669. The publisher-version PDF introduction and
+   displayed asymptotic were inspected. For partitions into powers of an
+   integer `r`, de Bruijn records a leading term
+   `(2 log r)^{-1}(log(h/log h))^2` in `log p(rh)`, with refined lower-order and
+   periodic terms. For `r=2`, the corresponding quadratic-log coefficient is
+   consistent with the half-quadratic cost that appears in each phase of the
+   ProbStack cap calculation. This is an analogy, not an invocation of de
+   Bruijn's theorem for the message chain.
+
+3. L. V. Rozovsky, *Small Deviations of Probabilities for Weighted Sum of
+   Independent Positive Random Variables with a Common Distribution That
+   Decreases at Zero Not Faster than a Power*, Theory of Probability & Its
+   Applications 60 (2016), 142–150, DOI `10.1137/S0040585X97T987545`.
+   Publisher abstract inspected; it studies small deviations for weighted sums
+   of independent positive random variables under power-type behavior near
+   zero.
+
+4. L. V. Rozovsky, *Small Deviation Probabilities for a Weighted Sum of
+   Independent Positive Random Variables with Common Distribution Function
+   That Can Decrease at Zero Fast Enough*, Theory of Probability & Its
+   Applications 63(1) (2018), 155–163,
+   DOI `10.1137/S0040585X97T988976`. Publisher abstract and reference list
+   inspected. This gives broader context for weighted small deviations,
+   including distributions with faster decay near zero.
+
+The Session 3 proof in ProbStack remains elementary and self-contained: it
+uses exact TreeStack recurrences plus direct geometric-CDF inequalities. No
+claim is made that the cited small-deviation theorems apply verbatim, and no
+novelty or priority conclusion is drawn from this limited search.
