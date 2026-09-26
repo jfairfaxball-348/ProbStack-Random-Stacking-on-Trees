@@ -355,6 +355,9 @@ theorem rightBranch_branchMessage_eq_reversePrefixScan
   | zero =>
       intro hk
       rw [LeftPath.prefixScan]
+      change
+        (rightBranch n hn 0 hk).branchMessage C =
+          pathStep TreeStack.EMPTY (C ((⟨0, by omega⟩ : Fin n).rev))
       have hroot :
           (rightBranch n hn 0 hk).root =
             (⟨0, by omega⟩ : Fin n).rev := by
