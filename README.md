@@ -114,6 +114,9 @@ python scripts/validate_small.py --max-order 5 --max-total 5
 python scripts/enumerate_paths.py --min-n 2 --max-n 9 --max-t 12
 python scripts/scan_probability_profile.py data/path_exact_atlas.csv
 python scripts/compare_path_scalings.py
+python scripts/analyze_product_excursion.py
+python scripts/tabulate_product_excursion_bounds.py
+python scripts/compare_conditioned_product_local.py
 ```
 
 All stochastic scripts accept explicit seeds.  Generated numerical datasets
@@ -127,7 +130,7 @@ it informally**.  Full Lean formalization, extensive originality/prior-art
 audit, Palomar packaging, a standalone paper, and arXiv submission are later
 stages and are deliberately not started here.  See `docs/ROADMAP.md`.
 
-The immediate mathematical task is to exploit the one-dimensional path
-message recurrence together with the exact conditioned-geometric
-representation of the weak-composition law, and to determine whether the
-observed recovery scale survives larger experiments and analysis.
+The immediate mathematical task is to convert the proved finite-block
+one-sided hazard into a renewal/block description of irreversible fronts over
+a path of length `n`, combine the two scan directions without assuming
+independence, and then transfer that global comparison through conditioning.
