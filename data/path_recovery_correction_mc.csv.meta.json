@@ -1,0 +1,13 @@
+{
+  "code_commit": "8a70122dd7fe94eda7bc7225364f24e64fee2511",
+  "model": "uniform weak compositions of t into n nonnegative parts",
+  "predicate": "exact front-pruned path TreeStack recurrence, exhaustively cross-checked against full path/general evaluator",
+  "interpretation": "An n log log n subtraction improves finite-size alignment over a fixed coefficient of n log n through n=40000, but the best correction drifts by n=160000; no fixed correction constant is claimed.",
+  "commands": [
+    "PYTHONPATH=. python scripts/analyze_path_recovery.py --n-values 640,2560 --corrections 0,0.5,0.75,1.0 --trials 200 --seed-base 2026092620 --output data/path_recovery_correction_small_mc.csv",
+    "PYTHONPATH=. python scripts/analyze_path_recovery.py --n-values 10000 --corrections 0,0.5,0.75,1.0 --trials 200 --seed-base 2026092620 --output data/path_recovery_correction_10000_mc.csv",
+    "PYTHONPATH=. python scripts/analyze_path_recovery.py --n-values 40000 --corrections 0,0.5,0.75,1.0 --trials 150 --seed-base 2026092620 --output data/path_recovery_correction_40000_mc.csv",
+    "PYTHONPATH=. python scripts/analyze_path_recovery.py --n-values 160000 --corrections 0.75 --trials 40 --seed-base 2026092620 --output data/path_recovery_correction_160000_mc.csv",
+    "PYTHONPATH=. python scripts/analyze_path_recovery.py --n-values 160000 --corrections 0.5,0.6,0.65 --trials 30 --seed-base 2026092620 --output data/path_recovery_correction_160000_extra_mc.csv"
+  ]
+}
