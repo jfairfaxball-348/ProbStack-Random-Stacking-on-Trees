@@ -1,0 +1,23 @@
+{
+  "generated_utc": "2026-09-26T11:53:55.985987+00:00",
+  "git_commit": "9bfc768f44f276d8413577a0d15506b84acc476d",
+  "command": "python scripts/compare_conditioned_product_local.py --mean 16 --n-values 100,500,2000,10000 --output data/conditioned_product_local_exact.csv",
+  "conditioned_model": "uniform weak compositions of t=n*mean into n parts",
+  "product_model": "iid geometric with mean t/n",
+  "event": "canonical deterministic-cap deep-deficit witness on the first block",
+  "exactness": "both event probabilities are exact rational calculations; CSV uses float presentation",
+  "caps": [
+    2,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    2,
+    4
+  ]
+}
