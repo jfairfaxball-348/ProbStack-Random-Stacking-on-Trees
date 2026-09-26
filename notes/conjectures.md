@@ -43,3 +43,30 @@ number of one-sided message/deficit statistics, then test `n log n` against
 explicit log-corrected alternatives on larger seeded runs.  If that succeeds,
 a precise growing-regime recovery conjecture can be entered with date and
 commit.
+
+
+## Session 2 decision — still no promoted asymptotic conjecture
+
+The earlier working phrase “near `n log n`” is now too specific.  The exact
+path recurrence exposes exponentially amplifying deficit excursions, and a
+two-sided rare-excursion heuristic instead suggests the candidate density
+[
+t/n \asymp 2^{\sqrt{\log_2 n}}.
+]
+Seeded simulations from `n=640` through `160000` align substantially better
+under `t=a n 2^{sqrt(log2 n)}` than under a fixed multiple of `n log n`, with
+`a=0.84` remaining in the transition region across all tested sizes.
+
+This is **not promoted to a formal conjecture**.  The derivation still relies on
+a schematic product-measure rare-event calculation, front overlap is only a
+sufficient obstruction, and the conditioning step has not been controlled
+asymptotically.  The strongest justified working hypothesis is therefore:
+
+> Recovery is governed by two-sided multiscale deficit excursions in the
+> one-dimensional TreeStack message chain; the associated density may be of
+> stretched-logarithmic order `2^sqrt(log n)`, but the exponent, constants and
+> precise event still require proof.
+
+A precise conjecture should wait until the one-sided excursion probability is
+bounded sharply enough to distinguish this scale from nearby alternatives and
+those bounds can be transferred to the conditioned weak-composition model.
