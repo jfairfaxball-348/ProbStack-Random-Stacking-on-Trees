@@ -574,3 +574,171 @@ matching logarithmic rate for **all** irreversible fronts. More importantly,
 nonstackability is not yet shown to require one of these deep local witnesses.
 Therefore Session 4 does not prove the supercritical statement for `c>1`,
 does not prove a full threshold, and does not determine a critical window.
+
+
+## Session 5: deep-message necessity and the supercritical theorem
+
+Session 5 closes the leading-order structural gap left by Session 4. The key
+new fact is that nonstackability itself forces a genuinely deep one-sided
+message. No front-overlap converse is needed.
+
+### Exact dissipation identity
+
+Use zero only as the arithmetic contribution of an EMPTY branch inside a
+score; EMPTY remains a distinct categorical message. Let
+
+A_i = sum_{j<i} C_j,    B_i = sum_{j>i} C_j,
+
+and let ell_i and r_i be the numerical contributions of the left and right
+incoming messages at root i. Define
+
+D_i^L = A_i - ell_i,    D_i^R = B_i - r_i.
+
+Then exactly
+
+S_i = t - D_i^L - D_i^R.                                           (4)
+
+For an active left transfer with effective value x=C_i+ell_i, prefix
+dissipation increments by
+
+D_{i+1}^L - D_i^L = x - F(x).                                      (5)
+
+If the prefix through i is still empty, the increment is zero.
+
+### Sharp one-step dissipation bound
+
+Lemma. Let h>=2. If x<=h-1 and F(x)>=1-h, then
+
+x - F(x) <= floor(h/2)+1.                                           (6)
+
+For x<=1, the low branch F(x)=2x-3 and F(x)>=1-h imply
+x>=ceil((4-h)/2), which gives (6). For x>=2, the exact parity formulas for F
+give the same inequality directly from x<=h-1.
+
+### Deep-message necessity theorem
+
+Theorem. Let C be a positive-mass configuration of total t on P_n. If C is
+nonstackable and h>=2 satisfies
+
+t > (n-1)(floor(h/2)+1),                                            (7)
+
+then at least one directed TreeStack message is at most -h.
+
+Proof. Suppose instead that every nonempty directed message is at least 1-h.
+At any vertex i<n-1, nonstackability gives C_i+ell_i+r_i<=0. The opposite
+incoming contribution is either zero (EMPTY) or at least 1-h, so the active
+left effective value x=C_i+ell_i is at most h-1. The outgoing message is also
+at least 1-h. By (6), every active prefix dissipation increment is at most
+floor(h/2)+1, while inactive empty-prefix steps contribute zero. Hence
+
+D_{n-1}^L <= (n-1)(floor(h/2)+1) < t.
+
+But the last rooted score is S_{n-1}=t-D_{n-1}^L, contradicting
+nonstackability. For h=1, if all directed messages were nonnegative then every
+occupied root would have positive score, so a positive-mass nonstackable
+configuration must contain a negative message.
+
+The largest threshold obtained directly from (7) is
+
+h_*(n,t) = max(1, 2 floor((t-1)/(n-1)) - 1).
+
+In particular, for integer mean t=n mu,
+
+nonstackable  ==>  some directed message <= -(2 mu - 1).            (8)
+
+This is stronger than the order-mu necessity originally targeted for
+Session 5.
+
+### Local cap cover for a deep message
+
+Work under iid geometric occupancies of integer mean mu and put
+L=ceil(log_2 mu). A directional scan starts from EMPTY.
+
+For an interior descent from a state at least mu to its first state at most 1,
+backward TreeStack preimages force L-O(1) occupancies to obey the cap sequence
+
+5, 13, 29, ...
+
+when read backwards from the entry. Let a_mu be the product probability of
+these entry caps. The Session 3 small-deviation estimate gives
+
+log_2 a_mu = -L^2/2 + O(L).                                        (9)
+
+For the final uninterrupted low-phase run to a message at most -(2 mu - 1),
+the last nonnegative state is 0 or 1; the only boundary exception starts from
+-1. In all cases the initial deficit is at most 4. Therefore the first
+L-O(1) occupancies of the final run obey
+
+X_j <= 4*2^(j-1)-2.
+
+Let b_mu be this cap probability. Then
+
+log_2 b_mu = -L^2/2 + O(L).                                       (10)
+
+A state M>-(2 mu-1) is sent to M'>=mu whenever X>=4 mu+1. Thus, while
+a scan has neither returned to height mu nor hit the deep threshold, every
+intervening coordinate must satisfy X<=4 mu. Put c_mu=P[X<=4 mu] and choose
+the least R with c_mu^R<=b_mu. Since P[X>=4 mu+1] is bounded below by an
+absolute positive constant and b_mu=2^{-O(L^2)},
+
+R = O(L^2).                                                        (11)
+
+Every deep-message occurrence is therefore covered as follows.
+
+- A boundary-origin witness has one of R+1 cap patterns, each of product
+  probability at most b_mu.
+- An interior witness has an entry block, at most R middle coordinates capped
+  by 4 mu, and a final low-run block, or else an entry block followed by R
+  middle caps. There are at most R+2 such patterns per possible entry
+  location, each of product probability at most a_mu b_mu.
+
+Consequently, for a one-direction scan with N transfers,
+
+P_prod[some message <= -(2 mu-1)]
+ <= (R+1)b_mu + N(R+2)a_mu b_mu.                                  (12)
+
+The boundary contribution has exponent 1/2 but only O(L^2) opportunities. The
+spatial interior contribution satisfies
+
+a_mu b_mu = 2^{-L^2+O(L)}.                                        (13)
+
+### Conditioning without the global point-probability loss
+
+Every cap pattern in (12) is supported on O(L^2) consecutive coordinates and
+has total capped block mass O(mu L^2). The exact Session 3 local
+likelihood-ratio bound therefore gives, uniformly over all these witness
+events,
+
+P_cond(E) <= exp(Delta_n) P_prod(E),
+
+where
+
+Delta_n = O(L^4/n + mu L^4/n) = o(1)
+
+throughout the stretched-log regime. This avoids dividing by
+P(sum X_i=n mu), and hence avoids the square-root-n loss that a global
+conditioning inequality would introduce.
+
+Combining (8), the two scan directions, and the local cap cover gives
+
+P_cond[nonstackable]
+ <= 2 exp(o(1)) ((R+1)b_mu + n(R+2)a_mu b_mu).                     (14)
+
+### Global supercritical theorem
+
+Theorem. Let mu=mu_n be integer, t=n mu, and
+
+log_2 mu = (c+o(1)) sqrt(log_2 n)
+
+for a fixed c>1. Then a uniformly random weak composition of total t on P_n
+is stackable with probability tending to one.
+
+The boundary term in (14) tends to zero, while the interior term has
+
+log_2(n poly(L) a_mu b_mu)
+ = (1-c^2+o(1)) log_2 n -> -infinity.
+
+Together with the Session 4 theorem for every fixed c<1, this proves the
+leading stretched-log separation coefficient 1. It does not prove a critical
+window at c=1, a finite-n monotonicity statement in total mass, or a
+second-order threshold correction.

@@ -174,3 +174,59 @@ a new rare-event mechanism.
 Secondary targets are to sharpen the `O(L log L)` loss in the explicit lower
 witness, characterize the unrestricted true-front hazard from above, and only
 then study the critical `c=1` window.
+
+
+## Session 5 proof progress
+
+The leading-order supercritical problem is now solved.
+
+The new deterministic input is a deep-message necessity theorem. If a
+positive-mass configuration of total t on P_n is nonstackable, then for every
+h>=2 with
+
+t > (n-1)(floor(h/2)+1)
+
+some directed message is at most -h. In particular, at fixed total t=n mu,
+nonstackability forces a message at most -(2 mu-1).
+
+The proof uses prefix dissipation D_i^L=(left branch mass)-(left message).
+Under the hypothesis that all messages exceed -h, nonstackability bounds each
+active effective value by h-1, while the outgoing message is at least 1-h.
+The exact transfer then limits each dissipation increment to
+floor(h/2)+1. The last root needs total prefix dissipation at least t, which is
+impossible under the displayed inequality.
+
+For the iid geometric scan, every message below -(2 mu-1) is covered by a
+local cap pattern. Boundary-origin patterns cost 2^{-L^2/2+O(L)}, but there
+are only O(L^2) of them. Interior patterns factor into a positive-phase entry
+block and a final low-phase block, with combined probability
+
+2^{-L^2+O(L)}.
+
+A return-to-height-mu argument limits the middle gap to O(L^2) cap patterns
+without paying another quadratic logarithmic cost. Thus one direction has
+upper bound
+
+O(L^2) 2^{-L^2/2+O(L)} + n O(L^2) 2^{-L^2+O(L)}.
+
+All witness windows have length O(L^2) and capped mass O(mu L^2), so the exact
+local conditioned/product likelihood ratio is exp(o(1)) throughout the
+stretched-log regime. No global reciprocal point-probability factor is needed.
+
+Therefore, for every fixed c>1,
+
+log_2 mu = (c+o(1)) sqrt(log_2 n)
+
+implies stackability with probability tending to one under the uniform
+weak-composition model. Combined with Session 4, the leading separation
+coefficient 1 is now a theorem.
+
+### Highest-priority next proof target
+
+The next mathematical target is the c=1 regime. The current lower side uses an
+explicit witness with an O(L log L) loss, while the new upper side has only
+O(L) losses in the local cap exponents plus polynomial factors. The single
+most useful next step is to determine the next-order asymptotics of the
+one-sided descent/amplification probability, ideally sharpening the canonical
+lower witness to match the upper bound beyond the L^2 term. That is the
+natural route to a genuine critical-window statement.

@@ -1,0 +1,22 @@
+{
+  "exact_formula_evaluation": true,
+  "git_commit": "4be2b6af533766d7dfa585dddea1aa0172444c60",
+  "command": "python scripts/tabulate_supercritical_bound.py --levels 20,30,40,50 --coefficients 1.05,1.10,1.25,1.50 --output data/supercritical_bound_table.csv",
+  "parameters": {
+    "levels": [
+      20,
+      30,
+      40,
+      50
+    ],
+    "coefficients": [
+      1.05,
+      1.1,
+      1.25,
+      1.5
+    ],
+    "scale": "mean=2^L, log2(n)=round((L/c)^2)"
+  },
+  "seed": null,
+  "purpose": "finite evaluation of the proved Session 5 local-cap and conditioning upper bound; floating values are diagnostics, not the asymptotic proof"
+}

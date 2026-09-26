@@ -1,0 +1,12 @@
+{
+  "exact": true,
+  "git_commit": "4be2b6af533766d7dfa585dddea1aa0172444c60",
+  "command": "python scripts/classify_deep_message_necessity.py --max-order 10 --max-total 10 --output data/deep_message_necessity_exact.csv",
+  "parameters": {
+    "max_order": 10,
+    "max_total": 10
+  },
+  "seed": null,
+  "statistic": "minimum directed message among nonstackable paths compared with the proved forced threshold",
+  "purpose": "bounded exhaustive validation and tightness diagnostics for the Session 5 deep-message necessity theorem"
+}

@@ -228,3 +228,58 @@ Thus the mathematical checks underlying the new commit were independently
 reproduced, but a literal `pytest` invocation at the final HEAD was not
 available in this execution environment. This limitation is recorded rather
 than reported as a passing pytest run.
+
+
+## Session 5: necessity and supercritical validation
+
+Session 5 began by closing the Session 4 validation caveat. In the local
+execution environment, the literal full test suite was run successfully after
+the new Session 5 code was added. The suite contains 54 tests, all passing.
+The independent exact validator was also rerun and returned:
+
+validated 146 labeled trees, 33711 configurations, 166116 rooted cases; no disagreements
+
+The Session 5 deterministic necessity theorem is checked exhaustively by
+tests/test_soft_front.py, while tests/test_supercritical.py checks the local
+cap-cover implication, finite probability ordering, and conditioned bound
+behavior. The cap-cover test includes all 7^6=117649 occupancy strings in the
+bounded alphabet 0,...,6 at mu=16, plus targeted boundary and interior
+deep-excursion examples.
+
+### Exact deep-message catalogue
+
+Command:
+
+python scripts/classify_deep_message_necessity.py --max-order 10 --max-total 10 --output data/deep_message_necessity_exact.csv
+
+The script enumerates every weak composition in the displayed rectangle,
+filters the nonstackable configurations, and compares the minimum directed
+message with the proved forced threshold
+
+h_*(n,t)=max(1, 2 floor((t-1)/(n-1))-1).
+
+Across the rectangle there are 307646 nonstackable configurations. No
+counterexample to the theorem occurs. Forty-seven configurations attain the
+forced threshold exactly, so the deterministic estimate is genuinely tight on
+bounded instances rather than merely qualitative. Examples include (1,1) at
+(n,t)=(2,2), (3,0,3) at (3,6), and (1,0,4,5) at (4,10).
+
+### Finite supercritical bound table
+
+Command:
+
+python scripts/tabulate_supercritical_bound.py --levels 20,30,40,50 --coefficients 1.05,1.10,1.25,1.50 --output data/supercritical_bound_table.csv
+
+This evaluates the proved local-cap plus conditioning formula at mu=2^L and
+log2(n)=round((L/c)^2). It is not Monte Carlo.
+
+For c=1.10, the log2 upper bounds on fixed-total nonstackability are
+approximately 17.67, -28.09, -109.22, and -224.56 at L=20,30,40,50. For
+c=1.25 they are approximately -57.33, -196.09, -407.22, and -690.56. The slow
+finite convergence at c=1.05 is expected from lower-order terms: the bound
+becomes negative by L=50.
+
+These finite values are diagnostics of the proved formula, not the proof of
+the asymptotic theorem. The proof uses
+log2 a_mu=-L^2/2+O(L), log2 b_mu=-L^2/2+O(L), R=O(L^2), and local conditioning
+error o(1).

@@ -32,3 +32,17 @@ labeled pebbles.
 Each file has a metadata sidecar recording parameters, source commit, purpose,
 and the fact that the final values were evaluated in the session harness after
 GitHub Actions failed before job creation.
+
+
+## Session 5 additions
+
+- deep_message_necessity_exact.csv: exact bounded catalogue comparing the
+  minimum directed message in every nonstackable path through n<=10,t<=10 with
+  the Session 5 forced threshold. It contains 307646 nonstackable
+  configurations in total and 47 exact-threshold cases.
+- supercritical_bound_table.csv: finite evaluations of the proved
+  supercritical local-cap/conditioning upper bound at selected dyadic means and
+  coefficients above one. This is a formula table, not Monte Carlo.
+
+Both files have metadata sidecars giving the generating command and the
+Session 5 source commit.

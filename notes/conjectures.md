@@ -147,3 +147,35 @@ is therefore better supported than before, but remains a working target rather
 than a registered conjecture. Promotion should wait for a supercritical
 upper bound or a structural necessity theorem that makes the Session 3
 deep-deficit upper estimate globally applicable.
+
+
+## Session 5 decision — leading coefficient 1 is now a theorem
+
+Session 5 proves the missing supercritical side. For integer mu=mu_n, total
+t=n mu, and fixed c>1,
+
+log_2 mu = (c+o(1)) sqrt(log_2 n)
+
+implies stackability with probability tending to one under the uniform
+weak-composition model.
+
+Together with the Session 4 result for every fixed c<1, this establishes a
+two-sided leading-order separation at coefficient 1. In that precise sense the
+stretched-log coefficient 1 is now proved rather than conjectural.
+
+The proof does not rely on front overlap being necessary. Instead,
+nonstackability forces a directed message at most -(2 mu-1), and every such
+deep message is covered by a boundary or interior local cap witness. Interior
+witnesses have product probability 2^{-L^2+O(L)} with only n poly(L) possible
+placements, and the exact local equivalence-of-ensembles estimate transfers
+this directly to fixed total.
+
+What remains open is lower order. The results do not identify the behavior at
+c=1, do not give a critical window, and do not establish monotonicity of the
+finite-n stackability probability as a function of total mass. Accordingly,
+no second-order or critical-window conjecture is promoted in this session. The
+former working target
+
+mu = 2^{(1+o(1)) sqrt(log_2 n)}
+
+is now a proved leading-order scale statement rather than a conjecture.
