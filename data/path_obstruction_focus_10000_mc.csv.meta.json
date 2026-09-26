@@ -1,0 +1,14 @@
+{
+  "generated_utc": "2026-09-26T11:04:01.098979+00:00",
+  "git_commit": "8a70122dd7fe94eda7bc7225364f24e64fee2511",
+  "code_commit": "8a70122dd7fe94eda7bc7225364f24e64fee2511",
+  "command": "python scripts/analyze_path_recovery.py --n-values 10000 --corrections 0.75 --trials 600 --seed-base 2026092630 --output data/path_obstruction_focus_10000_mc.csv",
+  "model": "uniform weak compositions of t into n nonnegative parts",
+  "predicate": "exact path TreeStack recurrence with irreversible-deficit pruning",
+  "statistics": {
+    "zero_run": "maximum consecutive vertices with C_i=0",
+    "low1_run": "maximum consecutive vertices with C_i<=1",
+    "front_certificate": "two irreversible one-sided exclusion fronts cover all roots"
+  },
+  "note": "Numerical output was generated from code identical to the committed code revision; final notes/data are in descendant commits."
+}
