@@ -107,3 +107,43 @@ justified working hypothesis is now more specific:
 > `2^{-(1+o(1))(log_2 mu)^2}` on a logarithmic block, and spatial accumulation
 > of such seeds may place path recovery at
 > `mu=2^{(1+o(1))sqrt(log_2 n)}`. The global conversion remains to be proved.
+
+
+## Session 4 decision — rigorous global lower side; still no full threshold conjecture
+
+Session 4 proves substantially more than the Session 3 working hypothesis on
+one side of the transition. For integer `mu=mu_n` and fixed total `t=nmu`,
+if
+
+`log_2 mu = (c+o(1)) sqrt(log_2 n)`
+
+with fixed `c<1`, then the uniform weak-composition configuration on `P_n`
+is nonstackable with probability tending to one.
+
+The proof is by two disjoint families of certified true-front superblocks,
+one in each half of the path, followed by exact conditioning on the total.
+Thus the stretched-log mechanism is now a rigorous global obstruction, not
+merely a local heuristic.
+
+This also corrects the scale comparison in the Session 3 discussion:
+asymptotically `log n` is **below**, not above,
+`2^{sqrt(log_2 n)}`. The new theorem directly shows nonstackability at
+`mu=Theta(log n)` and at
+`mu=exp(O((log n)^alpha))` for `alpha<1/2`, without invoking any unproved
+monotonicity in total mass.
+
+No precise two-sided threshold conjecture is promoted yet. The reason is now
+narrow and structural: the certified front event has exponent 1, but no
+matching upper bound is known for the occurrence of arbitrary irreversible
+fronts or for global nonstackability. A cheaper obstruction could still shift
+the leading coefficient above 1. Conversely, no proof yet gives stackability
+with high probability for `c>1`.
+
+The candidate statement
+
+`t_c(n)=n 2^{(1+o(1))sqrt(log_2 n)}`
+
+is therefore better supported than before, but remains a working target rather
+than a registered conjecture. Promotion should wait for a supercritical
+upper bound or a structural necessity theorem that makes the Session 3
+deep-deficit upper estimate globally applicable.

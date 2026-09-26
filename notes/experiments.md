@@ -155,3 +155,76 @@ ensembles estimate on the witness used in the proof.
 
 All three outputs record the code commit, exact command, parameters, and seeds
 where applicable in sidecar metadata and `data/experiment_log.jsonl`.
+
+
+## Session 4: spatial-front diagnostics
+
+Session 4 used computation only for the two structural questions left open by
+the new proof.
+
+### Exact missed-front catalogue
+
+The exact command represented by
+`scripts/classify_missed_front_failures.py` uses all weak compositions with
+`2<=n<=10` and `1<=t<=8`. Across the grid, 20,429 nonstackable
+configurations are missed by direct overlap of the two irreversible fronts.
+All 20,429 nevertheless possess both one-sided fronts. Their failure of the
+certificate is a central gap, not absence of a front.
+
+Among the missed cases, 5,579 have `max_i S_i=0` and 14,850 have
+`max_i S_i<0`. Hence the finite counterexample `(1,0,2)` is not merely
+representative of an equality-score exception. The maximum uncovered gap in
+the tested rectangle is 4. Full counts are in
+`data/missed_front_small_exact.csv`.
+
+### Seed-to-front conversion
+
+The statistic was fixed before sampling: start from `M_0=-mu`, take
+`n=2^{ceil(log_2 mu)^2}`, and record whether the exact product-geometric
+chain reaches `Z>=2nmu+3` before its first exit from the low phase.
+
+With 20,000 trials per mean and seed `2026092700+mu`:
+
+| mu | hits | estimate | Wilson 95% interval | mean steps given hit |
+|---:|---:|---:|---:|---:|
+| 16 | 5268 | 0.2634 | [0.25734, 0.26955] | 19.52 |
+| 32 | 4318 | 0.2159 | [0.21025, 0.22166] | 28.75 |
+| 64 | 3969 | 0.19845 | [0.19298, 0.20404] | 39.88 |
+| 128 | 3723 | 0.18615 | [0.18082, 0.19160] | 52.92 |
+
+The purpose was only to discriminate an order-one conversion probability from
+a second rare-event exponent. The rigorous proof uses the much smaller
+universal lower bound `0.0095991`; these estimates do not enter any theorem.
+
+### Rigorous finite-parameter spatial table
+
+`data/spatial_front_rigorous_bounds.csv` records the exact formula values for
+the canonical superblock at `mu=2^L` and `n=2^{L^2}`. At the exact
+coefficient-one scale the explicit lower witness remains far too conservative
+at finite `L`: `log_2(Bp)` is negative throughout the tabulated
+`L=4,5,6,8,10,12,16` range. This is expected from the
+`O(L log L)` subleading loss and is not evidence against the asymptotic
+`c<1` theorem.
+
+### Validation note
+
+GitHub-hosted Actions was attempted for a literal final `pytest` run but the
+run failed before job creation (`jobs=0`), so that failed run is not counted
+as code validation and the temporary workflow was removed.
+
+The original 34 Session 3 tests concern files unchanged in Session 4. In the
+session harness, the following exact checks were rerun against the committed
+formulas:
+
+- all 146 labeled trees through order 5, 33,711 configurations through mass 5,
+  and 166,116 rooted direct-vs-structural cases, with zero disagreements;
+- 24,309 path message/score comparisons against the general evaluator;
+- 167,959 exact pruned-path decisions;
+- the Session 3 product-chain test identities and finite bounds;
+- all current Session 4 spatial deterministic/numerical assertions, including
+  the stable Robbins conditioning bounds and the stretched-log two-sided bound.
+
+Thus the mathematical checks underlying the new commit were independently
+reproduced, but a literal `pytest` invocation at the final HEAD was not
+available in this execution environment. This limitation is recorded rather
+than reported as a passing pytest run.

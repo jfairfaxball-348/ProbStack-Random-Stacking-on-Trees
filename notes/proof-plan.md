@@ -123,3 +123,54 @@ matching bounds up to `2^{o(L^2)}` factors. Then combine the two directions
 without assuming independence and quantify the failures not captured by front
 overlap. The exact local equivalence-of-ensembles bound can then transfer the
 result to fixed total.
+
+
+## Session 4 proof progress
+
+The Session 3 local witness now has a rigorous spatial implementation.
+
+The key deterministic/probabilistic chain is:
+
+1. `F(x)<=x/2` globally.
+2. On total mass at most `2nmu`, an `O(log n)` reset block has probability
+   bounded below by a positive constant and sends every incoming state to
+   message at most `2mu`.
+3. The canonical Session 3 cap witness then forces message at most `-mu`
+   with probability `2^{-L^2-O(L log L)}`.
+4. A further `O(log n)` low-phase buffer grows the deficit by factor at least
+   `3/2` per step and has probability bounded below by the universal
+   constant `c_*>0.0095991`.
+5. The resulting deficit exceeds `2nmu`, so on the reserve event it is a
+   genuine irreversible front.
+6. Disjoint superblocks give `Theta(n/polylog n)` independent opportunities
+   under the product law.
+7. Conditioning on total `nmu` is handled globally by division by the exact
+   negative-binomial point probability, not by pretending many local blocks
+   remain independent after conditioning.
+8. Putting one directional certificate in each half proves nonstackability
+   with probability tending to one for
+   `mu=2^{(c+o(1))sqrt(log_2 n)}` for every fixed `c<1`.
+
+This gives a rigorous global **lower side** of the stretched-log recovery
+picture. It does not prove that the actual front hazard is no larger than the
+certified hazard, and it does not prove stackability for `c>1`.
+
+### Highest-priority next proof target
+
+Prove a structural necessity or near-necessity theorem for nonstackability.
+A useful target is a “soft-front” statement saying that every nonstackable
+configuration, except perhaps for a controlled exceptional event, contains a
+local one-sided deep-deficit seed in one of `n polylog(n)` candidate windows.
+Combined with the Session 3 upper bound
+`q_mu<=2^{-L^2+O(L)}`, such a theorem could yield stackability for `c>1`
+and close the leading coefficient.
+
+The exact missed-front catalogue suggests looking first at the central gap
+between the two irreversible fronts: every missed failure through
+`n<=10,t<=8` has both fronts, but with an uncovered gap of length 1--4.
+The correct refinement may be a finite-reserve or soft-front bridge rather than
+a new rare-event mechanism.
+
+Secondary targets are to sharpen the `O(L log L)` loss in the explicit lower
+witness, characterize the unrestricted true-front hazard from above, and only
+then study the critical `c=1` window.

@@ -1,0 +1,17 @@
+{
+  "command": "python scripts/tabulate_spatial_front_certificate.py --levels 4,5,6,8,10,12,16 --coefficient 1.0 --output data/spatial_front_rigorous_bounds.csv",
+  "source_commit": "034720d2b94e69c2d5e7be2ff82df952e499e570",
+  "rigorous_formula_table": true,
+  "levels": [
+    4,
+    5,
+    6,
+    8,
+    10,
+    12,
+    16
+  ],
+  "coefficient_c": 1,
+  "path_rule": "n=2^(L^2)",
+  "execution_note": "Evaluated in the session harness from the committed formulas after GitHub Actions failed before job creation."
+}

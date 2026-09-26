@@ -1,0 +1,17 @@
+{
+  "command": "python scripts/analyze_seed_to_front.py --means 16,32,64,128 --trials 20000 --seed-base 2026092700 --output data/seed_to_front_mc.csv",
+  "source_commit": "034720d2b94e69c2d5e7be2ff82df952e499e570",
+  "statistic": "P_{M0=-mu}[reach deficit Z>=2*n*mu+3 before first exit from low phase]",
+  "path_length": "n=2^(ceil(log2(mu))^2)",
+  "means": [
+    16,
+    32,
+    64,
+    128
+  ],
+  "trials": 20000,
+  "seed_base": 2026092700,
+  "seed_rule": "seed_base+mean",
+  "purpose": "discriminate order-one seed-to-front conversion from an additional rare-event cost",
+  "execution_note": "Evaluated in the session harness using the committed exact transfer and sampling rule after GitHub Actions failed before job creation."
+}

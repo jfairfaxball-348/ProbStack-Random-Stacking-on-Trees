@@ -397,3 +397,180 @@ This is not yet a theorem or promoted global conjecture. The needed renewal or
 block comparison has not been proved, left/right front events have not been
 shown independent, and irreversible-front overlap remains sufficient rather
 than necessary for nonstackability.
+
+
+## Session 4: spatial reset, true-front conversion, and a global subcritical theorem
+
+Session 4 turns the Session 3 canonical deep-deficit witness into a spatial
+certificate. This section concerns a **sufficient certified front event**; it
+does not identify the complete law of all irreversible fronts.
+
+### Global half-contraction and reset block
+
+The exact transfer satisfies
+
+`F(x) <= x/2`
+
+for every integer `x`. Hence, after a block of length `r` with occupancies
+`X_1,...,X_r`, any active incoming integer message `m` obeys
+
+`M_r <= m/2^r + sum_{j=1}^r 2^{-(r-j+1)} X_j`.
+
+An EMPTY branch is handled separately by requiring the first coordinate of the
+reset block to be positive; after activation the same upper bound is valid with
+initial contribution zero.
+
+On a path of length `n` with total mass at most `2 n mu`, the
+message-versus-mass lemma gives every incoming message the upper bound
+`2 n mu`. Put
+
+`r = ceil(log_2(4n))`.
+
+Define the reset event by `X_1>0` and
+
+`sum_{j=1}^r 2^{-(r-j+1)} X_j <= 3 mu/2`.
+
+Then every incoming state, including EMPTY, exits the reset block with message
+at most `2 mu`. Under iid geometric coordinates of mean `mu`, Markov's
+inequality and a union bound give
+
+`P(reset) >= 1/3 - 1/(mu+1)`.
+
+Thus the spatial argument does not need a stationary law or a proof that the
+uncontrolled scan frequently lands specifically in `[mu,2mu]`: a
+constant-probability local reset forces the required upper starting control.
+
+### Constant-cost conversion of a deep seed into a true front
+
+Suppose the canonical Session 3 witness has ended with `M<=-mu`, so the
+low-phase deficit `Z=3-M` satisfies `Z>=mu+3`. If `D` is a deterministic
+lower bound on `Z` and the next occupancy obeys
+
+`X <= floor(D/4)`,
+
+then the update stays in the low phase and
+
+`Z' = 2(Z-X) >= 3D/2`.
+
+Iterate this until the certified deficit is at least `2 n mu+3`. This takes
+`O(log n)` steps. The probability of the entire buffer is bounded below
+uniformly in `mu` and `n` by the positive infinite product
+
+`c_* = prod_{j>=0} (1-exp(-(3/2)^j/4))`.
+
+The explicit rigorous truncation implemented in
+`universal_runaway_probability_lower_bound` gives
+
+`c_* > 0.0095991`.
+
+Consequently converting the canonical `-mu` seed into a deficit large enough
+to dominate the entire path costs only a constant factor, not another
+quadratic logarithmic exponent.
+
+### Certified one-sided spatial-front theorem
+
+A superblock consists of:
+
+1. the reset block above;
+2. the canonical Session 3 deep-deficit witness;
+3. the runaway buffer above.
+
+Let `w_mu` be the exact product probability of the canonical witness and let
+`p_{mu,n}` be the certified superblock probability lower bound. Then
+
+`p_{mu,n} >= (1/3-1/(mu+1)) c_* w_mu`,
+
+and therefore, for `L=ceil(log_2 mu)`,
+
+`log_2 p_{mu,n} = -L^2 - O(L log L)`.
+
+The superblock length is
+
+`b_{mu,n}=O(log n + L)`.
+
+Disjoint superblocks are independent under the product law. On the event that
+the total path mass is at most `2 n mu`, every successful superblock forces a
+genuine irreversible left-to-right front. Hence, with
+`B=floor(n/b_{mu,n})`,
+
+`P_product[no certified front]
+ <= (1-p_{mu,n})^B + P[total mass > 2 n mu]`.
+
+The last term has an exponential Chernoff bound. Thus the **certified true
+front** retains the Session 3 leading exponent `1`. This is a lower bound on
+the occurrence rate of true fronts, not a matching upper bound for the event
+that any true front occurs.
+
+### Conditioning and a rigorous global nonstackability regime
+
+For fixed total `t=n mu`, split the path into two halves. Use disjoint
+left-to-right certified superblocks in the left half and the reversed
+right-to-left construction in the right half. Under the product law the two
+families use disjoint coordinates. After conditioning on total mass `n mu`,
+the reserve bound required by either certificate is automatic.
+
+If `B` is the number of superblocks in one half, then
+
+`P_conditioned[missing at least one half-certificate]
+ <= 2 (1-p_{mu,n})^B / P_product[sum X_i=n mu]`.
+
+The negative-binomial point probability in the denominator is of order
+`1/(mu sqrt(n))`; the code uses cancellation-free Robbins/Stirling bounds
+rather than subtracting enormous `lgamma` values.
+
+Therefore, whenever
+
+`log_2 n - L^2 - O(L log L) -> +infinity`,
+
+both opposing certified fronts occur with conditioned probability tending to
+one, and their exclusion regions cover the path. In particular:
+
+**Theorem (global subcritical stretched-log bound).** If `mu=mu_n` is an
+integer sequence satisfying
+
+`log_2 mu = (c+o(1)) sqrt(log_2 n)`
+
+for a fixed `c<1`, and `t=n mu`, then a uniformly random weak composition
+of `t` on `P_n` is nonstackable with probability tending to one.
+
+This is the first rigorous global stretched-log result in ProbStack. It is
+one-sided: no theorem yet proves stackability for `c>1`.
+
+As direct corollaries of the same certificate criterion, densities
+`mu=Theta(log n)` and more generally
+`mu=exp(O((log n)^alpha))` with `alpha<1/2` are still nonstackable with
+probability tending to one. No monotonicity in total mass is used for these
+claims.
+
+### Small failures missed by front overlap
+
+Exact enumeration through `n<=10,t<=8` found 20,429 nonstackable
+configurations missed by the existing front-overlap certificate. Every one of
+these missed cases still had both one-sided irreversible fronts; the fronts
+simply left a central uncovered gap. Of the missed cases, 5,579 had maximum
+root score exactly zero and 14,850 had maximum root score strictly negative.
+Thus an equality-only explanation is false.
+
+The largest uncovered gap in this rectangle is 4. The observed maximum grows
+from 1 to 4 across the small grid, so no universal bounded-gap claim is made.
+
+### Seed-to-front diagnostic
+
+A seeded product-law diagnostic started exactly from `M_0=-mu` and asked
+whether the process reached deficit `2 n mu+3`, with
+`n=2^{ceil(log_2 mu)^2}`, before ever leaving the low phase. With 20,000
+trials per mean, the estimates were 0.2634, 0.2159, 0.19845, and 0.18615 for
+`mu=16,32,64,128`, respectively. The Wilson intervals are recorded in
+`data/seed_to_front_mc.csv`.
+
+These values are far above the universal rigorous lower constant
+`0.0095991`, supporting the interpretation that seed-to-front conversion is
+order one. They are not used in the proof.
+
+### What remains open
+
+The exponent `1` is proved for the certified front witness, but not as a
+matching logarithmic rate for **all** irreversible fronts. More importantly,
+nonstackability is not yet shown to require one of these deep local witnesses.
+Therefore Session 4 does not prove the supercritical statement for `c>1`,
+does not prove a full threshold, and does not determine a critical window.

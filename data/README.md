@@ -18,3 +18,17 @@ No synthetic or placeholder result files should be added.
 The intended probability space is always the uniform law on weak compositions
 of `t` into `n` nonnegative parts.  Do not substitute independent placement of
 labeled pebbles.
+
+
+## Session 4 additions
+
+- `spatial_front_rigorous_bounds.csv`: rigorous formula table for the reset +
+  canonical witness + runaway-buffer superblock at selected dyadic means.
+- `seed_to_front_mc.csv`: seeded Monte Carlo diagnostic for conversion from
+  `M=-mu` to a whole-path-strength deficit before low-phase rescue.
+- `missed_front_small_exact.csv`: exact classification of bounded
+  nonstackable path configurations missed by direct front overlap.
+
+Each file has a metadata sidecar recording parameters, source commit, purpose,
+and the fact that the final values were evaluated in the session harness after
+GitHub Actions failed before job creation.

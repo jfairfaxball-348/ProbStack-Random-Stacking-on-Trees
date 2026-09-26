@@ -1,0 +1,10 @@
+{
+  "command": "python scripts/classify_missed_front_failures.py --max-order 10 --max-total 8 --output data/missed_front_small_exact.csv",
+  "source_commit": "034720d2b94e69c2d5e7be2ff82df952e499e570",
+  "exact": true,
+  "max_order": 10,
+  "max_total": 8,
+  "classification": "nonstackable but not certified by overlap of irreversible one-sided fronts",
+  "purpose": "test equality-only, missing-front, and bounded-gap explanations of missed failures",
+  "execution_note": "Evaluated exhaustively in the session harness using the committed exact path recurrences after GitHub Actions failed before job creation."
+}
