@@ -1,0 +1,10 @@
+{
+  "git_commit": "b0593c6dd17a35b607fe0f0416c9fde42b769966",
+  "command": "python scripts/tabulate_second_order_bounds.py --levels 6,8,10,12,16,20,30,40,50 --exact-through-level 10 --output data/second_order_local_bounds.csv",
+  "exact_component_dp_through_level": 10,
+  "analytic_bounds_rigorous": true,
+  "levels": [6, 8, 10, 12, 16, 20, 30, 40, 50],
+  "seed": null,
+  "statistic": "rigorous second-order bounds for q_mu and exact probabilities of the two simplex witness components at feasible levels",
+  "interpretation": "The theorem is analytic. Exact DP columns validate the weighted-budget components; they are not curve fits and do not estimate q_mu itself."
+}
