@@ -30,7 +30,6 @@ def test_affine_weighted_sum_matches_half_recursion():
 def test_reset_event_contracts_any_bounded_active_message():
     mean, n = 16, 37
     r = reset_length(n)
-    # bounded exhaustive occupancies keep this test small; implication is exact.
     for block in product(range(4), repeat=r):
         if not reset_event_holds(mean, block):
             continue
@@ -54,7 +53,6 @@ def test_runaway_caps_grow_deficit_and_stay_low_phase():
 
 
 def test_runaway_probability_has_constant_scale_on_large_n():
-    # The deterministic cap event approaches a positive infinite-product limit.
     p1 = 2 ** runaway_log2_probability_lower_bound(16, 10**3)
     p2 = 2 ** runaway_log2_probability_lower_bound(16, 10**9)
     assert p2 > 0.009
@@ -73,8 +71,6 @@ def test_spatial_certificate_keeps_session3_leading_exponent():
         witness = canonical_deep_deficit_witness(mean)
         assert cert.block_length == cert.reset_steps + cert.witness_steps + cert.buffer_steps
         assert math.isfinite(cert.per_block_log2_probability_lower)
-        # Reset and buffer only add constant probability factors; all quadratic
-        # logarithmic cost is inherited from the Session-3 witness.
         extra = cert.per_block_log2_probability_lower - witness.log2_probability
         assert extra > -10
         if previous is not None:
@@ -103,10 +99,6 @@ def test_segment_certificate_uses_global_reserve_budget():
 
 
 def test_canonical_witness_ends_deep_not_only_hits_deep_small_means():
-    from itertools import product
-    from prob_stack.product_chain import canonical_deep_deficit_witness
-    from prob_stack.tree_score import transfer
-
     for mean in (16, 32):
         witness = canonical_deep_deficit_witness(mean)
         for occupancies in product(*[range(cap + 1) for cap in witness.all_caps]):
@@ -115,3 +107,26 @@ def test_canonical_witness_ends_deep_not_only_hits_deep_small_means():
                 for occupancy in occupancies:
                     message = transfer(message + occupancy)
                 assert message <= -mean
+
+from prob_stack.product_spatial import (
+    conditioned_total_log_probability_bounds,
+    conditioned_two_sided_failure_bound,
+)
+
+
+def test_conditioning_log_bounds_enclose_direct_formula_on_moderate_sizes():
+    for mean in (1, 16, 64):
+        for n in (2, 10, 100, 1000):
+            t=n*mean
+            direct=(math.lgamma(n+t)-math.lgamma(t+1)-math.lgamma(n)
+                    -n*math.log(mean+1.0)+t*(math.log(mean)-math.log(mean+1.0)))
+            lower,upper=conditioned_total_log_probability_bounds(mean,n)
+            # lgamma subtraction itself accumulates about 1e-11 error by n=1000.
+            assert lower-5e-10 <= direct <= upper+5e-10
+
+
+def test_conditioned_two_sided_bound_is_stable_at_stretched_log_scale():
+    mean=2**16
+    n=2**456  # coefficient c=16/sqrt(456) about 0.75
+    bound=conditioned_two_sided_failure_bound(mean,n)
+    assert 0.0 <= bound < 1e-50

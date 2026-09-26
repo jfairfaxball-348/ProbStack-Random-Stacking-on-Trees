@@ -185,20 +185,52 @@ def universal_runaway_probability_lower_bound(prefix_terms: int = 10) -> float:
     return product * max(0.0, 1.0 - tail_sum_upper)
 
 
-def conditioned_total_log_probability(mean: int, path_length: int) -> float:
-    """Log P[sum X_i = n*mu] for iid geometrics of integer mean mu."""
+def _factorial_increment(x: int) -> float:
+    """Stable x log x-(x-1)log(x-1) for integer x>=2."""
+    if x < 2:
+        raise ValueError("x must be at least 2")
+    inv = 1.0 / x
+    return math.log(x) - (x - 1) * math.log1p(-inv)
+
+
+def conditioned_total_log_probability_bounds(mean: int, path_length: int) -> tuple[float, float]:
+    """Rigorous stable bounds for log P[sum X_i=n*mu].
+
+    Direct differences of ``lgamma`` values lose all useful precision when
+    ``n`` is stretched-exponentially large.  Writing the negative-binomial
+    point probability with factorials and applying Robbins' two-sided Stirling
+    bounds leaves only cancellation-free O(log n) terms.
+    """
     if mean <= 0 or path_length <= 0:
         raise ValueError("mean and path_length must be positive")
     n = path_length
+    if n == 1:
+        logp = -math.log(mean + 1.0) + mean * (math.log(mean) - math.log(mean + 1.0))
+        return logp, logp
+
     t = n * mean
-    return (
-        math.lgamma(n + t)
-        - math.lgamma(t + 1)
-        - math.lgamma(n)
-        - n * math.log(mean + 1.0)
-        + t * (math.log(mean) - math.log(mean + 1.0))
+    total = n + t
+    a = total - 1
+    b = t
+    c = n - 1
+
+    main = (
+        _factorial_increment(n)
+        - _factorial_increment(total)
+        + 0.5 * (math.log(a) - math.log(b) - math.log(c))
+        - 0.5 * math.log(2.0 * math.pi)
     )
 
+    # Robbins: 1/(12k+1) < r_k < 1/(12k) in the Stirling remainder for k!.
+    lower = main + 1.0 / (12 * a + 1) - 1.0 / (12 * b) - 1.0 / (12 * c)
+    upper = main + 1.0 / (12 * a) - 1.0 / (12 * b + 1) - 1.0 / (12 * c + 1)
+    return lower, upper
+
+
+def conditioned_total_log_probability(mean: int, path_length: int) -> float:
+    """Stable midpoint approximation, enclosed by rigorous companion bounds."""
+    lower, upper = conditioned_total_log_probability_bounds(mean, path_length)
+    return 0.5 * (lower + upper)
 
 def spatial_front_certificate_in_segment(
     mean: int,
@@ -244,10 +276,14 @@ def conditioned_two_sided_failure_bound(mean: int, path_length: int) -> float:
     if cert.disjoint_blocks == 0:
         return 1.0
     log_a = cert.per_block_log2_probability_lower * math.log(2.0)
-    a = math.exp(log_a) if log_a > -745 else 0.0
-    if a == 0.0:
-        return 1.0
-    log_no = cert.disjoint_blocks * math.log1p(-a)
-    log_total_point = conditioned_total_log_probability(mean, path_length)
-    log_bound = math.log(2.0) + log_no - log_total_point
+    log_ba = math.log(cert.disjoint_blocks) + log_a
+    # (1-a)^B <= exp(-Ba).  Work with log(Ba) to avoid overflow/underflow.
+    if log_ba > 700:
+        log_no_upper = -math.inf
+    else:
+        log_no_upper = -math.exp(log_ba)
+    log_total_lower, _ = conditioned_total_log_probability_bounds(mean, path_length)
+    log_bound = math.log(2.0) + log_no_upper - log_total_lower
+    if log_bound == -math.inf:
+        return 0.0
     return 1.0 if log_bound >= 0 else math.exp(log_bound)
