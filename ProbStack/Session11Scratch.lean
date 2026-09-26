@@ -37,12 +37,13 @@ theorem leftBranch_zero_noChildren
   have hadj := c.adj
   rw [pathTree_graph, SimpleGraph.pathGraph_adj] at hadj
   rcases hadj with hright | hleft
-  · have hv : c.vertex.val = 1 := by omega
-    have hp : (leftBranch n hn 0 hk).parent.val = 1 := rfl
+  · change 1 = c.vertex.val at hright
     apply c.ne_parent
     apply Fin.ext
-    simpa [hp] using hv
-  · omega
+    change c.vertex.val = 1
+    omega
+  · change c.vertex.val + 1 = 0 at hleft
+    omega
 
 def leftChildSucc
     {n : Nat} (hn : 0 < n) (j : Nat) (hk : (j + 1) + 1 < n) :
@@ -68,12 +69,14 @@ theorem leftBranch_succ_uniqueChild
   have hadj := d.adj
   rw [pathTree_graph, SimpleGraph.pathGraph_adj] at hadj
   rcases hadj with hright | hleft
-  · exfalso
+  · change (j + 1) + 1 = d.vertex.val at hright
+    exfalso
     apply d.ne_parent
     apply Fin.ext
-    simp only [leftBranch_parent_val]
+    change d.vertex.val = (j + 1) + 1
     omega
-  · simp only [leftChildSucc]
+  · change d.vertex.val + 1 = j + 1 at hleft
+    change d.vertex.val = j
     omega
 
 theorem childBranch_leftChildSucc
@@ -91,7 +94,13 @@ theorem leftBranch_branchMessage_eq_prefixScan
   induction k with
   | zero =>
       intro hk
-      simpa [prefixScan] using
+      rw [prefixScan]
+      have hroot :
+          (leftBranch n hn 0 hk).root = (⟨0, by omega⟩ : Fin n) := by
+        apply Fin.ext
+        rfl
+      rw [← hroot]
+      exact
         PathBranch.branchMessage_eq_pathStep_empty_of_noChildren
           C (leftBranch n hn 0 hk) (leftBranch_zero_noChildren hn hk)
   | succ j ih =>
