@@ -211,3 +211,40 @@ No conjecture is promoted for the bounded-offset regime. In particular the
 linear coefficient beta in the local exponent, possible lattice/parity
 oscillations, a limiting critical-window law, and finite-n monotonicity remain
 open.
+
+## Session 7 decision — local beta resolved; global constant gap remains
+
+The linear local term is now determined.  With
+
+`L=ceil(log_2 mu)` and `theta=mu/2^L`,
+
+`-log_2 q_mu(m)
+ = L^2+2L log_2 L
+   +[2 log_2 theta-2 log_2(3e)]L+o(L)`
+
+uniformly for `m in [mu,2mu]`.  Hence a universal constant `beta` in the
+ceiling-`L` parametrization does not exist: it varies explicitly with dyadic
+phase.  In the natural variable `x=log_2 mu`, the phase cancels at linear
+order:
+
+`-log_2 q_mu(m)
+ = x^2+2x log_2 x-2 log_2(3e)x+o(x)`.
+
+The proof uses de Bruijn's binary-partition asymptotic and an exact reverse
+positive-phase slack encoding whose parity numerator telescopes.
+
+The global bounded-offset window is narrowed but not closed.  The
+deep-message upper cover gives stackability above the center
+
+`sqrt(log_2 n)-0.5 log_2 log_2 n+log_2(3e)`
+
+by any fixed positive offset.  A sharpened state-independent front certificate
+gives nonstackability below
+
+`sqrt(log_2 n)-0.5 log_2 log_2 n+log_2(e sqrt(3))`
+
+by any fixed negative offset.  The remaining rigorous gap is exactly
+`0.5 log_2 3` in `log_2 mu`.
+
+No limiting-window conjecture is promoted.  The next promotion test is to close
+this spatial constant gap without assuming monotonicity in total mass.
