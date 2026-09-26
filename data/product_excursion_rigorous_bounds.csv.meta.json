@@ -1,0 +1,9 @@
+{
+  "generated_utc": "2026-09-26T11:53:55.336726+00:00",
+  "git_commit": "9bfc768f44f276d8413577a0d15506b84acc476d",
+  "command": "python scripts/tabulate_product_excursion_bounds.py --levels 8,10,12,16,20,30,40 --output data/product_excursion_rigorous_bounds.csv",
+  "quantity": "q_mu = P_m(hit M<=-mu within 4L steps), uniformly for m in [mu,2mu], L=ceil(log2 mu)",
+  "lower_bound": "explicit deterministic cap witness",
+  "upper_bound": "first-entry plus final-negative-run union bound",
+  "status": "rigorous finite-parameter bounds implemented from Session 3 proof"
+}
