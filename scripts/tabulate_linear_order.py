@@ -6,6 +6,7 @@ import math
 from pathlib import Path
 
 from prob_stack.linear_order import (
+    certified_front_beta,
     colored_slack_count_exact,
     dyadic_phase,
     low_phase_linear_coefficient,
@@ -75,6 +76,11 @@ def main():
                             low_phase_linear_coefficient(theta, terminal)
                         ),
                         "q_beta_theta": one_sided_beta(theta),
+                        "certified_front_beta_theta": (
+                            certified_front_beta(theta)
+                        ),
+                        "local_to_certificate_beta_gap": math.log2(3.0),
+                        "global_center_gap": 0.5 * math.log2(3.0),
                     }
                 )
 
