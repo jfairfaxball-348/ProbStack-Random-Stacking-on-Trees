@@ -5,6 +5,7 @@ on:
     branches:
       - main
       - session-10-lean-bootstrap
+      - session-11-formalisation
   pull_request:
     branches:
       - main
