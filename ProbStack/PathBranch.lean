@@ -5,6 +5,9 @@ namespace ProbStack
 
 namespace PathBranch
 
+open TreeStack
+open TreeStack.OrientedBranch
+
 variable {V : Type*} [Fintype V] {T : TreeStack.FiniteTree V}
 
 def NoChildren (B : TreeStack.OrientedBranch T) : Prop :=
@@ -88,30 +91,22 @@ theorem childMessageSum_eq_uniqueChild
         ((B.childBranch c).branchMessage C) := by
   classical
   rw [TreeStack.OrientedBranch.childMessageSum]
-  apply Finset.sum_eq_single c.vertex
-  · intro v hv hvc
+  rw [Fintype.sum_eq_single c.vertex]
+  · have h :
+        T.graph.Adj B.root c.vertex ∧ c.vertex ≠ B.parent :=
+      ⟨c.adj, c.ne_parent⟩
+    rw [dite_eq_left h]
+  · intro v hvc
     by_cases h : T.graph.Adj B.root v ∧ v ≠ B.parent
     · let d : B.Child :=
         { vertex := v
           adj := h.1
           ne_parent := h.2 }
       have hd : d = c := huniq d
-      have hver : v = c.vertex := by
-        simpa [d] using congrArg TreeStack.OrientedBranch.Child.vertex hd
-      exact (hvc hver).elim
+      have hvertex : v = c.vertex := by
+        simpa [d] using congrArg (fun e : B.Child => e.vertex) hd
+      exact (hvc hvertex).elim
     · simp [h]
-  · intro hcnot
-    exact (hcnot (Finset.mem_univ c.vertex)).elim
-  · have hcnd : T.graph.Adj B.root c.vertex ∧ c.vertex ≠ B.parent :=
-      ⟨c.adj, c.ne_parent⟩
-    simp only [dif_pos hcnd]
-    let d : B.Child :=
-      { vertex := c.vertex
-        adj := hcnd.1
-        ne_parent := hcnd.2 }
-    have hd : d = c :=
-      TreeStack.OrientedBranch.Child.eq_of_vertex_eq (by rfl)
-    simpa [d, hd]
 
 theorem branchMessage_eq_pathStep_of_uniqueChild
     (C : TreeStack.Configuration V) (B : TreeStack.OrientedBranch T)
@@ -130,7 +125,6 @@ theorem branchMessage_eq_pathStep_of_uniqueChild
           rw [occupied_iff_root_or_uniqueChild C B c huniq]
           simp [hx, hchildNot]
         rw [B.branchMessage_eq_empty_of_not_occupied C hnot]
-        rw [hchild]
         simp [pathStep, TreeStack.EMPTY, hx]
       · have hpos : 0 < C B.root := Nat.pos_of_ne_zero hx
         have hocc : B.Occupied C :=
@@ -138,9 +132,7 @@ theorem branchMessage_eq_pathStep_of_uniqueChild
         rw [B.branchMessage_eq_some_of_occupied C hocc]
         rw [TreeStack.OrientedBranch.effectiveInput,
           childMessageSum_eq_uniqueChild C B c huniq, hchild]
-        rw [hchild]
-        rw [pathStep_empty_pos hpos]
-        simp
+        simp [pathStep, TreeStack.OrientedBranch.messageContribution, hx]
   | some z =>
       have hchildOcc : (B.childBranch c).Occupied C := by
         by_contra hnot
@@ -153,9 +145,7 @@ theorem branchMessage_eq_pathStep_of_uniqueChild
       rw [B.branchMessage_eq_some_of_occupied C hocc]
       rw [TreeStack.OrientedBranch.effectiveInput,
         childMessageSum_eq_uniqueChild C B c huniq, hchild]
-      rw [hchild]
-      simp [pathStep]
-      ring_nf
+      simp [pathStep, add_comm]
 
 end PathBranch
 
