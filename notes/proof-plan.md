@@ -230,3 +230,54 @@ most useful next step is to determine the next-order asymptotics of the
 one-sided descent/amplification probability, ideally sharpening the canonical
 lower witness to match the upper bound beyond the L^2 term. That is the
 natural route to a genuine critical-window statement.
+
+## Session 6 proof progress
+
+The next-order L log L term is now resolved. The central observation is that
+the rare positive descent and final low-phase amplification are dyadic
+weighted-simplex events, not products of independent rectangular cap events.
+The lattice-point count contains a factor 1/k!, which contributes exactly the
+missing -L log_2 L term to each half-excursion.
+
+For the finite-block probability q_mu(m), uniformly over m in [mu,2mu],
+
+-log_2 q_mu(m)
+=
+L^2+2L log_2 L+O(L).
+
+The Session 5 deep-message cover admits the same refinement: interior first
+hits of -(2mu-1) cost 2^{-L^2-2L log_2 L+O(L)}, and boundary-origin hits cost
+the square-root-scale analogue without an n multiplicity.
+
+Conditioning is not the apparent bottleneck at this precision. The
+supercritical local cover still has likelihood-ratio distortion exp(o(1)).
+For the subcritical side, truncating reset/runaway block mass at constant
+multiples preserves constant probability, after which one- and two-block
+conditioned/product ratios are exp(o(1)); an elementary second-moment argument
+replaces the older global point-probability division.
+
+Consequently, with
+
+a_n=sqrt(log_2 n)-(1/2)log_2 log_2 n,
+
+the proved separation is:
+
+L_n-a_n -> -infinity  => nonstackable whp,
+L_n-a_n -> +infinity  => stackable whp,
+
+where L_n=ceil(log_2 mu_n). This identifies the second-order centering but
+does not resolve bounded offsets.
+
+### Highest-priority next proof target
+
+Determine the linear-in-L term in
+
+-log_2 q_mu
+=
+L^2+2L log_2 L+beta L+o(L),
+
+or rigorously show that no single beta exists because of dyadic/parity
+oscillations. The correct next tools are a sharp lattice/saddle-point analysis
+of the weighted simplex together with the exact positive-phase parity
+penalties. Only after that local refinement should the bounded-offset spatial
+clumping law be attacked.
