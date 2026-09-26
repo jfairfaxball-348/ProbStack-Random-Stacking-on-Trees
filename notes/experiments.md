@@ -283,3 +283,48 @@ These finite values are diagnostics of the proved formula, not the proof of
 the asymptotic theorem. The proof uses
 log2 a_mu=-L^2/2+O(L), log2 b_mu=-L^2/2+O(L), R=O(L^2), and local conditioning
 error o(1).
+
+## Session 6: exact second-order diagnostics and validation
+
+Session 6 used no Monte Carlo. The new analytic object is the dyadic weighted
+simplex
+
+sum_{j=1}^k 2^{j-1}X_j <= B
+
+(and its reversed-weight counterpart). The probability admits rigorous
+lattice-volume bounds and, at feasible sizes, an exact rational dynamic
+programme.
+
+Command:
+
+python scripts/tabulate_second_order_bounds.py --levels 6,8,10,12,16,20,30,40,50 --exact-through-level 10 --output data/second_order_local_bounds.csv
+
+The table records rigorous lower and upper bounds for the Session 3
+finite-block q_mu, the benchmark rate L^2+2L log_2 L, the sharpened Session 5
+entry/low/interior upper bounds, and exact rational probabilities for the two
+simplex witness components through L=10. These exact component probabilities
+validate the new weighted-budget objects; they are not estimates of q_mu and
+were not used for curve fitting.
+
+A targeted Session 6 test harness passed all 8 new tests. Among the checks:
+
+- the analytic lattice bounds enclose exact rational DP values on small cases;
+- the descent simplex and amplification simplex were exhaustively checked at
+  mu=16 against the exact TreeStack transfer;
+- the sharpened first-deep-hit cover was checked on all 7^6=117649 occupancy
+  strings in {0,...,6}^6 at mu=16;
+- finite second-order bounds were checked for ordering and the predicted
+  L^2+2L log_2 L scale;
+- the sharpened conditioned upper bound was checked at selected
+  second-order-shifted scales.
+
+The last literal full pytest run remains the Session 5 validation with
+54 tests passed. A literal full-suite run after the Session 6 additions was
+not available in this execution environment because the repository could not
+be cloned into the local harness, and no GitHub Actions run was attached to
+the Session 6 code commit. This limitation is recorded explicitly rather than
+being counted as a full-suite pass.
+
+No literature search was needed for the Session 6 proof; the argument used the
+exact recurrence, elementary lattice-volume comparison, Stirling asymptotics,
+and the existing local conditioning machinery.
