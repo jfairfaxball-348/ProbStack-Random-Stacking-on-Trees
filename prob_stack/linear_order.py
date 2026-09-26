@@ -135,6 +135,20 @@ def one_sided_beta(theta: float) -> float:
     return 2.0 * math.log2(theta) - 2.0 * math.log2(3.0 * math.e)
 
 
+def robust_descent_linear_coefficient(theta: float) -> float:
+    """Optimal linear cost of the state-independent F(x)<=x/2 descent simplex."""
+    if not 0.5 < theta <= 1.0:
+        raise ValueError("theta must lie in (1/2, 1]")
+    return math.log2(theta) - 0.5 - LOG2_E
+
+
+def certified_front_beta(theta: float) -> float:
+    """Linear coefficient of the sharpened state-independent front witness."""
+    if not 0.5 < theta <= 1.0:
+        raise ValueError("theta must lie in (1/2, 1]")
+    return 2.0 * math.log2(theta) - math.log2(3.0) - 2.0 * LOG2_E
+
+
 def one_sided_linear_rate(mean: int) -> float:
     """L^2+2L log2 L+beta(theta)L for the Session 7 local theorem."""
     level, theta = dyadic_phase(mean)
@@ -155,12 +169,25 @@ def log_mean_linear_rate(mean: int) -> float:
     return x * x + 2.0 * x * math.log2(x) - 2.0 * math.log2(3.0 * math.e) * x
 
 
-def refined_global_center(log2_path_length: float) -> float:
-    """Session 7 O(1)-refined center for x=log2(mean)."""
+def refined_global_upper_center(log2_path_length: float) -> float:
+    """O(1)-refined center furnished by the deep-message upper cover."""
     if log2_path_length <= 1:
         raise ValueError("log2_path_length must exceed one")
     root = math.sqrt(log2_path_length)
     return root - math.log2(root) + math.log2(3.0 * math.e)
+
+
+def certified_global_lower_center(log2_path_length: float) -> float:
+    """O(1) center furnished by the sharpened state-independent front witness."""
+    if log2_path_length <= 1:
+        raise ValueError("log2_path_length must exceed one")
+    root = math.sqrt(log2_path_length)
+    return root - math.log2(root) + LOG2_E + 0.5 * math.log2(3.0)
+
+
+# Backward-compatible descriptive alias used only by the Session 7 diagnostics.
+def refined_global_center(log2_path_length: float) -> float:
+    return refined_global_upper_center(log2_path_length)
 
 
 def positive_entry_count_exact(start: int, steps: int, terminal: int) -> int:
