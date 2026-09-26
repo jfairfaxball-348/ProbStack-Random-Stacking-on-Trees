@@ -179,3 +179,35 @@ former working target
 mu = 2^{(1+o(1)) sqrt(log_2 n)}
 
 is now a proved leading-order scale statement rather than a conjecture.
+
+## Session 6 decision — second-order centering is now a theorem
+
+The L log L correction is no longer conjectural. For the Session 3 finite
+one-sided deep-deficit probability, uniformly over starting messages in the
+standard positive window,
+
+-log_2 q_mu
+=
+L^2+2L log_2 L+O(L),
+
+where L=ceil(log_2 mu). Thus the explicit coefficient of L log_2 L is 2.
+
+After sharpening both the Session 4 certificate and Session 5 necessity/cover
+arguments at the same rate, the global recovery scale is centered at
+
+log_2 mu
+=
+sqrt(log_2 n)-(1/2)log_2 log_2 n
+
+up to an unresolved bounded-order shift in log_2 mu. More precisely, if
+
+a_n=sqrt(log_2 n)-(1/2)log_2 log_2 n
+
+and L_n=ceil(log_2 mu_n), then L_n-a_n tending to minus infinity gives
+nonstackability with high probability, while L_n-a_n tending to plus infinity
+gives stackability with high probability.
+
+No conjecture is promoted for the bounded-offset regime. In particular the
+linear coefficient beta in the local exponent, possible lattice/parity
+oscillations, a limiting critical-window law, and finite-n monotonicity remain
+open.
