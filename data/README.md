@@ -58,3 +58,17 @@ Session 5 source commit.
 
 The Session 6 table is diagnostic support for an analytic theorem. It is not
 Monte Carlo and is not used to infer the L log L coefficient by fitting.
+
+## Session 7 additions
+
+- `linear_order_entry_counts.csv`: exact integer reverse-DP counts for
+  positive-phase entry into terminal messages 0 and 1 at selected dyadic
+  phases, plus exact colored-slack lower-subset counts.
+- `linear_order_entry_counts.csv.meta.json`: command, source revision,
+  exactness statement, and interpretation.
+
+The Session 7 table is a validation diagnostic, not a fit.  The linear local
+coefficient is derived analytically from binary-partition asymptotics and the
+exact positive-phase slack generating function.  The table also records the
+proved gap between the optimal local coefficient and the current
+state-independent certified-front coefficient.  No Monte Carlo was used.
