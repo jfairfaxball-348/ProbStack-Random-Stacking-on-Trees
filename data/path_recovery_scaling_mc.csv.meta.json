@@ -1,0 +1,25 @@
+{
+  "generated_utc": "2026-09-26T09:49:54.892103+00:00",
+  "git_commit": "20c8d611e045521e7870aae0f08e9a4197da5d6a",
+  "command": "python scripts/compare_path_scalings.py --n-values 40,80,160,320,640 --multipliers 0.55,0.65,0.75,0.85,1.00 --trials 1000 --seed-base 2026092600 --output data/path_recovery_scaling_mc.csv",
+  "model": "uniform weak compositions of t into n nonnegative parts",
+  "predicate": "TreeStack structural score evaluator, cross-validated against direct legal reachability on bounded cases",
+  "parameters": {
+    "n_values": [
+      40,
+      80,
+      160,
+      320,
+      640
+    ],
+    "multipliers": [
+      0.55,
+      0.65,
+      0.75,
+      0.85,
+      1.0
+    ],
+    "trials": 1000,
+    "seed_base": 2026092600
+  }
+}
