@@ -57,3 +57,15 @@ metadata, references, category, MSC, and keywords; compile from the upload
 bundle; then submit the final checked source.  Category choice should follow the
 actual mathematics (likely `math.CO` only if the completed work remains
 primarily probabilistic combinatorics).
+
+
+## Session 8 convergence decision
+
+The path headline theorem is now frozen at fixed O(1) offsets. The next project
+stage is formalisation design, followed by complete formal verification,
+public-record prior-art/originality audit, and paper writing.
+
+Do not make finer critical-window asymptotics a prerequisite for moving
+forward. The immediate task is to produce the Lean dependency graph, isolate
+the binary-partition asymptotic layer, and formalise the elementary
+TreeStack/reset/regeneration/front lemmas first.

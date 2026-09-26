@@ -324,3 +324,45 @@ regeneration that takes every non-front reset output into the
 `[mu,2mu]` start window without a linear penalty, or find a
 state-independent front witness with the optimal local coefficient.  Do not
 move to a limiting law until this gap is closed.
+
+
+## Session 8 convergence — global constant gap closed
+
+The Session 7 spatial gap is closed by an exact one-step regeneration lemma.
+After reset, outputs at most -mu are already deep. For every other reset output
+
+-mu < M <= 2mu,
+
+requiring
+
+X in [2mu+2-M, 4mu-M]
+
+forces the exact next TreeStack message into [mu,2mu]. For geometric mean mu
+the worst probability is
+
+(mu/(mu+1))^(3mu+1)
+*
+[1-(mu/(mu+1))^(2mu-1)],
+
+which is uniformly at least 8/(17e^3) for mu>=16.
+
+The spatial certificate can therefore concatenate reset, constant-cost
+regeneration, the sharp Session 7 local excursion, and runaway conversion.
+The lower spatial linear coefficient becomes exactly the local coefficient at
+the precision relevant to fixed offsets.
+
+The frozen global center is
+
+c_n
+=
+sqrt(log_2 n)
+-
+0.5 log_2 log_2 n
++
+log_2(3e).
+
+For every fixed epsilon>0, means below c_n-epsilon are nonstackable whp and
+means above c_n+epsilon are stackable whp.
+
+The next stage is formalisation design. Do not reopen the theorem merely to
+chase a zero-offset limiting law.

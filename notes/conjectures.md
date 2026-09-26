@@ -248,3 +248,23 @@ by any fixed negative offset.  The remaining rigorous gap is exactly
 
 No limiting-window conjecture is promoted.  The next promotion test is to close
 this spatial constant gap without assuming monotonicity in total mass.
+
+
+## Session 8 status: bounded-offset headline theorem frozen
+
+The former half-log-three spatial gap is no longer a conjectural issue.
+An exact one-coordinate regeneration from every nondeep reset state reaches
+the Session 7 optimal start window with a uniformly positive probability.
+Therefore the lower and upper O(1)-refined centers match.
+
+The project now freezes the fixed-offset theorem centered at
+
+sqrt(log_2 n)
+-
+0.5 log_2 log_2 n
++
+log_2(3e).
+
+No conjecture is promoted for the value at zero offset, a limiting transition
+law, finite-n monotonicity, or other tree families. Those questions are
+deliberately deferred until after formalisation and prior-art review.

@@ -72,3 +72,14 @@ coefficient is derived analytically from binary-partition asymptotics and the
 exact positive-phase slack generating function.  The table also records the
 proved gap between the optimal local coefficient and the current
 state-independent certified-front coefficient.  No Monte Carlo was used.
+
+
+## Session 8 additions
+
+- regeneration_exact.csv: exact Fraction probabilities for the worst
+  one-step regeneration state at selected integer means.
+- regeneration_exact.csv.meta.json: generating command, source revision,
+  exactness statement, and interpretation.
+
+The regeneration table validates an elementary exact lemma; it is not a fit and
+contains no Monte Carlo output.

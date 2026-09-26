@@ -187,3 +187,31 @@ python scripts/tabulate_linear_order.py \
 
 No Monte Carlo was used for Session 7.  The targeted Session 7 test file
 passes 8 tests locally; this is not a claim of a post-Session-7 full-suite run.
+
+
+## Session 8 decision — the O(1)-refined path theorem is frozen
+
+Session 8 closes the remaining spatial constant gap. After the Session 4 reset,
+every output M<=-mu is already a deep seed. For every remaining output
+-mu<M<=2mu, one fresh geometric occupancy in the exact interval
+
+2mu+2-M <= X <= 4mu-M
+
+sends the exact TreeStack message into [mu,2mu]. The worst conditional
+probability is bounded below by the positive absolute constant 8/(17e^3) for
+mu>=16, so this regeneration step has no linear-in-L exponent cost.
+
+Consequently the spatial lower certificate inherits the sharp Session 7 local
+linear coefficient. The lower and upper global centers now coincide at
+
+sqrt(log_2 n)
+- (1/2) log_2 log_2 n
++ log_2(3e).
+
+For every fixed epsilon>0, integer means eventually below this center by
+epsilon give nonstackability with probability tending to one, while means
+eventually above it by epsilon give stackability with probability tending to
+one. No assertion is made at zero offset.
+
+This theorem is now frozen. The project should move next to formalisation
+design rather than finer asymptotics.
