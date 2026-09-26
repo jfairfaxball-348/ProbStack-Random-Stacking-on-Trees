@@ -742,3 +742,65 @@ Together with the Session 4 theorem for every fixed c<1, this proves the
 leading stretched-log separation coefficient 1. It does not prove a critical
 window at c=1, a finite-n monotonicity statement in total mass, or a
 second-order threshold correction.
+
+## Session 6: second-order dyadic-simplex asymptotics
+
+Session 6 replaces the coordinatewise cap approximation by the exact geometry
+of a dyadic weighted simplex. For
+
+E_{k,B}={x>=0: sum_{j=1}^k 2^{j-1}x_j<=B},
+
+unit-cube comparison gives
+
+B^k/(k! 2^{k(k-1)/2})
+<= |E_{k,B}|
+<= (B+2^k-1)^k/(k! 2^{k(k-1)/2}).
+
+For iid geometric occupancies of mean mu, whenever
+k=L+O(1), B=Theta(mu), and L=ceil(log_2 mu), this yields
+
+log_2 P(E_{k,B})
+=
+-L^2/2-L log_2 L+O(L).
+
+The same estimate holds for reversed dyadic weights.
+
+Applying this to a positive descent simplex and then to the exact low-phase
+deficit budget gives a new lower witness for the Session 3 finite-block
+probability q_mu(m). Conversely, every hit within 4L steps contains a
+necessary positive-entry simplex and a disjoint necessary final-low-run
+simplex. Hence, uniformly for integer m in [mu,2mu],
+
+-log_2 q_mu(m)
+=
+L^2+2L log_2 L+O(L).
+
+Thus the coefficient of L log_2 L is proved to be 2. The former
+O(L log L) lower/upper mismatch is closed at this order; the coefficient of
+the remaining linear term is not determined.
+
+The same two necessary simplices sharpen the Session 5 first-deep-message
+cover at threshold -(2mu-1). Its interior probability is
+
+2^{-L^2-2L log_2 L+O(L)},
+
+while the physical-boundary term has half this exponent and no spatial n
+factor. The middle cluster remains O(L^2).
+
+Combining the sharpened local bounds with local equivalence of ensembles and
+a conditioned second-moment argument for disjoint spatial certificates gives
+the following second-order centering. Write N=log_2 n and
+
+a_n=sqrt(N)-log_2 sqrt(N)
+   =sqrt(log_2 n)-(1/2)log_2 log_2 n.
+
+For L_n=ceil(log_2 mu_n), integer mu_n, and total t=n mu_n:
+
+- if L_n-a_n -> -infinity, nonstackability holds with probability tending to 1;
+- if L_n-a_n -> +infinity, stackability holds with probability tending to 1.
+
+The bounded-offset regime L_n-a_n=O(1) remains open. In particular Session 6
+does not determine a limiting critical-window law, a beta coefficient in a
+linear-in-L refinement, or finite-n monotonicity in total mass.
+
+Full derivation and validation details are in notes/session-6-second-order.md.
