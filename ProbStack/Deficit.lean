@@ -30,4 +30,34 @@ theorem deficit_two_steps_of_low {m : Int} {x y : Nat}
     _ = 4 * deficit m - 4 * (x : Int) - 2 * (y : Int) := by
       ring
 
+
+def activeScan (m : Int) : List Nat → Int
+  | [] => m
+  | x :: xs => activeScan (activeStep m x) xs
+
+def LowRun (m : Int) : List Nat → Prop
+  | [] => True
+  | x :: xs =>
+      m + (x : Int) <= 1 ∧ LowRun (activeStep m x) xs
+
+def dyadicInputCost : List Nat → Int
+  | [] => 0
+  | x :: xs =>
+      (2 : Int) ^ (xs.length + 1) * (x : Int) + dyadicInputCost xs
+
+theorem deficit_activeScan_of_lowRun {m : Int} {xs : List Nat}
+    (h : LowRun m xs) :
+    deficit (activeScan m xs) =
+      (2 : Int) ^ xs.length * deficit m - dyadicInputCost xs := by
+  induction xs generalizing m with
+  | nil =>
+      simp [activeScan, dyadicInputCost]
+  | cons x xs ih =>
+      change
+        m + (x : Int) <= 1 ∧ LowRun (activeStep m x) xs at h
+      rcases h with ⟨hfirst, hrest⟩
+      rw [activeScan, ih hrest, deficit_activeStep_of_low hfirst]
+      simp only [dyadicInputCost, List.length_cons, pow_succ]
+      ring
+
 end ProbStack
