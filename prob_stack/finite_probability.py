@@ -115,6 +115,31 @@ def conditioned_cap_probability_from_counts(
     return Fraction(favorable, weak_composition_count(n, total))
 
 
+def local_likelihood_ratio_falling_product(
+    n: int, total: int, block_size: int, block_mass: int
+) -> Fraction:
+    """Authoritative falling-factorial/product form of R_{n,t,k}(s).
+
+    This is exactly the three finite products from the Session-3 formula,
+    and equals product_chain.local_conditioning_ratio.
+    """
+    if n <= 0 or total <= 0:
+        raise ValueError("n and total must be positive")
+    if not 0 <= block_size < n:
+        raise ValueError("block_size must lie in [0,n)")
+    if not 0 <= block_mass <= total:
+        return Fraction(0, 1)
+
+    ratio = Fraction(1, 1)
+    for i in range(1, block_size + 1):
+        ratio *= Fraction(n - i, n)
+    for j in range(block_mass):
+        ratio *= Fraction(total - j, total)
+    for ell in range(1, block_size + block_mass + 1):
+        ratio *= Fraction(n + total, n + total - ell)
+    return ratio
+
+
 @dataclass(frozen=True)
 class LocalComparison:
     """Exact finite conditioned/product comparison for a cap event."""
