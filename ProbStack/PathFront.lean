@@ -59,6 +59,8 @@ theorem runaway_step
   · exact hlow
   · have hhalf : 2 * (x : Int) <= D / 2 := by
       omega
+    have hdouble : 2 * (D / 2) <= D := by
+      omega
     unfold DeepSeed runawayNext
     rw [deficit_activeStep_of_low hlow]
     unfold DeepSeed deficit at hseed
