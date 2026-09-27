@@ -620,4 +620,146 @@ theorem conditionedLocalVectorMass_of_supported
         (weakCompositionCount n t : Rat) := by
   simp [conditionedLocalVectorMass, hk, hs]
 
+namespace LeftPath
+
+/--
+Thin genuine-path corollary for the finite probability interface:
+regeneration occupancy + explicit seed coordinate caps + explicit runaway caps
+produce the same genuine certified front proved in Session 13.
+-/
+theorem leftBranch_regeneration_cappedSeed_runaway_to_front
+    {n : Nat} (hn : 0 < n) (C : TreeStack.Configuration (Fin n))
+    (j runLen : Nat)
+    (descent amplification descentCaps amplificationCaps : List Nat)
+    (h :
+      j + 1 + (descent ++ amplification).length + runLen + 1 < n)
+    (mu : Nat) (M D : Int) (budget : Nat)
+    (hprev :
+      (leftBranch n hn j (by omega)).branchMessage C = some M)
+    (hmu : 1 <= mu)
+    (hMlo : -(mu : Int) < M)
+    (hMhi : M <= 2 * (mu : Int))
+    (hXlo :
+      2 * (mu : Int) + 2 - M <=
+        (C (leftBranch n hn (j + 1) (by omega)).root : Int))
+    (hXhi :
+      (C (leftBranch n hn (j + 1) (by omega)).root : Int) <=
+        4 * (mu : Int) - M)
+    (hD : 4 <= D)
+    (hseedValues :
+      leftBlockValues C (j + 1)
+          (descent ++ amplification).length (by omega) =
+        descent ++ amplification)
+    (hseedCert :
+      ExplicitDeepSeedEvent mu D descentCaps amplificationCaps)
+    (hdescent : CoordwiseLe descent descentCaps)
+    (hamplification : CoordwiseLe amplification amplificationCaps)
+    (hrunCaps :
+      CoordwiseLe
+        (leftBlockValues C
+          (j + 1 + (descent ++ amplification).length)
+          runLen (by omega))
+        (runawayCaps D runLen))
+    (htarget :
+      (budget : Int) + 2 <= runawayThreshold D runLen) :
+    ∃ z : Int,
+      (leftBranch n hn
+        (j + 1 + (descent ++ amplification).length + runLen)
+        (by omega)).branchMessage C =
+        some z ∧
+      CertifiedFront budget z := by
+  have hmuInt : (1 : Int) <= (mu : Int) := by
+    exact_mod_cast hmu
+  have hseedBlock :
+      UniformDeepSeedBlock
+        (mu : Int) (2 * (mu : Int)) D
+        (leftBlockValues C (j + 1)
+          (descent ++ amplification).length (by omega)) := by
+    rw [hseedValues]
+    exact
+      cappedSeed_uniformDeepSeedBlock
+        hseedCert hdescent hamplification
+  have hrun :
+      RunawayBlock D
+        (leftBlockValues C
+          (j + 1 + (descent ++ amplification).length)
+          runLen (by omega)) :=
+    runawayBlock_of_coordwise_runawayCaps hD hrunCaps
+  exact
+    leftBranch_regeneration_seed_runaway_to_front
+      hn C j (descent ++ amplification).length runLen h
+      (mu : Int) M D budget hprev hmuInt hMlo hMhi
+      hXlo hXhi hD hseedBlock hrun htarget
+
+end LeftPath
+
+namespace RightPath
+
+/-- Right-oriented counterpart of the left capped-seed front corollary. -/
+theorem rightBranch_regeneration_cappedSeed_runaway_to_front
+    {n : Nat} (hn : 0 < n) (C : TreeStack.Configuration (Fin n))
+    (j runLen : Nat)
+    (descent amplification descentCaps amplificationCaps : List Nat)
+    (h :
+      j + 1 + (descent ++ amplification).length + runLen + 1 < n)
+    (mu : Nat) (M D : Int) (budget : Nat)
+    (hprev :
+      (rightBranch n hn j (by omega)).branchMessage C = some M)
+    (hmu : 1 <= mu)
+    (hMlo : -(mu : Int) < M)
+    (hMhi : M <= 2 * (mu : Int))
+    (hXlo :
+      2 * (mu : Int) + 2 - M <=
+        (C (rightBranch n hn (j + 1) (by omega)).root : Int))
+    (hXhi :
+      (C (rightBranch n hn (j + 1) (by omega)).root : Int) <=
+        4 * (mu : Int) - M)
+    (hD : 4 <= D)
+    (hseedValues :
+      rightBlockValues C (j + 1)
+          (descent ++ amplification).length (by omega) =
+        descent ++ amplification)
+    (hseedCert :
+      ExplicitDeepSeedEvent mu D descentCaps amplificationCaps)
+    (hdescent : CoordwiseLe descent descentCaps)
+    (hamplification : CoordwiseLe amplification amplificationCaps)
+    (hrunCaps :
+      CoordwiseLe
+        (rightBlockValues C
+          (j + 1 + (descent ++ amplification).length)
+          runLen (by omega))
+        (runawayCaps D runLen))
+    (htarget :
+      (budget : Int) + 2 <= runawayThreshold D runLen) :
+    ∃ z : Int,
+      (rightBranch n hn
+        (j + 1 + (descent ++ amplification).length + runLen)
+        (by omega)).branchMessage C =
+        some z ∧
+      CertifiedFront budget z := by
+  have hmuInt : (1 : Int) <= (mu : Int) := by
+    exact_mod_cast hmu
+  have hseedBlock :
+      UniformDeepSeedBlock
+        (mu : Int) (2 * (mu : Int)) D
+        (rightBlockValues C (j + 1)
+          (descent ++ amplification).length (by omega)) := by
+    rw [hseedValues]
+    exact
+      cappedSeed_uniformDeepSeedBlock
+        hseedCert hdescent hamplification
+  have hrun :
+      RunawayBlock D
+        (rightBlockValues C
+          (j + 1 + (descent ++ amplification).length)
+          runLen (by omega)) :=
+    runawayBlock_of_coordwise_runawayCaps hD hrunCaps
+  exact
+    rightBranch_regeneration_seed_runaway_to_front
+      hn C j (descent ++ amplification).length runLen h
+      (mu : Int) M D budget hprev hmuInt hMlo hMhi
+      hXlo hXhi hD hseedBlock hrun htarget
+
+end RightPath
+
 end ProbStack
