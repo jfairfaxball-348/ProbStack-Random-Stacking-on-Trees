@@ -76,7 +76,7 @@ theorem positiveDescentEvent_forces_nonpositive
         (2 : Int) ^ xs.length * 1 := by
     simpa using hlt
   have hscan : activeScan m xs < 1 :=
-    (mul_lt_mul_left hp).mp hlt'
+    (Int.mul_lt_mul_left hp).mp hlt'
   omega
 
 /--
