@@ -180,6 +180,206 @@ theorem explicitDeepSeedEvent_uniform
   rw [activeScan_append]
   exact le_trans htarget hlow.2
 
+/--
+Coordinatewise finite cap event.  This exposes every constrained occupancy:
+the two lists must have the same support and each actual coordinate is at most
+its displayed cap.
+-/
+def CoordwiseLe : List Nat → List Nat → Prop
+  | [], [] => True
+  | x :: xs, a :: caps =>
+      x <= a ∧ CoordwiseLe xs caps
+  | _, _ => False
+
+theorem coordwiseLe_length
+    {xs caps : List Nat} (h : CoordwiseLe xs caps) :
+    xs.length = caps.length := by
+  induction xs generalizing caps with
+  | nil =>
+      cases caps <;> simp [CoordwiseLe] at h ⊢
+  | cons x xs ih =>
+      cases caps with
+      | nil =>
+          simp [CoordwiseLe] at h
+      | cons a caps =>
+          change x <= a ∧ CoordwiseLe xs caps at h
+          simp [ih h.2]
+
+theorem coordwiseLe_sum
+    {xs caps : List Nat} (h : CoordwiseLe xs caps) :
+    xs.sum <= caps.sum := by
+  induction xs generalizing caps with
+  | nil =>
+      cases caps <;> simp [CoordwiseLe] at h ⊢
+  | cons x xs ih =>
+      cases caps with
+      | nil =>
+          simp [CoordwiseLe] at h
+      | cons a caps =>
+          change x <= a ∧ CoordwiseLe xs caps at h
+          have htail := ih h.2
+          simp only [List.sum_cons]
+          omega
+
+theorem affineInputCost_mono
+    {xs caps : List Nat} (h : CoordwiseLe xs caps) :
+    affineInputCost xs <= affineInputCost caps := by
+  induction xs generalizing caps with
+  | nil =>
+      cases caps <;> simp [CoordwiseLe, affineInputCost] at h ⊢
+  | cons x xs ih =>
+      cases caps with
+      | nil =>
+          simp [CoordwiseLe] at h
+      | cons a caps =>
+          change x <= a ∧ CoordwiseLe xs caps at h
+          have hx : (x : Int) <= (a : Int) := by
+            exact_mod_cast h.1
+          have htail := ih h.2
+          simp only [affineInputCost]
+          omega
+
+theorem positiveDescentEvent_of_coordwise
+    {mu : Nat} {xs caps : List Nat}
+    (hcap : PositiveDescentEvent mu caps)
+    (hle : CoordwiseLe xs caps) :
+    PositiveDescentEvent mu xs := by
+  have hlen := coordwiseLe_length hle
+  have hcost := affineInputCost_mono hle
+  unfold PositiveDescentEvent at hcap ⊢
+  rw [hlen]
+  omega
+
+theorem lowBudget_mono
+    {D E : Int} {xs : List Nat}
+    (hDE : D <= E) (hbudget : LowBudget D xs) :
+    LowBudget E xs := by
+  induction xs generalizing D E with
+  | nil =>
+      simp [LowBudget]
+  | cons x xs ih =>
+      change
+        (x : Int) <= D - 2 ∧
+          LowBudget (2 * (D - (x : Int))) xs at hbudget
+      change
+        (x : Int) <= E - 2 ∧
+          LowBudget (2 * (E - (x : Int))) xs
+      constructor
+      · omega
+      · exact ih (by omega) hbudget.2
+
+theorem lowBudgetFinal_mono
+    {D E : Int} {xs : List Nat}
+    (hDE : D <= E) (hbudget : LowBudget D xs) :
+    lowBudgetFinal D xs <= lowBudgetFinal E xs := by
+  induction xs generalizing D E with
+  | nil =>
+      simpa [lowBudgetFinal] using hDE
+  | cons x xs ih =>
+      change
+        (x : Int) <= D - 2 ∧
+          LowBudget (2 * (D - (x : Int))) xs at hbudget
+      have htail :=
+        ih (D := 2 * (D - (x : Int)))
+          (E := 2 * (E - (x : Int)))
+          (by omega) hbudget.2
+      simpa [lowBudgetFinal] using htail
+
+theorem lowBudget_of_coordwise
+    {D : Int} {xs caps : List Nat}
+    (hcap : LowBudget D caps)
+    (hle : CoordwiseLe xs caps) :
+    LowBudget D xs ∧
+      lowBudgetFinal D caps <= lowBudgetFinal D xs := by
+  induction xs generalizing caps D with
+  | nil =>
+      cases caps with
+      | nil =>
+          simp [LowBudget, lowBudgetFinal]
+      | cons a caps =>
+          simp [CoordwiseLe] at hle
+  | cons x xs ih =>
+      cases caps with
+      | nil =>
+          simp [CoordwiseLe] at hle
+      | cons a caps =>
+          change x <= a ∧ CoordwiseLe xs caps at hle
+          change
+            (a : Int) <= D - 2 ∧
+              LowBudget (2 * (D - (a : Int))) caps at hcap
+          have hxa : (x : Int) <= (a : Int) := by
+            exact_mod_cast hle.1
+          have hthreshold :
+              2 * (D - (a : Int)) <=
+                2 * (D - (x : Int)) := by
+            omega
+          have hcapActual :
+              LowBudget (2 * (D - (x : Int))) caps :=
+            lowBudget_mono hthreshold hcap.2
+          have htail :=
+            ih (D := 2 * (D - (x : Int)))
+              hcapActual hle.2
+          have hcapFinal :
+              lowBudgetFinal (2 * (D - (a : Int))) caps <=
+                lowBudgetFinal (2 * (D - (x : Int))) caps :=
+            lowBudgetFinal_mono hthreshold hcap.2
+          constructor
+          · change
+              (x : Int) <= D - 2 ∧
+                LowBudget (2 * (D - (x : Int))) xs
+            exact ⟨by omega, htail.1⟩
+          · simpa [lowBudgetFinal] using
+              (le_trans hcapFinal htail.2)
+
+/--
+A coordinate-cap certificate is sufficient for the scalar deep-seed event.
+This is the finite seam used by the probability layer: the caps are
+deterministic and visible, while the actual occupancies need only lie below
+them coordinatewise.
+-/
+theorem cappedSeed_uniformDeepSeedBlock
+    {mu : Nat} {D : Int}
+    {descent amplification descentCaps amplificationCaps : List Nat}
+    (hcert :
+      ExplicitDeepSeedEvent mu D descentCaps amplificationCaps)
+    (hdescent : CoordwiseLe descent descentCaps)
+    (hamplification : CoordwiseLe amplification amplificationCaps) :
+    UniformDeepSeedBlock
+      (mu : Int) (2 * (mu : Int)) D
+      (descent ++ amplification) := by
+  unfold ExplicitDeepSeedEvent at hcert
+  rcases hcert with ⟨hdescentCaps, hampCaps, htarget⟩
+  have hdescentActual :
+      PositiveDescentEvent mu descent :=
+    positiveDescentEvent_of_coordwise hdescentCaps hdescent
+  have hampActual :=
+    lowBudget_of_coordwise hampCaps hamplification
+  have htargetActual :
+      D <= lowBudgetFinal 3 amplification :=
+    le_trans htarget hampActual.2
+  exact explicitDeepSeedEvent_uniform
+    ⟨hdescentActual, hampActual.1, htargetActual⟩
+
+theorem cappedSeed_support_length
+    {descent amplification descentCaps amplificationCaps : List Nat}
+    (hdescent : CoordwiseLe descent descentCaps)
+    (hamplification : CoordwiseLe amplification amplificationCaps) :
+    (descent ++ amplification).length =
+      descentCaps.length + amplificationCaps.length := by
+  rw [List.length_append, coordwiseLe_length hdescent,
+    coordwiseLe_length hamplification]
+
+theorem cappedSeed_mass_le
+    {descent amplification descentCaps amplificationCaps : List Nat}
+    (hdescent : CoordwiseLe descent descentCaps)
+    (hamplification : CoordwiseLe amplification amplificationCaps) :
+    (descent ++ amplification).sum <=
+      descentCaps.sum + amplificationCaps.sum := by
+  rw [List.sum_append]
+  have h1 := coordwiseLe_sum hdescent
+  have h2 := coordwiseLe_sum hamplification
+  omega
+
 /-- Geometric success parameter p=1/(mu+1), supported on {0,1,2,...}. -/
 def geometricP (mu : Nat) : Rat :=
   1 / ((mu : Rat) + 1)
