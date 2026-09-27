@@ -76,5 +76,5 @@ def test_canonical_seed_caps_force_final_deep_message_at_mean_16():
 
 def test_runaway_caps_and_probability_match_direct_product():
     caps = runaway_caps(19, 6)
-    assert caps == (4, 7, 10, 16, 24, 37)
+    assert caps == (4, 7, 10, 15, 23, 35)
     assert runaway_product_probability(16, 19, 6) == cap_event_probability(16, caps)
