@@ -63,7 +63,7 @@ theorem runaway_step
       omega
     unfold DeepSeed runawayNext
     rw [deficit_activeStep_of_low hlow]
-    unfold DeepSeed deficit at hseed
+    unfold deficit at hseed ⊢
     omega
 
 theorem runawayBlock_lowRun_and_deficit_ge
