@@ -459,6 +459,59 @@ def runawayCaps : Int → Nat → List Nat
   | D, k + 1 =>
       Int.toNat (D / 4) :: runawayCaps (runawayNext D) k
 
+@[simp] theorem runawayCaps_length (D : Int) (k : Nat) :
+    (runawayCaps D k).length = k := by
+  induction k generalizing D with
+  | zero =>
+      simp [runawayCaps]
+  | succ k ih =>
+      simp [runawayCaps, ih]
+
+theorem four_mul_le_of_le_runawayCap
+    {D : Int} {x : Nat}
+    (hD : 0 <= D)
+    (hx : x <= Int.toNat (D / 4)) :
+    4 * (x : Int) <= D := by
+  have hq : 0 <= D / 4 := by
+    omega
+  have hx' : (x : Int) <= (Int.toNat (D / 4) : Int) := by
+    exact_mod_cast hx
+  rw [Int.toNat_of_nonneg hq] at hx'
+  omega
+
+/--
+The deterministic Session-13 runaway block is exactly implied by the visible
+coordinate caps used in the product probability.
+-/
+theorem runawayBlock_of_coordwise_runawayCaps
+    {D : Int} {k : Nat} {xs : List Nat}
+    (hD : 4 <= D)
+    (hle : CoordwiseLe xs (runawayCaps D k)) :
+    RunawayBlock D xs := by
+  induction k generalizing D xs with
+  | zero =>
+      cases xs with
+      | nil =>
+          simp [RunawayBlock]
+      | cons x xs =>
+          simp [CoordwiseLe, runawayCaps] at hle
+  | succ k ih =>
+      cases xs with
+      | nil =>
+          simp [CoordwiseLe, runawayCaps] at hle
+      | cons x xs =>
+          change
+            x <= Int.toNat (D / 4) ∧
+              CoordwiseLe xs (runawayCaps (runawayNext D) k) at hle
+          change
+            4 * (x : Int) <= D ∧
+              RunawayBlock (runawayNext D) xs
+          constructor
+          · exact four_mul_le_of_le_runawayCap (by omega) hle.1
+          · exact
+              ih (D := runawayNext D) (xs := xs)
+                (four_le_runawayNext hD) hle.2
+
 def runawayProductMass (mu : Nat) (D : Int) (k : Nat) : Rat :=
   geometricCapProduct mu (runawayCaps D k)
 
