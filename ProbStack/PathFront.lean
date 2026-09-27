@@ -4,7 +4,7 @@ namespace ProbStack
 
 /-- A certified deficit threshold grows by the integer factor floor(3/2). -/
 def runawayNext (D : Int) : Int :=
-  3 * D / 2
+  D + D / 2
 
 /--
 An explicit finite runaway certificate.  At threshold `D`, the next occupancy
@@ -57,7 +57,9 @@ theorem runaway_step
     omega
   constructor
   · exact hlow
-  · unfold DeepSeed runawayNext
+  · have hhalf : 2 * (x : Int) <= D / 2 := by
+      omega
+    unfold DeepSeed runawayNext
     rw [deficit_activeStep_of_low hlow]
     unfold DeepSeed deficit at hseed
     omega
@@ -235,7 +237,7 @@ theorem leftBranch_certifiedFront_irreversible
       have hlen :=
         leftBlockValues_length C start len (by omega)
       rw [hnil] at hlen
-      simpa using hlen
+      exact hlen.symm
     · exact Or.inr hneg
 
 theorem leftBranch_seed_runaway_to_front
