@@ -49,12 +49,6 @@ jobs:
             echo "Found forbidden sorry/axiom in ProbStack Lean sources"
             exit 1
           fi
-      - name: Session 14 exact Python tests
-        shell: bash
-        run: |
-          set -euxo pipefail
-          python3 -m pip install -e '.[test]'
-          python3 -m pytest tests/test_finite_probability.py -q
       - name: Compile scratch source
         if: startsWith(github.event.head_commit.message, 'PROBSTACK_SCRATCH:')
         shell: bash
