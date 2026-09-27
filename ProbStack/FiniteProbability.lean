@@ -424,6 +424,32 @@ def geometricCapProduct : Nat → List Nat → Rat
     geometricCapProduct mu (a :: caps) =
       geometricCDFMass mu a * geometricCapProduct mu caps := rfl
 
+theorem geometricCapProduct_append
+    (mu : Nat) (caps₁ caps₂ : List Nat) :
+    geometricCapProduct mu (caps₁ ++ caps₂) =
+      geometricCapProduct mu caps₁ * geometricCapProduct mu caps₂ := by
+  induction caps₁ with
+  | nil =>
+      simp [geometricCapProduct]
+  | cons a caps₁ ih =>
+      simp [geometricCapProduct, ih, mul_assoc]
+
+/--
+Exact iid product-law mass of the visible two-stage coordinate-cap seed event.
+The equality below records the independence factorisation between descent and
+amplification coordinates.
+-/
+def cappedSeedProductMass
+    (mu : Nat) (descentCaps amplificationCaps : List Nat) : Rat :=
+  geometricCapProduct mu (descentCaps ++ amplificationCaps)
+
+theorem cappedSeedProductMass_factor
+    (mu : Nat) (descentCaps amplificationCaps : List Nat) :
+    cappedSeedProductMass mu descentCaps amplificationCaps =
+      geometricCapProduct mu descentCaps *
+        geometricCapProduct mu amplificationCaps := by
+  exact geometricCapProduct_append mu descentCaps amplificationCaps
+
 /--
 Runaway caps read directly from the Session-13 deterministic thresholds.
 For positive D, Int.toNat (D/4) is exactly floor(D/4).
@@ -435,6 +461,10 @@ def runawayCaps : Int → Nat → List Nat
 
 def runawayProductMass (mu : Nat) (D : Int) (k : Nat) : Rat :=
   geometricCapProduct mu (runawayCaps D k)
+
+/-- A concrete finite vector is a weak composition of total t into n parts. -/
+def IsWeakComposition (n t : Nat) (xs : List Nat) : Prop :=
+  xs.length = n ∧ xs.sum = t
 
 /--
 Weak-composition count with the zero-coordinate edge case made explicit.
@@ -492,6 +522,19 @@ theorem matchedProductVectorMass_constant_on_total
       matchedProductVectorMass n t ys := by
   rw [matchedProductVectorMass_of_length_sum hxlen hxsum,
     matchedProductVectorMass_of_length_sum hylen hysum]
+
+/--
+Exact finite conditioning core: every product-law atom in the fixed-total
+weak-composition fibre has the same mass.
+-/
+theorem matchedProductVectorMass_uniform_on_compositions
+    {n t : Nat} {xs ys : List Nat}
+    (hx : IsWeakComposition n t xs)
+    (hy : IsWeakComposition n t ys) :
+    matchedProductVectorMass n t xs =
+      matchedProductVectorMass n t ys :=
+  matchedProductVectorMass_constant_on_total
+    hx.1 hx.2 hy.1 hy.2
 
 /--
 Exact conditioned probability of one fixed local k-vector of total mass s,
