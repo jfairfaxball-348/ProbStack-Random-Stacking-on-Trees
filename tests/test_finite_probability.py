@@ -1,4 +1,5 @@
 from fractions import Fraction
+import math
 from itertools import product
 
 from prob_stack.configurations import weak_compositions
@@ -10,6 +11,7 @@ from prob_stack.finite_probability import (
     explicit_seed_caps,
     geometric_interval_probability,
     geometric_point_probability,
+    local_likelihood_ratio_falling_product,
     product_cap_probability_from_counts,
     runaway_caps,
     runaway_product_probability,
@@ -18,6 +20,8 @@ from prob_stack.finite_probability import (
 from prob_stack.product_chain import (
     cap_event_probability,
     conditioned_cap_event_probability,
+    conditioning_log_ratio_bound,
+    local_conditioning_ratio,
 )
 
 
@@ -54,12 +58,23 @@ def test_conditioned_cap_count_matches_existing_formula_and_bruteforce():
     assert exact == brute
 
 
+def test_falling_product_likelihood_ratio_matches_exact_binomial_ratio():
+    for mass in range(0, 9):
+        assert local_likelihood_ratio_falling_product(20, 80, 4, mass) == (
+            local_conditioning_ratio(20, 80, 4, mass)
+        )
+
+
 def test_exact_event_ratio_lies_between_atom_ratios():
-    comparison = exact_local_cap_comparison(12, 48, (1, 2, 3))
+    n, total, caps = 200, 3200, (1, 2, 3, 4)
+    comparison = exact_local_cap_comparison(n, total, caps)
     assert comparison.min_atom_ratio <= comparison.event_ratio
     assert comparison.event_ratio <= comparison.max_atom_ratio
     assert comparison.conditioned_probability > 0
     assert comparison.product_probability > 0
+
+    delta = conditioning_log_ratio_bound(n, total, len(caps), sum(caps))
+    assert math.exp(-delta) <= float(comparison.event_ratio) <= math.exp(delta)
 
 
 def test_canonical_seed_caps_force_final_deep_message_at_mean_16():
