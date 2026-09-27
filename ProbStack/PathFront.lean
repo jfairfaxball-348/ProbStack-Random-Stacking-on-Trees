@@ -384,7 +384,7 @@ theorem rightBranch_certifiedFront_irreversible
       have hlen :=
         rightBlockValues_length C start len (by omega)
       rw [hnil] at hlen
-      simpa using hlen
+      exact hlen.symm
     · exact Or.inr hneg
 
 theorem rightBranch_seed_runaway_to_front
