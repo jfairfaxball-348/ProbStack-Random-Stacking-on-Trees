@@ -3,7 +3,7 @@ module
 public import ProbStack.PathBridge
 public import ProbStack.TransferBounds
 
-public section
+@[expose] public section
 
 namespace ProbStack
 
