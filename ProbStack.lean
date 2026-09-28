@@ -8,3 +8,4 @@ import ProbStack.PathBridge
 import ProbStack.PathDeep
 import ProbStack.PathFront
 import ProbStack.FiniteProbability
+import ProbStack.FiniteDyadic
