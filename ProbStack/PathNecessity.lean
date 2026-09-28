@@ -75,22 +75,21 @@ private theorem pathStep_dissipation_le
       by_cases hx : x = 0
       · subst x
         simp [pathStep, TreeStack.EMPTY]
-      · have hxpos : 0 < x := Nat.pos_of_ne_zero hx
-        rw [pathStep_empty_pos hxpos]
-        simp only [TreeStack.OrientedBranch.messageContribution_some]
-        have hy' : (x : Int) <= (h : Int) - 1 := by
+        omega
+      · have hy' : (x : Int) <= (h : Int) - 1 := by
           simpa [TreeStack.OrientedBranch.messageContribution,
             TreeStack.EMPTY] using hy
         have hout' : -(h : Int) < TreeStack.F (x : Int) := by
-          simpa using hout
-        exact transfer_dissipation_le hh hy' hout'
+          simpa [pathStep, TreeStack.EMPTY, hx] using hout
+        simpa [pathStep, TreeStack.EMPTY, hx] using
+          (transfer_dissipation_le hh hy' hout')
   | some z =>
-      rw [pathStep_some]
-      simp only [TreeStack.OrientedBranch.messageContribution_some]
+      simp only [TreeStack.OrientedBranch.messageContribution_some] at hy
+      simp only [pathStep_some,
+        TreeStack.OrientedBranch.messageContribution_some] at hout ⊢
       have hy' : z + (x : Int) <= (h : Int) - 1 := by
         omega
-      have hout' : -(h : Int) < TreeStack.F (z + (x : Int)) := by
-        simpa using hout
+      have hout' : -(h : Int) < TreeStack.F (z + (x : Int)) := hout
       have hbound := transfer_dissipation_le hh hy' hout'
       linarith
 
@@ -103,8 +102,7 @@ private theorem path_score_zero_eq
           ⟨0, hn⟩ ⟨1, hn2⟩ := by
   rw [TreeStack.score, TreeStack.rootMessageSum]
   rw [Fintype.sum_eq_single (⟨1, hn2⟩ : Fin n)]
-  · rfl
-  · intro u hune
+  intro u hune
     have hnadj :
         ¬ (pathTree n hn).graph.Adj u (⟨0, hn⟩ : Fin n) := by
       intro hadj
@@ -161,7 +159,11 @@ private theorem path_score_interior_eq
             apply Fin.ext
             simp [r, q] at hright ⊢
             omega
-        simp [TreeStack.rootMessageTerm, hnadj, hul, huq]
+        have hnadj' : ¬ (SimpleGraph.pathGraph n).Adj u r := by
+          simpa [pathTree_graph] using hnadj
+        rw [TreeStack.rootMessageTerm]
+        simp only [dif_neg hnadj']
+        simp [hul, huq]
   have hsum :
       (∑ u : Fin n,
         TreeStack.rootMessageTerm (pathTree n hn) C r u) =
@@ -217,7 +219,10 @@ private theorem path_score_last_eq
       · have hu := u.isLt
         simp [r] at hright
         omega
-    simp [TreeStack.rootMessageTerm, hnadj]
+    have hnadj' : ¬ (SimpleGraph.pathGraph n).Adj u r := by
+      simpa [pathTree_graph] using hnadj
+    rw [TreeStack.rootMessageTerm]
+    simp only [dif_neg hnadj']
   change
     TreeStack.score (pathTree n hn) C r =
       (C r : Int) +
@@ -242,11 +247,10 @@ private theorem pathPrefixMass_succ
         C (Fin.castLE (Nat.succ_le_iff.mpr hk) (Fin.last (k + 1))) =
       pathPrefixMass C k (by omega) + C ⟨k + 1, hk⟩
   congr 1
-  · rw [pathPrefixMass]
-    apply Finset.sum_congr rfl
-    intro i hi
-    congr
-  · congr
+  rw [pathPrefixMass]
+  apply Finset.sum_congr rfl
+  intro i hi
+  congr
 
 private theorem pathPrefixMass_add_last_eq_mass
     {n : Nat} (C : TreeStack.Configuration (Fin n))
@@ -259,11 +263,10 @@ private theorem pathPrefixMass_add_last_eq_mass
     pathPrefixMass C j (by omega) + C ⟨j + 1, by omega⟩ =
       (∑ i : Fin (j + 1), C i.castSucc) + C (Fin.last (j + 1))
   congr 1
-  · rw [pathPrefixMass]
-    apply Finset.sum_congr rfl
-    intro i hi
-    congr
-  · congr
+  rw [pathPrefixMass]
+  apply Finset.sum_congr rfl
+  intro i hi
+  congr
 
 noncomputable def leftPrefixDissipation
     {n : Nat} (hn : 0 < n) (C : TreeStack.Configuration (Fin n))
@@ -327,9 +330,12 @@ private theorem leftPrefixDissipation_le_of_noDeep
             simpa [TreeStack.OrientedBranch.messageContribution,
               TreeStack.EMPTY] using hy)
           houtTerm
+      have hprefix0 :
+          pathPrefixMass C 0 (by omega) = C r := by
+        simp [pathPrefixMass, r]
       dsimp [leftPrefixDissipation]
-      rw [hstep]
-      simpa [pathPrefixMass, r, TreeStack.EMPTY,
+      rw [hprefix0, hstep]
+      simpa [TreeStack.EMPTY,
         TreeStack.OrientedBranch.messageContribution] using hlocal
   | succ j ih =>
       intro hk
@@ -447,21 +453,26 @@ private theorem mass_le_threshold_of_nonstackable_noDeep
   rw [hscore, hleft] at hs
   have hmassEq :=
     pathPrefixMass_add_last_eq_mass C j hjn
+  have hmassEqZ :
+      (TreeStack.mass C : Int) =
+        (pathPrefixMass C j (by omega) : Int) + (C r : Int) := by
+    have hz := congrArg (fun z : Nat => (z : Int)) hmassEq
+    push_cast at hz
+    simpa [r, add_comm] using hz.symm
   have hmassD :
       (TreeStack.mass C : Int) <=
         leftPrefixDissipation (by omega) C j hjedge := by
     dsimp [leftPrefixDissipation]
-    rw [← hmassEq]
-    push_cast
+    rw [hmassEqZ]
     dsimp [r] at hs
-    omega
+    linarith
   have hdiss :=
     leftPrefixDissipation_le_of_noDeep
       (n := n) (h := h) hn2 C hh hnonstack hnodeep j hjedge
   have hboundZ :
       (TreeStack.mass C : Int) <=
-        (n - 1 : Int) * ((h / 2 + 1 : Nat) : Int) := by
-    have hjfactor : (j + 1 : Int) = (n - 1 : Int) := by
+        ((n - 1 : Nat) : Int) * ((h / 2 + 1 : Nat) : Int) := by
+    have hjfactor : ((j + 1 : Nat) : Int) = ((n - 1 : Nat) : Int) := by
       dsimp [j]
       omega
     rw [hjfactor] at hdiss
