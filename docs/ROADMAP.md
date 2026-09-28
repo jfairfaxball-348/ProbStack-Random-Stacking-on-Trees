@@ -23,6 +23,11 @@ families.
 Session 9 fixed the formal dependency architecture. The authoritative plan is
 `notes/session-9-formalisation-design.md`.
 
+Session 18 has now assembled the complete mathematical proof of the frozen
+path theorem, including the exact conditioning transfer and both global
+fixed-offset directions. Session 19 is the theorem/formalisation/reproducibility
+closure stage; it should not reopen the probabilistic discovery programme.
+
 Immediate priorities:
 
 1. pin and compile the exact TreeStack/Mathlib/Lean dependency boundary;
