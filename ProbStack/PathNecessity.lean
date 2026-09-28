@@ -108,11 +108,12 @@ private theorem path_score_zero_eq
       ¬ (pathTree n hn).graph.Adj u (⟨0, hn⟩ : Fin n) := by
     intro hadj
     rw [pathTree_graph, SimpleGraph.pathGraph_adj] at hadj
+    simp only [Fin.val_mk] at hadj
     rcases hadj with hleft | hright
     · omega
     · apply hune
       apply Fin.ext
-      omega
+      exact hright.symm
   have hnadj' :
       ¬ (SimpleGraph.pathGraph n).Adj u (⟨0, hn⟩ : Fin n) := by
     simpa [pathTree_graph] using hnadj
@@ -185,6 +186,7 @@ private theorem path_score_interior_eq
             exact hterm u
       _ = TreeStack.rootMessageTerm (pathTree n hn) C r l +
             TreeStack.rootMessageTerm (pathTree n hn) C r q := by
+            rw [Finset.sum_add_distrib]
             simp [hlq]
   change
     TreeStack.score (pathTree n hn) C r =
@@ -249,7 +251,6 @@ private theorem pathPrefixMass_succ
   congr 1
   rw [pathPrefixMass]
   apply Finset.sum_congr rfl
-  intro i hi
 
 private theorem pathPrefixMass_add_last_eq_mass
     {n : Nat} (C : TreeStack.Configuration (Fin n))
@@ -264,7 +265,6 @@ private theorem pathPrefixMass_add_last_eq_mass
   congr 1
   rw [pathPrefixMass]
   apply Finset.sum_congr rfl
-  intro i hi
 
 noncomputable def leftPrefixDissipation
     {n : Nat} (hn : 0 < n) (C : TreeStack.Configuration (Fin n))
@@ -473,7 +473,7 @@ private theorem mass_le_threshold_of_nonstackable_noDeep
   have hboundZ :
       (TreeStack.mass C : Int) <=
         ((n - 1 : Nat) : Int) * ((h / 2 + 1 : Nat) : Int) := by
-    have hjfactor : ((j + 1 : Nat) : Int) = ((n - 1 : Nat) : Int) := by
+    have hjfactor : (j : Int) + 1 = ((n - 1 : Nat) : Int) := by
       dsimp [j]
       omega
     rw [hjfactor] at hdiss
