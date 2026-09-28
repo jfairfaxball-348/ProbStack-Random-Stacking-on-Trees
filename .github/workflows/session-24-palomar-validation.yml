@@ -113,6 +113,7 @@ jobs:
           set -euxo pipefail
           sudo apt-get update -qq
           sudo apt-get install -y -qq bubblewrap
+          sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0
           prefix="$(lean --print-prefix)"
           for tool in lake leanexport leanchecker nanoda_bin con-ron; do
             test -x "$prefix/bin/$tool"
