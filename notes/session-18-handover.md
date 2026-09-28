@@ -1,5 +1,11 @@
 # Session 18 handover — conditioning transfer and global closure
 
+> **Historical handover, superseded only in project-status bookkeeping by
+> Session 19.** Its mathematical Session 18 conclusions remain inputs to the
+> final theorem. Current formalisation and reproducibility status is recorded in
+> `docs/FINAL_THEOREM_STATUS.md` and `docs/PROOF_DEPENDENCY_MAP.md`.
+
+
 ## Starting validated state
 
 Session 18 started from exact validated main HEAD
@@ -35,19 +41,19 @@ The authoritative frozen center remains
 c_n
 =
 sqrt{log_2 n}
--rac12log_2log_2 n
+-\frac12log_2log_2 n
 +log_2(3e).
 ]
 
 The MINUS sign is essential and was independently checked in the Session 18
 balance calculation.
 
-For every fixed (arepsilon>0):
+For every fixed (\varepsilon>0):
 
-- if (log_2mu_nle c_n-arepsilon) eventually, then the uniform
+- if (log_2mu_nle c_n-\varepsilon) eventually, then the uniform
   weak-composition configuration on (P_n) is nonstackable with probability
   tending to one;
-- if (log_2mu_nge c_n+arepsilon) eventually, then it is stackable with
+- if (log_2mu_nge c_n+\varepsilon) eventually, then it is stackable with
   probability tending to one.
 
 No zero-offset assertion is added.
@@ -57,7 +63,7 @@ No zero-offset assertion is added.
 For iid geometric coordinates with
 
 [
-p=rac1{1+mu},qquad r=rac{mu}{1+mu},
+p=\frac1{1+mu},qquad r=\frac{mu}{1+mu},
 qquad P(X_i=a)=p r^a,
 ]
 
@@ -69,9 +75,9 @@ At (t=nmu),
 [
 P!left(sum_iX_i=nmuight)
 =
-inom{n+nmu-1}{nmu}
+\binom{n+nmu-1}{nmu}
 (1+mu)^{-n}
-left(rac{mu}{1+mu}ight)^{nmu}.
+left(\frac{mu}{1+mu}ight)^{nmu}.
 ]
 
 The cancellation-free Robbins/Stirling bounds give
@@ -79,8 +85,8 @@ The cancellation-free Robbins/Stirling bounds give
 [
 -log_2 P!left(sum_iX_i=nmuight)
 =
-rac12log_2 n
-+rac12log_2(mu(mu+1))
+\frac12log_2 n
++\frac12log_2(mu(mu+1))
 +O(1).
 ]
 
@@ -94,11 +100,11 @@ For a local (k)-vector of mass (s), the exact likelihood ratio is
 [
 R_{n,t,k}(s)
 =
-rac{(n-1)_k(t)_s}{(n+t-1)_{k+s}}
+\frac{(n-1)_k(t)_s}{(n+t-1)_{k+s}}
 Big/
 left[
-left(rac n{n+t}ight)^k
-left(rac t{n+t}ight)^s
+left(\frac n{n+t}ight)^k
+left(\frac t{n+t}ight)^s
 ight].
 ]
 
@@ -107,9 +113,9 @@ Under the standard half-range hypotheses,
 [
 |log R_{n,t,k}(s)|
 le
-rac{k(k+1)}n
-+rac{s(s-1)}t
-+rac{(k+s)(k+s+1)}{n+t}.
+\frac{k(k+1)}n
++\frac{s(s-1)}t
++\frac{(k+s)(k+s+1)}{n+t}.
 ]
 
 One bounded block therefore transfers with factor (exp(o(1))) in the
@@ -139,7 +145,7 @@ r^{3mu+1}(1-r^{2mu-1}),
 and for every integer (muge16),
 
 [
-delta_muge rac{8}{17e^3}>0.0234.
+delta_muge \frac{8}{17e^3}>0.0234.
 ]
 
 If the reset output is already at most (-mu), regeneration is skipped.
@@ -167,7 +173,7 @@ probability is uniformly at least (p_{mu,n}), with
 Therefore
 
 [
-P_{m prod}(	ext{no successful block and }Tle2nmu)
+P_{m prod}(\text{no successful block and }Tle2nmu)
 le
 exp(-B_np_{mu,n}).
 ]
@@ -175,12 +181,12 @@ exp(-B_np_{mu,n}).
 Only after this product-law bound is obtained do we condition on (T=nmu).
 No conditioned block independence is used.
 
-At (x=c_n-arepsilon),
+At (x=c_n-\varepsilon),
 
 [
 log_2(B_np_{mu,n})
 =
-(2arepsilon+o(1))sqrt{log_2 n},
+(2\varepsilon+o(1))sqrt{log_2 n},
 ]
 
 so the exponent (B_np_{mu,n}) overwhelms the merely (O(log n))
@@ -192,15 +198,15 @@ and use a union bound. Opposing certified fronts give nonstackability.
 The exact Session 5 deterministic necessity is retained:
 
 [
-	ext{nonstackable}
+\text{nonstackable}
 Longrightarrow
-	ext{some directed message}le-(2mu-1).
+\text{some directed message}le-(2mu-1).
 ]
 
 The target is not replaced by (-mu).
 
 The Session 7/17 terminal-specific cover has the same optimized phase-free
-interior rate. The (0	o0) route is cheapest. A (1	o0) route requires an
+interior rate. The (0\to0) route is cheapest. A (1\to0) route requires an
 exact-output-zero bridge and therefore one prescribed geometric occupancy,
 costing (L+O(1)) bits; polynomially many bridge locations are lower order.
 
@@ -209,12 +215,12 @@ There are (O(n)) interior locations. Physical-boundary witnesses have only
 support (O(L^2)) and mass (O(mu L^2)), so local conditioning transfer
 costs only (exp(o(1))).
 
-At (x=c_n+arepsilon),
+At (x=c_n+\varepsilon),
 
 [
-log_2!left(n,P(	ext{one interior cover})ight)
+log_2!left(n,P(\text{one interior cover})ight)
 =
--(2arepsilon+o(1))sqrt{log_2 n},
+-(2\varepsilon+o(1))sqrt{log_2 n},
 ]
 
 and the conditioned deep-message union probability tends to zero. The exact
