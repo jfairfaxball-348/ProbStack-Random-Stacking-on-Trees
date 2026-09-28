@@ -1,4 +1,8 @@
-import ProbStack.TreeStackBoundary
+module
+
+public import ProbStack.TreeStackBoundary
+
+public section
 
 namespace ProbStack
 
