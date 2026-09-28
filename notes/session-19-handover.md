@@ -21,20 +21,20 @@ The permanent workflow remains `.github/workflows/lean-bootstrap.yml`.
 
 ## Authoritative theorem
 
-For uniform weak compositions of total (nmu_n) on (P_n),
+For uniform weak compositions of total `n*mu_n` on `P_n`,
 
-[
-c_n=sqrt{log_2 n}
--rac12log_2log_2 n
-+log_2(3e).
-]
+```
+c_n = sqrt(log_2 n)
+      - (1/2) log_2 log_2 n
+      + log_2(3e).
+```
 
-For every fixed (arepsilon>0), means below (c_n-arepsilon) eventually
-give stackability probability tending to zero, while means above
-(c_n+arepsilon) eventually give stackability probability tending to one.
-There is no zero-offset claim.
+For every fixed `epsilon > 0`, means below `c_n-epsilon` eventually give
+stackability probability tending to zero, while means above `c_n+epsilon`
+eventually give stackability probability tending to one. There is no
+zero-offset claim.
 
-The MINUS half-log-log sign and (log_2(3e)) constant are frozen.
+The MINUS half-log-log sign and `log_2(3e)` constant are frozen.
 
 ## Authoritative maps
 
@@ -51,72 +51,70 @@ otherwise mistake them for the final theorem.
 
 Session 17 is a black box:
 
-[
+```
 -log_2 q_mu(m)
-=x^2+2xlog_2x-2log_2(3e)x+o(x),
-qquad x=log_2mu,
-]
+= x^2 + 2x log_2 x - 2 log_2(3e) x + o(x),
+x = log_2 mu,
+```
 
 uniformly over the full dyadic phase range and all integer
-(min[mu,2mu]).
+`m in [mu,2mu]`.
 
 Session 19 does not recompute it.
 
 ## Exact regeneration statement
 
-For (-mu<Mle2mu), an occupancy
+For `-mu < M <= 2mu`, an occupancy satisfying
 
-[
-2mu+2-Mle Xle4mu-M
-]
+```
+2mu + 2 - M <= X <= 4mu - M
+```
 
-forces the next message into ([mu,2mu]). The largest steering occupancy is
-(5mu-1), and the exact worst-case probability is
+forces the next message into `[mu,2mu]`. The largest steering occupancy is
+`5mu-1`, and the exact worst-case probability is
 
-[
-left(rac{mu}{mu+1}ight)^{3mu+1}
-left[1-left(rac{mu}{mu+1}ight)^{2mu-1}ight],
-]
+```
+(mu/(mu+1))^(3mu+1) * [1-(mu/(mu+1))^(2mu-1)],
+```
 
-at least (8/(17e^3)) for integer (muge16). If reset already yields
-(Mle-mu), steering is skipped.
+at least `8/(17e^3)` for integer `mu >= 16`. If reset already yields
+`M <= -mu`, steering is skipped.
 
 ## Subcritical architecture
 
 Use fresh product-law coordinates in each unused reserved superblock. Obtain
-the no-success bound under the product law first, with
-(Omega(n/log n)) candidates per half. Only then condition on total
-(nmu). The product no-success exponent overwhelms the (O(log n))-bit
-conditioning cost at every fixed negative offset. Repeat in the reversed half
-and use the opposing-front deterministic theorem.
+the no-success bound under the product law first, with `Omega(n/log n)`
+candidates per half. Only then condition on total `n*mu`. The product
+no-success exponent overwhelms the `O(log n)`-bit conditioning cost at every
+fixed negative offset. Repeat in the reversed half and use the opposing-front
+deterministic theorem.
 
 Conditioned independence is not used.
 
 ## Supercritical architecture
 
-Nonstackability forces the exact target (-(2mu-1)). The optimized
-terminal-specific cover has the Session 17 interior rate. The (0	o0) route
-is cheapest. The (1	o0) route requires an exact-output-zero bridge; since
-(F(y)=0) only for (y=3), one occupancy is fixed once the incoming message
-is known, costing (L+O(1)) bits. Interior locations receive the (O(n))
-multiplicity; physical-boundary events have only (O(1)) locations. Local
+Nonstackability forces the exact target `-(2mu-1)`. The optimized
+terminal-specific cover has the Session 17 interior rate. The `0 -> 0` route
+is cheapest. The `1 -> 0` route requires an exact-output-zero bridge; since
+`F(y)=0` only for `y=3`, one occupancy is fixed once the incoming message
+is known, costing `L+O(1)` bits. Interior locations receive the `O(n)`
+multiplicity; physical-boundary events have only `O(1)` locations. Local
 conditioning transfer is applied to bounded support/mass events.
 
 ## Fixed-offset calculation
 
-With (N=log_2n), (s=sqrt N), and
+With `N=log_2 n`, `s=sqrt(N)`, and
 
-[
-x=s-log_2s+log_2(3e)+delta,
-]
+```
+x = s - log_2 s + log_2(3e) + delta,
+```
 
 the local main rate satisfies
 
-[
-R(x)=N+2delta s+o(s),
-qquad
-N-R(x)=-2deltasqrt N+o(sqrt N).
-]
+```
+R(x) = N + 2*delta*s + o(s),
+N - R(x) = -2*delta*sqrt(N) + o(sqrt(N)).
+```
 
 This is the final balance used on both sides.
 
