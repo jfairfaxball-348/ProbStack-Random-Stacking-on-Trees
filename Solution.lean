@@ -2,7 +2,7 @@ module
 
 public import ProbStack
 
-public section
+@[expose] public section
 
 /-!
 # Palomar solution surface for ProbStack P6
