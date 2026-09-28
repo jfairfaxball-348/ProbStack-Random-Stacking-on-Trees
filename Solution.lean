@@ -144,7 +144,7 @@ private theorem directedMessage_eq_incident
       · apply Fin.ext
         rfl
       · apply Fin.ext
-        exact hleft
+        exact hleft.symm
     calc
       directedMessage C u r =
           prefixScan C u.val u.isLt := by
