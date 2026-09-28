@@ -146,10 +146,7 @@ Session 15 adds:
 - this handover note;
 - an import of `ProbStack.FiniteDyadic` from `ProbStack.lean`.
 
-Lean formalises the natural dyadic cost, exact strict positive-descent budget,
-the binary-partition multiplicity-vector encoding and converse, the recursive
-low-deficit closed form, and the final-deficit inequality for the reversed
-simplex.
+Lean formalises a forward natural dyadic cost for positive descent, reuses the pre-existing reversed `dyadicInputCost` from `ProbStack.Deficit`, proves the exact strict positive-descent budget, the binary-partition multiplicity-vector encoding and converse, the recursive low-deficit closed form, and the final-deficit inequality for the reversed simplex.
 
 The standalone exact Python harness passes 11 tests, including exhaustive
 small checks of the binary-partition coefficient, strict boundary, ordinary
