@@ -1,4 +1,8 @@
-import ProbStack.PathDeep
+module
+
+public import ProbStack.PathDeep
+
+public section
 
 namespace ProbStack
 
