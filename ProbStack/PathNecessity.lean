@@ -494,6 +494,7 @@ theorem nonstackable_exists_directedMessage_le
     (hlarge :
       (n - 1) * (h / 2 + 1) < TreeStack.mass C) :
     HasDirectedPathMessageAtMost (n := n) (by omega) C h := by
+  have _ := hmassPos
   by_contra hnodeep
   have hbound :=
     mass_le_threshold_of_nonstackable_noDeep
@@ -541,7 +542,6 @@ theorem nonstackable_total_mul_exists_directedMessage_le
   rcases hdeep with ⟨r, u, hu, m, hmsg, hm⟩
   refine ⟨r, u, hu, m, hmsg, ?_⟩
   dsimp [h] at hm
-  push_cast at hm
   omega
 
 end ProbStack
