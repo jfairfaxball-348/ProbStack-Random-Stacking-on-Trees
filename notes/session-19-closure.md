@@ -19,14 +19,14 @@ EMPTY remains categorical: `TreeStack.EMPTY = none` and is not `some 0`.
 The frozen theorem is internally consistent across the current mathematical
 sources. The authoritative center remains
 
-[
-sqrt{log_2 n}
--rac12log_2log_2 n
-+log_2(3e).
-]
+```
+sqrt(log_2 n)
+- (1/2) log_2 log_2 n
++ log_2(3e).
+```
 
 Session 19 does not change the theorem, the Session 17 local rate, the exact
-deep target (-(2mu-1)), or any dependency pin.
+deep target `-(2*mu-1)`, or any dependency pin.
 
 The principal documentation issue was historical status drift. Several notes
 still used language that was accurate at the end of Sessions 1, 6, or 7 but
@@ -36,7 +36,7 @@ Session 18 proof and the final Session 19 dependency map.
 
 ## Formalisation audit
 
-The Lean repository does contain the finite/deterministic interfaces listed in
+The Lean repository contains the finite/deterministic interfaces listed in
 `docs/FINAL_THEOREM_STATUS.md`: exact path recursion, deficit identities,
 regeneration, deep-block consequences, explicit seed/runaway support and mass,
 genuine left/right seed-to-front composition, finite geometric masses,
@@ -66,11 +66,11 @@ they are deliberately left out.
 
 The Python/Lean finite conventions agree:
 
-- (p=1/(1+mu));
-- (r=mu/(1+mu));
-- `weak_composition_count(0,0)=1);
-- `weak_composition_count(0,t)=0` for (t>0);
-- matched local product law uses (p=n/(n+t)), (r=t/(n+t));
+- `p = 1/(1+mu)`;
+- `r = mu/(1+mu)`;
+- `weak_composition_count(0,0) = 1`;
+- `weak_composition_count(0,t) = 0` for `t > 0`;
+- matched local product law uses `p=n/(n+t)`, `r=t/(n+t)`;
 - exact local likelihood-ratio implementations agree;
 - separated bounded blocks are concatenated into one displayed vector;
 - conditioned independence is nowhere required.
@@ -83,28 +83,27 @@ recorded in Session 18.
 The final proof continues to use:
 
 - Session 4 reset;
-- Session 8 regeneration for (-mu<Mle2mu);
-- steering interval
-  ([2mu+2-M,,4mu-M]);
-- steering occupancy cap (5mu-1);
+- Session 8 regeneration for `-mu < M <= 2mu`;
+- steering interval `[2mu+2-M, 4mu-M]`;
+- steering occupancy cap `5mu-1`;
 - worst-case probability
-  (r^{3mu+1}(1-r^{2mu-1})ge8/(17e^3)) for (muge16);
-- Session 17 start window ([mu,2mu]);
-- an (O(log n))-support reserved superblock;
+  `r^(3mu+1) * (1-r^(2mu-1)) >= 8/(17e^3)` for `mu >= 16`;
+- Session 17 start window `[mu,2mu]`;
+- an `O(log n)`-support reserved superblock;
 - reversed construction in the other half;
-- exact supercritical target (-(2mu-1));
-- (O(n)) interior locations but only (O(1)) physical-boundary locations;
+- exact supercritical target `-(2mu-1)`;
+- `O(n)` interior locations but only `O(1)` physical-boundary locations;
 - one prescribed occupancy for the exact-output-zero bridge.
 
 No conditioned independence is introduced.
 
 ## Reproducibility closure
 
-`docs/REPRODUCIBILITY.md` is the single entry point for the final exact
+`docs/REPRODUCIBILITY.md` is the single entry point for final exact
 validation commands. Session 19 adds regression tests for:
 
-- the exact (-(2mu-1)) deep target;
-- the explicit spatial factor (n) in the global balance;
+- the exact `-(2mu-1)` deep target;
+- the explicit spatial factor `n` in the global balance;
 - concatenation rather than independence for separated conditioned blocks;
 - the frozen TreeStack/Mathlib/Lean pins and permanent workflow cache key.
 
