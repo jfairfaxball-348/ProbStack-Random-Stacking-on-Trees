@@ -132,5 +132,8 @@ The project makes no claim of:
 - an arbitrary-tree extension of the path threshold;
 - novelty, priority, publication, or submission status.
 
-The next stage is a separate extensive public-record prior-art/originality
-audit. It must not reopen the frozen theorem.
+Sessions 20–21 completed the public-record prior-art audit at the documented
+non-novelty-claim level. Session 23 has now formalised P6 and passed the
+Palomar target gate. The next stage is Palomar packaging, module-system
+migration, and full predictive preflight; it must not reopen the frozen
+random theorem.
