@@ -1,5 +1,10 @@
 # Session 6: second-order dyadic-simplex theorem
 
+> **Historical Session 6 status.** The bounded-order uncertainty described in
+> this note was later resolved by Sessions 7--8, and the global conditioning
+> proof by Session 18. See `docs/FINAL_THEOREM_STATUS.md`.
+
+
 Status: proved mathematics, with exact finite checks and executable rigorous
 bounds.  This note sharpens the Session 3 one-sided theorem and transfers the
 new rate through the Session 4/5 global arguments.  It does not resolve the
