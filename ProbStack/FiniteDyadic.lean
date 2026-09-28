@@ -92,6 +92,16 @@ theorem binaryPartition_head_eq_slack
   omega
 
 /--
+The exact Session-15 cutoff inequality in arithmetic form. If `B < 2^k`,
+then the next omitted binary part `2^(k+1)` is already larger than the
+coefficient total `2B`.
+-/
+theorem binaryPartition_nextPart_gt_total
+    {k B : Nat} (hcut : B < 2 ^ k) :
+    2 * B < 2 ^ (k + 1) := by
+  simpa [pow_succ, Nat.mul_comm] using Nat.mul_lt_mul_left 2 hcut
+
+/--
 Closed form for the Session-14 recursive low-phase certified deficit. The
 existing `dyadicInputCost` is exactly twice the reversed dyadic occupancy
 cost required by this recurrence.
