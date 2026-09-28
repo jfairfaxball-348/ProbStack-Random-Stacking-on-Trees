@@ -1,4 +1,8 @@
-import ProbStack.FiniteProbability
+module
+
+public import ProbStack.FiniteProbability
+
+public section
 
 namespace ProbStack
 
