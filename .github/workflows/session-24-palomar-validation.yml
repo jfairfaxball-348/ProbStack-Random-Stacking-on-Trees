@@ -98,6 +98,42 @@ jobs:
           python -m pip install --disable-pip-version-check pytest
           PYTHONPATH=. pytest -q
 
+      - name: Validate Palomar metadata locally
+        shell: bash
+        run: |
+          set -euxo pipefail
+          curl -fsSL \
+            https://raw.githubusercontent.com/PalomarRegistry/PalomarTemplate/2891de4c48955af824969a263d31b25e7a9a1406/scripts/validate-formalization.rb \
+            -o /tmp/validate-formalization.rb
+          ruby /tmp/validate-formalization.rb formalization.yaml
+
+      - name: Run local Comparator with bundled independent kernels
+        shell: bash
+        run: |
+          set -euxo pipefail
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq bubblewrap
+          prefix="$(lean --print-prefix)"
+          for tool in lake leanexport leanchecker nanoda_bin con-ron; do
+            test -x "$prefix/bin/$tool"
+          done
+          cfg="$(mktemp)"
+          python3 - "$cfg" "$prefix" <<'PY'
+          import json, pathlib, sys
+          destination, prefix = sys.argv[1:]
+          config = json.loads(pathlib.Path("comparator.json").read_text())
+          if "external_kernels" in config:
+              raise SystemExit("external_kernels is not a submitter field")
+          config.pop("enable_nanoda", None)
+          config["external_kernels"] = {
+              "nanoda": [f"{prefix}/bin/nanoda_bin"],
+              "con-ron": [f"{prefix}/bin/con-ron"],
+          }
+          pathlib.Path(destination).write_text(json.dumps(config, indent=2) + "\n")
+          PY
+          lake exe cache get
+          lake comparator --config "$cfg"
+
   palomar-full-preflight:
     needs: project-validation
     uses: PalomarRegistry/PalomarSubmission/.github/workflows/submission.yml@65f0154ed776cd26c224254aa57b379137f28b0d
