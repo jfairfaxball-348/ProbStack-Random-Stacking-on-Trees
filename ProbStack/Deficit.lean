@@ -1,4 +1,8 @@
-import ProbStack.PathMessage
+module
+
+public import ProbStack.PathMessage
+
+public section
 
 namespace ProbStack
 
