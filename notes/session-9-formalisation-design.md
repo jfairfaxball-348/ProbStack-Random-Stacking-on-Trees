@@ -1,5 +1,12 @@
 # Session 9 — formalisation architecture
 
+> **Historical design document.** This file records the proposed architecture
+> before implementation. Sessions 10--19 implemented a deliberately narrower
+> exact finite Lean boundary; the final asymptotic theorem remains paper
+> mathematics. Use `docs/PROOF_DEPENDENCY_MAP.md` and
+> `docs/FINAL_THEOREM_STATUS.md` for current status.
+
+
 Status: **DESIGN COMPLETE; FORMAL VERIFICATION NOT YET STARTED.**
 
 This document fixes the proposed Lean architecture for the frozen ProbStack path
@@ -35,16 +42,16 @@ compositions of total (nmu_n) over the (n)-vertex path (P_n), and put
 [
 c_n=
 sqrt{log_2 n}
--rac12log_2log_2 n
+-\frac12log_2log_2 n
 +log_2(3e).
 ]
 
-For every fixed (arepsilon>0):
+For every fixed (\varepsilon>0):
 
-- if (log_2mu_nle c_n-arepsilon) eventually, then
-  (Pr[C_n	ext{ stackable}]	o0);
-- if (log_2mu_nge c_n+arepsilon) eventually, then
-  (Pr[C_n	ext{ stackable}]	o1).
+- if (log_2mu_nle c_n-\varepsilon) eventually, then
+  (Pr[C_n\text{ stackable}]\to0);
+- if (log_2mu_nge c_n+\varepsilon) eventually, then
+  (Pr[C_n\text{ stackable}]\to1).
 
 No assertion is made at zero offset. This mathematical content is frozen.
 
@@ -288,9 +295,9 @@ with the PMF/measure value.
 For integer mean (mu>0), take success parameter
 
 [
-p_mu=rac1{mu+1},
+p_mu=\frac1{mu+1},
 qquad
-r_mu=rac{mu}{mu+1}.
+r_mu=\frac{mu}{mu+1}.
 ]
 
 Use `ProbabilityTheory.geometricMeasure` on (mathbb N). For a finite vector
@@ -310,12 +317,12 @@ paper is a finite-vector or finite-block event.
 
 Use filters:
 
-- `Filter.atTop` for (n	oinfty);
+- `Filter.atTop` for (n\toinfty);
 - `∀ᶠ n in atTop, ...` for “eventually”;
 - `Tendsto p atTop (𝓝 0)` and `Tendsto p atTop (𝓝 1)`;
 - `Asymptotics.IsLittleO` where an explicit error function is helpful.
 
-Keep (mu : mathbb N	omathbb N) with an explicit positivity hypothesis.
+Keep (mu : mathbb N\tomathbb N) with an explicit positivity hypothesis.
 The center may be globally defined using `Real.logb`; all analytic lemmas
 will work under eventual lower bounds on (n), so small exceptional indices do
 not alter the theorem.
@@ -399,8 +406,8 @@ formal power series are not required for the theorem.
 | E2 | Low-phase asymptotic for start (ain{0,1}) | D8–D10, F1 | HIGH |
 | E3 | Exact bridge atom penalty | A1, F1 | MODERATE |
 | E4 | Compare the four terminal routes | E1–E3 | MODERATE |
-| E5 | Prove (0	o0) is uniquely cheapest at linear order | E4, real inequalities | LOW |
-| E6 | Uniform local (q_mu(m)) theorem in (L,	heta) | E1–E5 | HIGH |
+| E5 | Prove (0\to0) is uniquely cheapest at linear order | E4, real inequalities | LOW |
+| E6 | Uniform local (q_mu(m)) theorem in (L,\theta) | E1–E5 | HIGH |
 | E7 | Phase cancellation in (x=log_2mu) | E6, log algebra | HIGH |
 
 ### Layer F — finite probability and conditioning
@@ -433,7 +440,7 @@ and the frozen (c_n).
 |---|---|---|---|
 | G1 | Define and basic-domain lemmas for (R) | real log | LOW |
 | G2 | Define and basic-domain lemmas for (c_n) | real sqrt/log | LOW |
-| G3 | Fixed-offset expansion of (R(c_npmarepsilon)) | G1–G2 | HIGH |
+| G3 | Fixed-offset expansion of (R(c_npm\varepsilon)) | G1–G2 | HIGH |
 | G4 | Negative offset gives exponentially many certified front opportunities | G3, B10, E6, F6–F7 | HIGH |
 | G5 | Nonstackability below the center | G4, A10, F2 | HIGH |
 | G6 | Positive offset kills the deep-message cover | G3, C3–C6, E1–E2, F8 | HIGH |
@@ -466,12 +473,12 @@ left|
 log_2 A(B)
 -
 left[
-rac12L^2
+\frac12L^2
 -Llog_2L
 +
 left(
-log_2rac{B}{2^L}
-+rac12+log_2 e
+log_2\frac{B}{2^L}
++\frac12+log_2 e
 ight)L
 ight]
 ight|
@@ -557,7 +564,7 @@ This statement keeps:
 - total mass exactly (nmu_n);
 - (P_n) as the (n)-vertex Mathlib path on `Fin n`;
 - the exact uniform weak-composition law;
-- fixed (arepsilon>0);
+- fixed (\varepsilon>0);
 - eventual inequalities;
 - limits (0) and (1).
 

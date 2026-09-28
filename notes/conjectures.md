@@ -1,5 +1,16 @@
 # Conjecture register
 
+> **Current authoritative status (Session 19).** The path headline is no
+> longer a conjecture. Sessions 8/17/18 establish the frozen fixed-offset
+> theorem with center
+> `sqrt(log_2 n) - 0.5 log_2 log_2 n + log_2(3e)`.
+> For every fixed positive offset, stackability tends to 0 below the center and
+> 1 above it. There is no zero-offset claim. The chronological entries below
+> are preserved as research history; early working scales and unresolved gaps
+> must not be read as current statements. See
+> `docs/FINAL_THEOREM_STATUS.md` and `docs/PROOF_DEPENDENCY_MAP.md`.
+
+
 ## Promotion rule
 
 A conjecture is promoted here only after independent stackability checks agree,
@@ -7,7 +18,7 @@ exact enumeration covers a meaningful range, obvious competing scalings have
 been tested, boundary cases are understood, and there is a plausible analytic
 mechanism.  A plotted curve alone is not enough.
 
-## Current status — no stable headline conjecture yet
+## Historical Session 1 status — no stable headline conjecture yet (superseded)
 
 The initial exact atlas and seeded Monte Carlo runs point toward a high-density
 path recovery on a mixed scale near `n log n`, rather than at a fixed multiple
@@ -268,3 +279,18 @@ log_2(3e).
 No conjecture is promoted for the value at zero offset, a limiting transition
 law, finite-n monotonicity, or other tree families. Those questions are
 deliberately deferred until after formalisation and prior-art review.
+
+
+## Session 18/19 closure — theorem complete
+
+Session 18 completed the conditioning transfer and both global directions
+using the Session 17 local theorem as a black box. Session 19 reconciles the
+repository and freezes the proof/formalisation/reproducibility boundary.
+
+The authoritative center is
+
+`sqrt(log_2 n) - 0.5 log_2 log_2 n + log_2(3e)`.
+
+The MINUS half-log-log sign and `log_2(3e)` constant are final at the claimed
+fixed-offset precision. No new conjecture is promoted for zero offset, a
+limiting law, finite-`n` monotonicity, arbitrary trees, or novelty.

@@ -1,5 +1,13 @@
 # Session 7: linear-order local theorem and refined recovery center
 
+> **Historical Session 7 global status.** The local linear theorem in this note
+> remains an input to the final proof. The bounded global gap described here
+> was closed in Session 8 by constant-cost regeneration, and Session 18
+> completed the exact-conditioning/global argument. It is not a current open
+> gap. See `docs/FINAL_THEOREM_STATUS.md` and
+> `docs/PROOF_DEPENDENCY_MAP.md`.
+
+
 Status: proved mathematics, with exact integer validation of the new positive-phase
 reverse recurrence.  This note sharpens Session 6 from an unspecified `O(L)`
 term to an explicit linear term.  Globally it sharpens both sides to explicit

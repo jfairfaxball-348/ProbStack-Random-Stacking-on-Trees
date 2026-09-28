@@ -67,11 +67,11 @@ Monte Carlo and is not used to infer the L log L coefficient by fitting.
 - `linear_order_entry_counts.csv.meta.json`: command, source revision,
   exactness statement, and interpretation.
 
-The Session 7 table is a validation diagnostic, not a fit.  The linear local
+The Session 7 table is a validation diagnostic, not a fit. The linear local
 coefficient is derived analytically from binary-partition asymptotics and the
-exact positive-phase slack generating function.  The table also records the
-proved gap between the optimal local coefficient and the current
-state-independent certified-front coefficient.  No Monte Carlo was used.
+exact positive-phase slack generating function. The table records the bounded
+spatial gap that existed at the end of Session 7; Session 8 later closed that
+gap by constant-cost regeneration. No Monte Carlo was used.
 
 
 ## Session 8 additions
@@ -83,3 +83,29 @@ state-independent certified-front coefficient.  No Monte Carlo was used.
 
 The regeneration table validates an elementary exact lemma; it is not a fit and
 contains no Monte Carlo output.
+
+
+## Session 16 additions
+
+- `session16_binary_partition_diagnostics.csv`: exact integer finite
+  binary-partition/dyadic-simplex diagnostics across the documented levels and
+  phases.
+- `session16_binary_partition_diagnostics.csv.meta.json`: exact generating
+  command, parameter grid, purpose and non-Monte-Carlo status.
+
+The table checks finite indexing, cutoff/truncation handling and asymptotic
+signs. It is not the proof of the de Bruijn asymptotic.
+
+## Session 18 additions
+
+- `session18_global_balance.csv`: deterministic fixed-offset balance and
+  conditioning-cost diagnostics.
+- `session18_global_balance.csv.meta.json`: exact generator, parameter grid,
+  frozen center and purpose.
+
+This table checks the MINUS half-log-log sign, `log_2(3e)`, the spatial
+factor `n`, and the separation from the conditioning point-mass cost. It is
+validation only, not the global proof.
+
+Session 17 product-geometric diagnostics are regenerated on demand rather than
+stored as a committed CSV; see `docs/REPRODUCIBILITY.md`.

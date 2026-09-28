@@ -2,69 +2,75 @@
 
 ## Stage 1 — complete: conjecture discovery and mathematical proof
 
-The path theorem was frozen in Session 8 at fixed (O(1)) offsets. The target
-center is
+The frozen path theorem is
 
-[
-sqrt{log_2 n}
--rac12log_2log_2 n
-+log_2(3e),
-]
+\[
+c_n=\sqrt{\log_2 n}
+-\frac12\log_2\log_2 n
++\log_2(3e).
+\]
 
-with probability tending to 0 below every fixed negative offset and to 1 above
-every fixed positive offset. No zero-offset claim is made.
+For every fixed \(\varepsilon>0\), the stackability probability tends to zero
+when \(\log_2\mu_n\le c_n-\varepsilon\) eventually and tends to one when
+\(\log_2\mu_n\ge c_n+\varepsilon\) eventually. There is no zero-offset claim.
 
-Do not reopen Stage 1 merely to obtain a critical-window law, finer (o(1))
-centering, finite-(n) monotonicity, Poisson front processes, or other tree
-families.
+Session 18 completed the global mathematical proof. Do not reopen this stage
+for a critical-window law, finer \(o(1)\) centering, finite-\(n\) monotonicity,
+Poisson front counts, limiting distributions, or arbitrary-tree extensions.
 
-## Stage 2 — current: formalisation and complete verification
+## Stage 2 — complete: finite formalisation boundary and reproducibility
 
-Session 9 fixed the formal dependency architecture. The authoritative plan is
-`notes/session-9-formalisation-design.md`.
+Sessions 9--19 established and validated the exact finite Lean boundary used by
+the proof: pinned TreeStack semantics, categorical EMPTY, left/right path
+messages, low-phase deficit identities, regeneration, explicit finite
+seed/runaway/front interfaces, finite geometric and weak-composition algebra,
+and finite dyadic combinatorics.
 
-Session 18 has now assembled the complete mathematical proof of the frozen
-path theorem, including the exact conditioning transfer and both global
-fixed-offset directions. Session 19 is the theorem/formalisation/reproducibility
-closure stage; it should not reopen the probabilistic discovery programme.
+The full analytic asymptotic theorem is deliberately paper mathematics rather
+than a Lean limit theorem. In particular, Robbins/Stirling asymptotics,
+de Bruijn binary-partition asymptotics, the Session 17 local probability
+asymptotic, and the Session 18 global limiting argument are not hidden behind
+`sorry` or new axioms.
 
-Immediate priorities:
+The authoritative closure documents are:
 
-1. pin and compile the exact TreeStack/Mathlib/Lean dependency boundary;
-2. formalise deterministic path messages/fronts/regeneration;
-3. formalise finite weak-composition and geometric conditioning;
-4. formalise finite dyadic/binary-partition combinatorics;
-5. discharge the isolated compact-uniform binary-partition (o(L))
-   asymptotic;
-6. assemble local and global asymptotics;
-7. expose one small no-sorry headline theorem and run complete Lean CI.
+- `docs/FINAL_THEOREM_STATUS.md`;
+- `docs/PROOF_DEPENDENCY_MAP.md`;
+- `docs/REPRODUCIBILITY.md`;
+- `notes/session-19-closure.md`.
 
-Do not weaken the mathematical theorem to fit the prover. Keep mathematical
-proof status, Python validation status, and Lean compilation status separate.
+Historical formalisation plans such as `notes/session-9-formalisation-design.md`
+remain records of the state at the time; they are not the current completion
+checklist.
 
-## Stage 3 — comprehensive public-record prior-art/originality audit
+## Stage 3 — next: comprehensive public-record prior-art/originality audit
 
-Only after complete formal verification, search well beyond arXiv:
-MathSciNet/zbMATH where accessible, journals, Scholar-style citation trails,
-graph-pebbling bibliographies, author pages, proceedings, theses, terminology
-variants, cited/citing papers, and mathematically equivalent formulations.
-Log search terms, dates, databases, and findings.
+Search well beyond arXiv: journals, MathSciNet/zbMATH where accessible,
+Scholar-style citation trails, graph-pebbling bibliographies, author pages,
+proceedings, theses, terminology variants, cited/citing papers, and
+mathematically equivalent formulations.
 
-A negative public-record audit cannot rule out private, unpublished, or
-unindexed work.
+The audit should cover at least random weak compositions / conditioned
+geometrics, pebbling or stacking on paths and trees, TreeStack-style structural
+certificates, binary-partition asymptotics, random message/affine recurrences
+and rare deficit fronts, and thresholds at stretched-logarithmic densities.
+
+Log search terms, dates, databases and findings. A negative public-record audit
+cannot establish novelty or rule out private, unpublished, or unindexed work.
+Do not make novelty or priority claims during the audit.
 
 ## Stage 4 — standalone paper
 
-Write a self-contained article explaining the model, deterministic TreeStack
-input, uniform weak-composition probability space, frozen theorem, proof,
-formal verification, only mathematically useful experiments, and the
-public-record literature audit. Do not oversell.
+Only after Stage 3, write a self-contained article explaining the model,
+deterministic TreeStack input, uniform weak-composition probability space,
+frozen theorem, rigorous paper proof, exact finite Lean boundary, reproducible
+deterministic validation, and the literature audit. Do not oversell the degree
+of formalisation or originality.
 
 ## Stage 5 — submission and packaging decisions
 
-Only after the theorem is proved, formally verified, audited, and written as a
-standalone paper should the project decide on arXiv, Palomar, journal
-submission, or other packaging.
-
-At that time, inspect the then-current specifications rather than reusing old
-TreeStack packaging assumptions.
+Only after the theorem is proved, the finite formalisation/reproducibility
+boundary is stable, the public-record audit is complete, and the standalone
+paper is written should the project decide on arXiv, Palomar, journal
+submission, or other packaging. Inspect then-current specifications rather
+than reusing historical assumptions.
