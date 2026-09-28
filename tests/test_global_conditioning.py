@@ -47,7 +47,12 @@ def test_frozen_center_has_minus_half_log_log_and_correct_constant():
     assert math.isclose(LOG2_3E, math.log2(3.0 * math.e), rel_tol=0.0, abs_tol=1e-15)
 
     wrong_plus = math.sqrt(N) + 0.5 * math.log2(N) + LOG2_3E
-    assert abs(frozen_center(N) - wrong_plus) == math.log2(N)
+    assert math.isclose(
+        abs(frozen_center(N) - wrong_plus),
+        math.log2(N),
+        rel_tol=0.0,
+        abs_tol=1e-12,
+    )
 
 
 def test_fixed_offset_balance_has_the_frozen_signs():
