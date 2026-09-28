@@ -270,10 +270,10 @@ identity from Session 7; there is no hidden parity constant.
 
 `ProbStack/FiniteDyadic.lean` adds:
 
-- `dyadicInputCost` and `reverseDyadicInputCost`;
-- `affineInputCost_eq_dyadicInputCost`;
+- `forwardDyadicInputCost`, alongside the pre-existing reversed `dyadicInputCost` from `ProbStack.Deficit`;
+- `affineInputCost_eq_forwardDyadicInputCost`;
 - `positiveDescentBudgetInt`;
-- `positiveDescentEvent_iff_dyadicInputCost_le`;
+- `positiveDescentEvent_iff_forwardDyadicInputCost_le`;
 - `binaryPartitionEncoding`;
 - `binaryPartitionEncoding_cost`;
 - `binaryPartition_tail_le`;
@@ -282,7 +282,7 @@ identity from Session 7; there is no hidden parity constant.
 - `LowPhaseSimplex`;
 - `lowPhaseSimplex_final_ge`.
 
-The binary-partition encoding lemmas formalise the finite bijection behind
+The low-phase closed form deliberately reuses the pre-existing `dyadicInputCost`, whose weights are exactly twice the reversed occupancy weights in (8). The binary-partition encoding lemmas formalise the finite bijection behind
 (2) at the multiplicity-vector level without introducing polynomial
 coefficient machinery. A full `Fintype.card` theorem can be added later if a
 downstream theorem actually requires it.
