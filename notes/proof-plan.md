@@ -1,5 +1,14 @@
 # Proof plan — stage 1
 
+> **Historical chronological proof plan.** This file records how the proof
+> programme evolved session by session. Statements such as “current scale
+> question”, “highest-priority next target”, and the Session 6/7 open gaps are
+> accurate only at their historical positions. The final authoritative proof
+> dependency graph is `docs/PROOF_DEPENDENCY_MAP.md`, and the final theorem
+> status is `docs/FINAL_THEOREM_STATUS.md`. Session 18 closes the global
+> probability proof; Session 19 does not reopen it.
+
+
 The current goal is not to formalize an unproved guess.  It is to turn the path
 score theorem into a tractable probabilistic event and identify the correct
 asymptotic statement.
@@ -35,7 +44,7 @@ conditioning event, Poissonisation/de-Poissonisation, first/second moments for
 extreme bad blocks, and concentration only after the correct statistic is
 identified.
 
-## Current scale question
+## Historical Session 1 scale question (superseded)
 
 Experiments make `n log n` a serious working hypothesis for the recovery order,
 but not yet a theorem or stable conjecture.  A proof programme should seek
@@ -366,3 +375,25 @@ means above c_n+epsilon are stackable whp.
 
 The next stage is formalisation design. Do not reopen the theorem merely to
 chase a zero-offset limiting law.
+
+
+## Session 18/19 final closure
+
+The remaining conditioning/global gap is closed. The final fixed-offset center
+is
+
+`c_n = sqrt(log_2 n) - 0.5 log_2 log_2 n + log_2(3e)`.
+
+The Session 17 one-sided local rate is imported unchanged; Session 8
+regeneration supplies the optimal start window at constant cost; Session 18
+uses sequential product-law spatial abundance followed by exact total
+conditioning on the subcritical side, and a bounded local cover plus local
+conditioning transfer on the supercritical side. Conditioned independence is
+not used.
+
+The exact supercritical deterministic target remains `-(2mu-1)`. Interior
+locations receive an `O(n)` multiplicity; physical-boundary locations do not.
+The `1 -> 0` terminal route pays the exact-output-zero bridge cost.
+
+Future sessions should use `docs/PROOF_DEPENDENCY_MAP.md` rather than this
+chronological file as the current proof checklist.
