@@ -99,7 +99,8 @@ coefficient total `2B`.
 theorem binaryPartition_nextPart_gt_total
     {k B : Nat} (hcut : B < 2 ^ k) :
     2 * B < 2 ^ (k + 1) := by
-  simpa [pow_succ, Nat.mul_comm] using Nat.mul_lt_mul_left 2 hcut
+  rw [pow_succ]
+  omega
 
 /--
 Closed form for the Session-14 recursive low-phase certified deficit. The
