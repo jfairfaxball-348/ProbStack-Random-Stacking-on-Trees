@@ -110,6 +110,21 @@ private theorem prefixScan_eq_probStack {n : Nat} (C : Configuration n) :
       rw [ih (by omega)]
       rfl
 
+private theorem orientedBranch_eq_of_root_parent_eq
+    {V : Type*} [Fintype V] {T : TreeStack.FiniteTree V}
+    (A B : TreeStack.OrientedBranch T)
+    (hroot : A.root = B.root)
+    (hparent : A.parent = B.parent) :
+    A = B := by
+  cases A with
+  | mk ar ap aadj =>
+      cases B with
+      | mk br bp badj =>
+          simp only at hroot hparent
+          subst br
+          subst bp
+          rfl
+
 private theorem directedMessage_eq_incident
     {n : Nat} (hn : 0 < n) (C : Configuration n)
     (r u : Fin n)
@@ -125,9 +140,11 @@ private theorem directedMessage_eq_incident
     have hB :
         TreeStack.incidentBranch (ProbStack.pathTree n hn) r u hu =
           ProbStack.LeftPath.leftBranch n hn u.val hk := by
-      ext <;>
-        simp [TreeStack.incidentBranch, ProbStack.LeftPath.leftBranch] <;>
-        omega
+      apply orientedBranch_eq_of_root_parent_eq
+      · apply Fin.ext
+        rfl
+      · apply Fin.ext
+        exact hleft
     calc
       directedMessage C u r =
           prefixScan C u.val u.isLt := by
@@ -152,9 +169,14 @@ private theorem directedMessage_eq_incident
     have hB :
         TreeStack.incidentBranch (ProbStack.pathTree n hn) r u hu =
           ProbStack.RightPath.rightBranch n hn k hk := by
-      ext <;>
+      apply orientedBranch_eq_of_root_parent_eq
+      · apply Fin.ext
         simp [TreeStack.incidentBranch, ProbStack.RightPath.rightBranch,
-          k, Fin.val_rev] <;>
+          k, Fin.val_rev]
+        omega
+      · apply Fin.ext
+        simp [TreeStack.incidentBranch, ProbStack.RightPath.rightBranch,
+          k, Fin.val_rev]
         omega
     calc
       directedMessage C u r =
@@ -162,9 +184,12 @@ private theorem directedMessage_eq_incident
             simp [directedMessage, hnotleft, hright, k]
       _ =
           ProbStack.LeftPath.prefixScan
+            (reverseConfig C) k (by omega) :=
+            prefixScan_eq_probStack (reverseConfig C) k (by omega)
+      _ =
+          ProbStack.LeftPath.prefixScan
             (ProbStack.RightPath.reverseConfig C) k (by omega) := by
-            simpa [reverseConfig, ProbStack.RightPath.reverseConfig] using
-              prefixScan_eq_probStack (reverseConfig C) k (by omega)
+            rfl
       _ =
           (ProbStack.RightPath.rightBranch n hn k hk).branchMessage C := by
             symm
