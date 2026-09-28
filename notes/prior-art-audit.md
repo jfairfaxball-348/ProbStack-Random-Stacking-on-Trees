@@ -761,3 +761,446 @@ The next audit should be narrower than this one: it should resolve those specifi
 - TreeStack/Mathlib/Lean dependency pins are untouched.
 - Permanent CI is untouched.
 - No Python or Lean mathematical code is changed by this audit.
+
+# Session 21 targeted prior-art audit completion
+
+Date of follow-up: 2026-09-28.
+
+This section records the targeted follow-up requested after Session 20. It supersedes the Session 20 open-items list and roadmap recommendation in Sections 17-18, but it does not erase the Session 20 search record. As throughout this audit, a negative search is not evidence of novelty, priority or originality.
+
+## 20. Repository and scope verification
+
+Session 21 began from the exact Session 20 branch tip:
+
+2b7df6de75aac414a0db8808465ff877cfa3c467
+
+The merge base with validated Session 19 main is exactly:
+
+d03b8381eb1b4cc100146cadbed3035c31c7016d
+
+At the start of Session 21, the Session 20 branch was two commits ahead of main and zero behind. The only files differing from Session 19 main were notes/prior-art-audit.md and notes/session-20-handover.md.
+
+The Session 21 continuation branch is:
+
+session-21-prior-art-audit-completion
+
+No mathematical code, Lean, Python tests, data, dependency pins or workflows were changed in beginning this follow-up. The theorem and Session 17 remain closed.
+
+## 21. Bushaw-Kettle constant-level comparison
+
+Primary source:
+
+Neal Bushaw and Nathan Kettle, “Thresholds for pebbling on grids,” Discrete Mathematics 348(10) (2025), 114519; arXiv:2309.01762; DOI 10.1016/j.disc.2025.114519.
+
+### 21.1 Their q-pebbling model and random law
+
+A q-pebbling move removes q pebbles from one vertex and places one pebble on an adjacent vertex. A configuration is v-solvable if a pebble can be moved to the prescribed vertex v, and is solvable if it is v-solvable for every v. Different roots may use different move sequences.
+
+Their random space D_{G,t} is the uniform distribution over configurations of t indistinguishable pebbles on the N vertices of G. Equivalently, it is the uniform law on weak compositions of t into N parts. This is exactly the fixed-total probability law used by ProbStack.
+
+The event is not the same. Bushaw-Kettle solvability asks whether at least one pebble can be delivered to each prescribed root, separately. ProbStack stackability asks whether the entire surviving support can be collapsed to one vertex in one legal sequence.
+
+Bushaw-Kettle define the median threshold parameter
+
+P_{1/2}(G)=min{k : Pr(D in D_{G,k} is solvable) >= 1/2}.
+
+Solvability is monotone under adding pebbles to a fixed configuration. ProbStack does not use this monotonicity structure for stackability; finite stackability probabilities need not be treated as a monotone threshold family.
+
+### 21.2 Exact grid and path threshold statements
+
+For a d-dimensional grid with side length n and pebbling bases q_1,...,q_d, their main grid theorem has the form
+
+P_{1/2}(P_n^d)
+=
+n^d exp(
+  (((d+1)! log n * product_i log q_i)/2)^(1/(d+1))
+  - d/(d+1) log log n
+  + O(1)
+).
+
+For paths, their Theorem 2 states the stronger asymptotic
+
+P_{1/2}(P_n)
+=
+n exp(
+  sqrt(log q * log n)
+  - (1/2) log log n
+  + o(1)
+).
+
+The logarithms in that formula are natural.
+
+For q=2, put N=log_2 n and let lambda_n=P_{1/2}(P_n)/n. Converting the displayed path theorem to base-2 logarithmic density gives
+
+log_2 lambda_n
+=
+sqrt(N)
+-
+(1/2) log_2 N
+-
+(1/2) log_2(log 2)
++
+o(1).
+
+Thus Bushaw-Kettle determine a fixed additive center in log-density coordinates for their solvability event. The additive constant is
+
+-(1/2) log_2(log 2),
+
+not ProbStack’s frozen constant log_2(3e). The agreement is therefore at the leading square-root-log and minus-half-log-log scales, with a different event and a different additive constant.
+
+This corrects the weaker Session 20 wording that treated their result only as having the “same broad scale.” Their path theorem is substantially sharper than order-level, and the distinction should be reflected in any related-work section.
+
+### 21.3 Role of partitions into powers of q
+
+Their sharp path argument studies weighted local configurations whose counting problem is expressed using partitions into powers of q. The same Mahler/de Bruijn family of partition asymptotics therefore appears as an analytic ingredient.
+
+This is an analytic-method overlap, not an event equivalence. ProbStack’s local objects arise from its signed TreeStack message/deficit dynamics and opposing-front obstruction. Bushaw-Kettle’s local objects arise from q-pebbling solvability and weighted access to target vertices.
+
+### 21.4 Their local occupancy lemma
+
+Bushaw-Kettle’s Lemma 3 works directly in the same fixed-total multiset model. In the notation of their paper, with N boxes, average density lambda, t prescribed coordinates and total prescribed mass m, their hypotheses include
+
+lambda=o(sqrt(N)),
+t=o(lambda),
+m=o(lambda^2).
+
+For a specified occupancy vector they obtain a point probability asymptotic of the form
+
+lambda^{-t} exp(-m/lambda) (1+o(1)),
+
+equivalently expressed through the matched geometric factors at their precision.
+
+This is highly relevant to ProbStack’s Session 18 conditioning transfer, but the statements are not identical. Their result is a point-vector local occupancy asymptotic under support/mass restrictions. ProbStack’s Session 18 finite ratio bound controls every event supported on a displayed set of k coordinates whose local mass is bounded by S, and it applies the same exact finite ratio to one or two separated bounded blocks without asserting conditioned independence.
+
+### 21.5 Side-by-side comparison
+
+| Feature | Bushaw-Kettle 2025 | ProbStack |
+| --- | --- | --- |
+| random law | uniform fixed-total multiset / weak composition | uniform fixed-total weak composition |
+| graph | grids; sharp special theorem for paths | paths for the headline random theorem |
+| local move | q-pebbling, q removed and one moved | ordinary q=2 graph pebbling |
+| event | solvable: every prescribed root can receive a pebble, separately | stackable: some root can receive all surviving support |
+| deterministic certificate | root-solvability weights and path/grid local estimates | exact TreeStack branch messages and root score |
+| local rare event | weighted occupancy obstruction/access event | deep signed-deficit excursion/front |
+| partition ingredient | partitions into powers of q | binary partitions applied to dyadic deficit/simplex counts |
+| threshold parameter | median P_{1/2}(G) | asymptotic stackability probability at density mu_n |
+| path density scale, q=2 | sqrt(log_2 n) - 1/2 log_2 log_2 n plus fixed constant and o(1) | same first two scales |
+| additive constant | -1/2 log_2(log 2) | log_2(3e) |
+| local conditioning | specified local occupancy vector, t=o(lambda), m=o(lambda^2) | exact finite likelihood ratio for capped local event classes |
+| monotonicity | solvability is upward monotone in added pebbles | finite stackability probability is not used as a monotone threshold family |
+| conclusion | strong threshold for solvability | fixed-epsilon high-density transition for stackability; no epsilon=0 theorem |
+
+The comparison is descriptive. It is not a ranking and does not support a novelty inference.
+
+## 22. Csernák-Soukup deep audit
+
+Primary source:
+
+Tamás Csernák and Lajos Soukup, “Stacking and clearing in graph pebbling,” arXiv:2604.22341 (2026).
+
+### 22.1 Exact terminology
+
+Their definitions are exact event precedents:
+
+- a configuration is stacked if its support has size one;
+- it is stacked at v if its support is {v};
+- it is stackable if some stacked configuration is reachable by legal pebbling moves;
+- stack(G) is the least t>=2 such that every configuration of size t is stackable.
+
+The authors state, in their own qualified historical wording, that “to the best of our knowledge” these parameters had not previously been investigated. This audit records that statement as an attributed author claim; it does not adopt it as an independent priority conclusion.
+
+They explicitly situate stacking inside Hurlbert’s general target-family framework and say their project was motivated by a 2023 Glenn Hurlbert seminar talk.
+
+### 22.2 Path theorem and proof architecture
+
+They prove
+
+stack(P_n)=2^n-1.
+
+For the lower bound they define c_n^m=m e_{v_1}+e_{v_n}. Their Theorem 7.3 shows c_n^m is non-stackable whenever m<2^n and m is congruent to 2^n modulo 3. The proof combines a path valuation, bipartite imbalance modulo 3, a homomorphism reduction and induction. Taking m=2^n-3 produces a non-stackable configuration of total size 2^n-2.
+
+For the upper bound they induct on path length. Starting with a configuration of size at least 2^{n+1}-1, they eliminate the endpoint v_{n+1} while retaining enough total mass on the first n vertices; the induction hypothesis then stacks the reduced configuration.
+
+This is a worst-case deterministic theorem. It does not provide a random fixed-total probability transition.
+
+### 22.3 Relationship to ordinary pebbling and cover pebbling
+
+They prove the general deterministic lower bound
+
+stack(G) >= pi(G)+1,
+
+so their stacking parameter is explicitly compared to the ordinary pebbling number.
+
+Their Almost Stacked Hypothesis is motivated by Sjöstrand’s cover pebbling theorem. A configuration is almost stacked at v_0 if every other vertex carries at most one pebble. ASH asserts that the worst-case threshold stack(G), and analogously clear(G) when applicable, can be tested on almost-stacked configurations.
+
+The cover-pebbling terminology must remain separate. Sjöstrand’s stacking principle says that extremal cover-pebbling obstructions may be taken from configurations initially concentrated at one vertex. Haynes-Keaton later use “stacking number” in a cover/rubbling target-demand setting. Those are not the event “given C, can C be transformed to support one?”
+
+### 22.4 Tree results and computation
+
+Csernák-Soukup first prove a two-pebbles-per-vertex tree leaf-elimination result: on a tree, such a configuration can be stacked at any chosen vertex by repeatedly clearing leaves while preserving at least two pebbles on the remaining tree.
+
+Their later tree section is about the worst-case stacking number. For a root r they define a distance/degree expression sigma_T(r) and an estimator estim(T). Theorem 10.1 proves a sufficient condition for an almost-stacked configuration to be stackable at its distinguished vertex. Assuming ASH they obtain stack(T)<=estim(T), and they conjecture equality for finite connected trees.
+
+Their computations verify this tree conjecture for all trees with at most seven vertices and verify ASH for graphs with at most seven vertices.
+
+None of these statements is an exact arbitrary-configuration root feasibility criterion of the TreeStack form StackableAt(T,C,r) iff 0<score(T,C,r).
+
+### 22.5 Backward terminology trail
+
+The references and related literature inspected in this follow-up include:
+
+- Hurlbert’s general target framework;
+- Sjöstrand, “The Cover Pebbling Theorem” (2005);
+- Haynes-Keaton, “Cover rubbling and stacking” (2020);
+- DeVries, “Pebbling of Oriented Graphs” (M.S. thesis, 2017), where “simple” configurations and concentration language occur in the cover-pebbling context;
+- Hurlbert’s 2023 seminar listing “Pebbling Problems and Paradigms.”
+
+These older uses give related “stacking”, “simple configuration” and “concentration” language but, in the inspected sources, refer to an initial extremal form or target-demand problem rather than the support-collapse final event.
+
+No earlier public-record source using “stackable” for the exact support-collapse reachability event was located in this targeted trail. This is a search result only, not a priority conclusion.
+
+### 22.6 Directed follow-up and random variants
+
+Csernák and Soukup subsequently posted “Stacking and Clearing in Directed Graph Pebbling,” arXiv:2606.04659 (2026). It continues the deterministic stacking/clearing programme on directed graphs.
+
+No random stackability probability model was located in that follow-up, the inspected author trail, or the forward/related search described below.
+
+## 23. Direct bibliographic-database pass
+
+The following direct or database-native searches were attempted in addition to ordinary web search.
+
+| Database/index | Representative direct queries | Result/access mode |
+| --- | --- | --- |
+| MathSciNet | exact titles “Thresholds for pebbling on grids”, “Stacking and clearing in graph pebbling”, “Target Pebbling in Trees”; stackable/random-stacking variants | direct result pages were not accessible in this environment; coverage unresolved |
+| zbMATH | same exact-title and keyword variants | direct result pages were not accessible; a propagated zbMATH Open record for Bushaw-Kettle surfaced through MaRDI, but this does not substitute for a complete direct search |
+| Google Scholar | exact recent titles and author/title combinations | direct citation page access was rate-limited (HTTP 429) during the targeted pass |
+| Semantic Scholar | exact-title, arXiv and DOI lookups | direct API/result access was unavailable from this environment |
+| Crossref | exact-title/DOI metadata queries | direct API access was unavailable from this environment |
+| DBLP | exact journal title/author combinations | public DBLP records were accessible for Bushaw-Kettle and the 2026 Target Pebbling paper; no useful exact-title record for the very recent Csernák-Soukup arXiv work was located |
+| arXiv | exact titles, author searches, related recent preprints | full/preprint access successful for Bushaw-Kettle, Csernák-Soukup, the directed follow-up and Target Pebbling in Trees |
+| publisher sites | DOI/title searches | public metadata was accessible for the principal journal papers; preprints/author copies supplied the needed full mathematical body where publisher full text was limited |
+
+Important keyword combinations run across these systems/public search included:
+
+stackable graph pebbling; stacking graph pebbling; random stackable pebbling; random stacking pebbling; pebbling threshold path; multiset pebbling threshold; uniform pebble configuration; weak composition graph pebbling; Bose Einstein pebbling; support collapse pebbling; all pebbles to one vertex; gathering pebbling; concentration pebbling; coalescing pebbling; target pebbling tree configuration algorithm; pebbling dynamic programming tree; tree pebbling message passing.
+
+The direct MathSciNet/zbMATH failure is recorded as an access limitation, not silently replaced by ordinary web search and not interpreted as absence from those databases.
+
+## 24. Theses, proceedings and author-page follow-up
+
+The targeted pass inspected author/publication pages and older non-journal records in the closest lineages.
+
+David Moews’s publication page lists “The Pebbling Threshold Spectrum and Paths” together with the earlier components “An Exact Pebbling Threshold for the Path” and “Extending the Pebbling Threshold Spectrum,” and an expanded “Pebbling Graphs.” These alternate titles matter for retrospective searching.
+
+Glenn Hurlbert’s publication material exposes older proceedings/unpublished entries including “On the pebbling threshold spectrum” and a 2000 British Combinatorial Conference item “On graph pebbling, threshold functions, and supernormal posets,” as well as later target-pebbling work.
+
+Carl Yerger’s 2005 senior thesis “Extensions of Graph Pebbling” contains probabilistic and cover-pebbling extensions. No support-collapse random-stackability theorem was located there.
+
+Bushaw’s author page was checked for alternate/prepublication pebbling items; the relevant Bushaw-Kettle paper/preprint is the material match located.
+
+The Csernák-Soukup author/preprint trail and their cited 2023 Hurlbert seminar were checked. The inspected material did not reveal an earlier random stackability theorem.
+
+## 25. Tree-certificate equivalence search
+
+### 25.1 Closest recurrence precedent: Watson
+
+Nathaniel Watson, “The Complexity of Pebbling and Cover Pebbling,” arXiv:math/0503511 (2005), contains a tree leaf-elimination rule for a fixed cover demand D.
+
+For a leaf v with neighbor v', compare the available supply B(v) with demand D(v):
+
+- when B(v)-D(v) is nonnegative, the transferable surplus is halved, using floor((B(v)-D(v))/2);
+- when B(v)-D(v) is negative, the deficit sent to the neighbor is doubled.
+
+The reduced tree instance is cover-solvable exactly when the original instance is cover-solvable.
+
+This is a genuine close algebraic precedent for propagating signed resource surplus/deficit through a factor-two-loss tree. It should be cited when describing the broader structural context of TreeStack.
+
+It is not, however, an exact TreeStack match. Watson fixes a target demand, permits leftovers beyond that demand, and solves cover feasibility. TreeStack’s certificate concerns arbitrary input configurations, a chosen stack root, complete support collapse and categorical branch-message semantics including EMPTY.
+
+### 25.2 Other targeted tree/algorithm sources
+
+Adauto, Bardenova, Bidav and Hurlbert, “Target Pebbling in Trees” (2026), computes target pebbling numbers on trees through path partitions and extremal target configurations. It is a worst-case target-number problem rather than an arbitrary-configuration support-collapse decision rule.
+
+Searches also covered graph-pebbling reachability/pruning algorithms, weight-function certificates, outerplanar/tree-like pebbling algorithms, chip-firing/resource-transfer language, bottom-up tree dynamic programming, signed surplus/deficit recurrences, min-plus tree recurrences and factor-two flow formulations.
+
+Conclusion:
+
+no exact public-record match located in the searched sources
+
+for an arbitrary-configuration criterion mathematically equivalent to
+
+StackableAt(T,C,r) iff 0 < score(T,C,r)
+
+with recursively computed branch messages.
+
+This sentence is deliberately a search-status statement only.
+
+## 26. Binary-partition citation closure
+
+The clean primary citation for the asymptotic input used by ProbStack is:
+
+N. G. de Bruijn, “On Mahler’s partition problem” (1948), especially equations (1.3)-(1.4).
+
+For partitions into powers of r, de Bruijn gives the logarithmic asymptotic and bounded periodic refinement. Setting r=2 and using ProbStack’s exact identification A(B)=p_bin(2B) provides the unrestricted binary-partition input.
+
+The status of the compact-uniform specialization needed by ProbStack is:
+
+1. Literature theorem stated directly: de Bruijn’s unrestricted power-partition asymptotic and periodic refinement.
+2. Immediate corollary: specialize to r=2 and substitute the argument B.
+3. Small uniformity deduction: for B=lambda 2^L+O(1) with lambda in a fixed compact subinterval of (0,infinity), the substitution/Taylor expansion is uniform because log lambda is bounded and the additive perturbation is uniformly bounded.
+4. Project-specific application: use the exact finite truncation comparison and insert the resulting count into the ProbStack deficit/front rare-event calculation.
+
+Protasov’s later papers remain useful refinements and context, especially for binary-partition variants, but de Bruijn is the most direct primary source for the unrestricted asymptotic actually invoked.
+
+No new binary-partition theorem is claimed.
+
+## 27. Conditioning and local-block citation closure
+
+Three levels should be kept distinct.
+
+### 27.1 Classical allocation identity
+
+Janson’s 2012 survey “Simply generated trees, conditioned Galton-Watson trees, random allocations and condensation” treats random allocations through product weights conditioned on a total. For Bose-Einstein weights w_k=1, the fixed-total allocations are equiprobable and the matching independent variables are geometric.
+
+Thus the identity
+
+uniform weak composition = iid geometric coordinates conditioned on their sum
+
+is classical.
+
+### 27.2 Bushaw-Kettle local point asymptotic
+
+Bushaw-Kettle Lemma 3 is unusually close because it works in the same fixed-total pebble space while the density grows. It gives a local specified-vector probability asymptotic under t=o(lambda), m=o(lambda^2) and lambda=o(sqrt N).
+
+### 27.3 ProbStack Session 18 exact finite transfer
+
+Session 18 derives the exact finite likelihood ratio for a displayed k-vector with local mass s:
+
+R_{n,t,k}(s)
+=
+[(n-1)_k (t)_s/(n+t-1)_{k+s}]
+/
+[(n/(n+t))^k (t/(n+t))^s].
+
+Under the half-range hypotheses it bounds |log R| by
+
+k(k+1)/n + s(s-1)/t + (k+s)(k+s+1)/(n+t).
+
+This yields uniform exp(o(1)) transfer for the capped local event classes actually used by ProbStack, including two separated blocks treated as one displayed vector. It does not assume conditioned independence.
+
+The most accurate literature classification is therefore:
+
+- model/conditioning identity: classical;
+- growing-density specified local occupancy asymptotic: directly present in Bushaw-Kettle under their hypotheses;
+- exact finite capped-event likelihood-ratio bound in the particular form used by Session 18: a short project-specific deduction from stars-and-bars/product-mass identities, not a claimed new general allocation theorem.
+
+## 28. Forward-citation pass for recent closest sources
+
+Exact-title, DOI/arXiv and author/title searches were run for:
+
+- Bushaw-Kettle 2025;
+- Csernák-Soukup 2026;
+- Adauto-Bardenova-Bidav-Hurlbert 2026.
+
+The accessible citation-index picture is too immature to support strong numerical claims. Public pages returned inconsistent or incomplete citation counts for the 2025 paper, and direct Google Scholar/Semantic Scholar access was rate-limited or blocked during part of this pass.
+
+For Csernák-Soukup, the June 2026 directed-graph paper is a same-author continuation that cites/continues the stacking programme. No reliable independent forward-citing paper was located in the accessible indexes.
+
+For the 2026 Target Pebbling paper, no reliable independent forward-citation trail bearing on random stackability or a TreeStack-equivalent certificate was located.
+
+Because all three papers are recent, indexing lag is a material limitation. The safe future-paper practice is to rerun forward-citation checks immediately before submission or public posting, rather than treating the present counts as stable.
+
+## 29. Expanded model-comparison matrix
+
+| Source | Event | Probability law | Graph family | Deterministic certificate / mechanism | Threshold parameter/asymptotic | log-log / additive precision | Binary partitions | Local conditioning | Monotonicity | Formulation |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| ProbStack | support collapse to one unspecified root | uniform fixed-total weak composition | path headline theorem; TreeStack semantics on trees | exact branch messages/root score; path deficit fronts | density mu_n; fixed-epsilon transition around frozen c_n | -1/2 log_2 log_2 n and +log_2(3e); no epsilon=0 theorem | yes, applied to local dyadic deficit counts | exact finite capped-event ratio plus global conditioning | finite stackability probability not used as monotone threshold family | random |
+| Bushaw-Kettle 2025 | ordinary/q-pebbling solvability for every prescribed root | same uniform fixed-total multiset law | grids; sharp paths | weights/local target access | median P_{1/2}; path n exp(sqrt(log q log n)-1/2 log log n+o(1)) | for q=2 gives fixed constant -1/2 log_2(log 2) in log-density coordinates | yes, powers of q | growing-density specified local vectors | solvability upward monotone | random |
+| Moews 2019 | pebbling solvability | uniform multiset law | paths and threshold spectrum | root solvability | path order Theta(n 2^{sqrt(log_2 n)}/sqrt(log_2 n)) | correct first two order scales; no ProbStack fixed constant | related path threshold methods | classical threshold model | solvability monotone | random |
+| Csernák-Soukup 2026 | exact stackability event | none in main problem | general graphs, exact paths, cycles, trees | valuations, imbalance, induction, ASH, distance/degree bounds | worst-case stack(G); stack(P_n)=2^n-1 | not a random-density asymptotic | no role comparable to ProbStack | none | stack(G) is worst-case deterministic parameter | deterministic |
+| Adauto et al. 2026 | meet fixed target demand | none in target-number theorem | trees | path partitions/extremal target configurations | target pebbling number | not a random-density asymptotic | no identified role | none | worst-case target number | deterministic |
+| Watson 2005 | cover solvability for a fixed demand | none in leaf recurrence | trees/general complexity | leaf surplus/deficit elimination, halve surplus/double deficit | decision/complexity and cover feasibility | not a random-density asymptotic | no identified role | none | fixed-demand feasibility | deterministic |
+| Classical 2002-2008 random-pebbling line | solvability | uniform multiset/weak composition | graph sequences including paths | pebbling/root-solvability methods | threshold functions | progressively refined path scale | later sharp work uses partition methods | multiset threshold framework | monotone solvability family | random |
+
+The matrix is descriptive and intentionally does not score, rank or select a “closest winner.”
+
+## 30. Stable terminology recommendation
+
+Recommended terminology for eventual paper preparation:
+
+- random stackability — for the probabilistic model/problem area;
+- stackability probability — for the finite-n observable;
+- high-density stackability transition — for the asymptotic phenomenon proved by the frozen theorem;
+- fixed-offset high-density stackability transition — when emphasizing the exact theorem statement.
+
+Use stackable with an explicit citation to Csernák-Soukup because their definition matches the deterministic event.
+
+Avoid using “stacking number” for ProbStack’s random quantity because Csernák-Soukup already use stack(G) for a different worst-case deterministic parameter.
+
+Avoid making “stackability threshold” the primary unqualified term. Classical “pebbling threshold” terminology is tied to an upward-monotone solvability family, whereas finite stackability probability is not being treated as monotone here. “Transition” is less likely to imply a monotonicity theorem that ProbStack does not state.
+
+“Recovery transition” is not recommended as the primary public term because it hides the established graph-pebbling word “stackable” and requires extra explanation.
+
+Cover-pebbling “stacking” should always be qualified so that an initially stacked extremal configuration is not confused with the final support-collapse event.
+
+## 31. Conservative classification after Session 21
+
+Classical:
+- uniform weak compositions / Bose-Einstein fixed-total allocations;
+- iid-geometric conditioned-on-sum representation;
+- random pebbling in the uniform multiset law;
+- binary/power-partition asymptotics.
+
+Exact event precedent with a different question:
+- Csernák-Soukup stackability and stack(G): same deterministic event, worst-case deterministic parameter.
+
+Same probability model, graph family and close asymptotic structure with a different event:
+- Bushaw-Kettle path solvability; Moews path solvability.
+
+Same or close analytic mechanism:
+- partitions into powers of q in Bushaw-Kettle;
+- local fixed-total occupancy conditioning in Bushaw-Kettle and classical allocation theory;
+- signed halve/double resource propagation in Watson’s cover-pebbling tree reduction.
+
+No exact public-record match located in the searched sources:
+- a random fixed-total path stackability theorem combining the Csernák-Soukup event with the classical multiset law;
+- an external arbitrary-configuration TreeStack-equivalent branch-message/root-score criterion for support collapse.
+
+Unresolved because of access/indexing limitations:
+- direct authenticated coverage of MathSciNet and zbMATH;
+- stable forward-citation networks for the 2025-2026 papers;
+- any item absent from the public/indexed sources actually searched.
+
+These unresolved items are citation-maintenance caveats. They are not evidence of absence and do not support a categorical novelty claim.
+
+## 32. Session 21 closure decision
+
+YES — the public-record audit is sufficiently mature to begin standalone paper preparation, while continuing to avoid categorical novelty claims.
+
+The reason for this decision is not that absence has been proved. Rather, the principal collision risks have now been identified and can be cited explicitly:
+
+- exact stackability terminology/event: Csernák-Soukup;
+- same random law, paths and sharp stretched-log solvability transition: Bushaw-Kettle, with Moews and the earlier threshold lineage;
+- classical allocation/conditioning background: Janson and random-allocation literature;
+- classical binary-partition input: de Bruijn/Mahler/Protasov;
+- close signed tree recurrence precedent: Watson;
+- target-tree structural literature: Adauto et al.
+
+The remaining limitations are ordinary pre-submission citation-maintenance tasks: rerun recent forward citations and, where institutional access is available, check MathSciNet/zbMATH records. They do not warrant reopening another broad audit before drafting.
+
+This recommendation is only a roadmap decision about audit maturity. It is not a statement that the theorem is novel, original, first, publishable or unprecedented.
+
+## 33. Session 21 safeguards
+
+- The frozen theorem is unchanged.
+- The minus half-log-log sign is unchanged.
+- The constant log_2(3e) is unchanged.
+- There is still no epsilon=0 theorem.
+- Session 17 was not reopened.
+- No local rare-event rate was recomputed.
+- EMPTY remains categorical and was not identified with integer zero.
+- TreeStack, Mathlib and Lean dependency pins are unchanged.
+- Permanent CI semantics are unchanged.
+- No Python, Lean, theorem-code, test, data or workflow file was changed by this audit.
+- No novelty, priority, originality, publication or submission claim is made.
+- Negative search results are not treated as evidence of novelty.
