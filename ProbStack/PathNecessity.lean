@@ -250,7 +250,6 @@ private theorem pathPrefixMass_succ
       pathPrefixMass C k (by omega) + C ⟨k + 1, hk⟩
   congr 1
   rw [pathPrefixMass]
-  apply Finset.sum_congr rfl
 
 private theorem pathPrefixMass_add_last_eq_mass
     {n : Nat} (C : TreeStack.Configuration (Fin n))
@@ -264,7 +263,6 @@ private theorem pathPrefixMass_add_last_eq_mass
       (∑ i : Fin (j + 1), C i.castSucc) + C (Fin.last (j + 1))
   congr 1
   rw [pathPrefixMass]
-  apply Finset.sum_congr rfl
 
 noncomputable def leftPrefixDissipation
     {n : Nat} (hn : 0 < n) (C : TreeStack.Configuration (Fin n))
