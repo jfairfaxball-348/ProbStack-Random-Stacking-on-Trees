@@ -1,5 +1,9 @@
-import Mathlib.Combinatorics.SimpleGraph.Hasse
-import ProbStack.TreeStackBoundary
+module
+
+public import Mathlib.Combinatorics.SimpleGraph.Hasse
+public import ProbStack.TreeStackBoundary
+
+public section
 
 namespace ProbStack
 
