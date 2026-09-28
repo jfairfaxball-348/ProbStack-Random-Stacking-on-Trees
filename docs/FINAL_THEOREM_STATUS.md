@@ -78,25 +78,22 @@ paper/Lean boundary:
   fixed-total fibre, conditioned local-vector mass, and local-likelihood-ratio
   definitions in `FiniteProbability.lean`;
 - exact finite dyadic/binary-partition encodings, low-phase simplex facts,
-  ordinary-mass bounds, and reversal invariance in `FiniteDyadic.lean`.
+  ordinary-mass bounds, and reversal invariance in `FiniteDyadic.lean`;
+- the Session 5 global deep-message necessity in `PathNecessity.lean`:
+  `nonstackable_exists_directedMessage_le` and the exact fixed-total
+  corollary `nonstackable_total_mul_exists_directedMessage_le`, which forces
+  an actual directed path message at most `-(2*mu-1)`.
 
-The current ProbStack Lean source does **not** package the full Session 5
-global implication
-
-```
-nonstackable => some directed message <= -(2*mu-1),
-```
-
-nor a single global `opposing fronts => nonstackable` theorem. Those are
-rigorous deterministic paper mathematics. Session 19 leaves them there rather
-than adding nontrivial path/root-score infrastructure merely to increase
-formal theorem count.
+The current ProbStack Lean source still does **not** package a single global
+`opposing fronts => nonstackable` theorem. P5 remains rigorous deterministic
+paper mathematics; Session 23 changed only the P6 side of this formalisation
+boundary.
 
 ## What remains paper mathematics rather than Lean
 
 The deliberate non-Lean layer is:
 
-- the two global deterministic implications just identified;
+- the global deterministic implication `opposing fronts => nonstackable` (P5);
 - the full normalised event-level conditioning/uniformity theorem for the
   weak-composition fibre (Lean already contains its constant-atom algebra);
 - Robbins/Stirling asymptotics for the conditioning point mass;
