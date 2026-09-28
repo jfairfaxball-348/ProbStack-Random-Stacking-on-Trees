@@ -1,4 +1,8 @@
-import ProbStack.PathBridge
+module
+
+public import ProbStack.PathBridge
+
+public section
 
 namespace ProbStack
 
