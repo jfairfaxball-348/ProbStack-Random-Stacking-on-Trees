@@ -1,6 +1,6 @@
 # ProbStack — Random Stacking on Trees
 
-**Status: frozen path theorem with complete mathematical proof; formalisation / reproducibility closure in progress.**
+**Status: frozen path theorem mathematically complete; finite Lean interfaces and reproducibility closure complete. Next stage: public-record prior-art/originality audit.**
 
 ProbStack studies random pebble configurations on deterministic trees.  The
 first target is the path sequence \(P_n\).  This repository is intentionally
@@ -8,8 +8,9 @@ independent of TreeStack: it has its own Git history, tests, experiments, notes,
 and future proof development.  TreeStack is used only as the authoritative
 source of the deterministic structural theorem described below.
 
-No novelty, priority, publication, formal-verification, or Palomar claim is
-made here.  Numerical evidence is recorded as evidence, not as proof.
+No novelty, priority, publication, or Palomar claim is made here. The final
+asymptotic theorem is rigorous paper mathematics, not a fully Lean-formalised
+limit theorem. Numerical evidence is recorded as evidence, not as proof.
 
 Session 18 closes the global conditioning-transfer step: the stabilized local
 product-law excursion rate is now connected rigorously to the fixed-total
@@ -102,11 +103,11 @@ an additional aggregate nonmonotonicity on \(P_3\): the exact probability drops
 from \(19/21\) at \(t=5\) to \(25/28\) at \(t=6\) before reaching 1 at \(t=7\).
 These are finite facts, not asymptotic claims.
 
-A subsequent Monte Carlo orientation experiment, performed only after the
-exact/direct validation above, suggests that the high-density path recovery is
-better normalized by a mixed scale near \(n\log n\) than by a fixed multiple
-of \(n\).  That observation is currently a **candidate mechanism, not a
-settled theorem or promoted asymptotic formula**; see `notes/conjectures.md`.
+Early Monte Carlo orientation experiments suggested a mixed scale near
+\(n\log n\). That is retained only as historical discovery evidence: later
+Sessions 2--18 replaced it by the proved stretched-logarithmic path theorem
+stated below. Monte Carlo is not used in the final proof; see
+`notes/conjectures.md` for the chronological record.
 
 ## Reproduce
 
@@ -131,19 +132,24 @@ machine-readable experiment ledger is `data/experiment_log.jsonl`.
 
 ## Research discipline and scope
 
-The path theorem is now frozen at the intended fixed-offset precision. The
-current stage is **formalisation and complete verification**. The project
-should not reopen the theorem merely for a finer critical window, zero-offset
-law, finite-n monotonicity, Poisson front process, or arbitrary-tree extension.
+The path theorem is frozen at the intended fixed-offset precision. Session 19
+closes the theorem/formalisation/reproducibility stage without pretending that
+the analytic limit theorem is Lean-formalised. The exact current boundary is
+recorded in `docs/FINAL_THEOREM_STATUS.md`, and the authoritative proof DAG is
+`docs/PROOF_DEPENDENCY_MAP.md`.
 
-Session 9 records the formal dependency architecture in
-`notes/session-9-formalisation-design.md`. The immediate implementation task
-is to configure the exact pinned Lean/TreeStack/Mathlib boundary and compile
-the deterministic path-message scaffold. A comprehensive public-record
-prior-art/originality audit and standalone paper come only after complete
-formal verification. See `docs/ROADMAP.md`.
+The project must not reopen the theorem merely for a finer critical window,
+zero-offset law, finite-n monotonicity, Poisson front process, or arbitrary-tree
+extension. The next separate stage is a comprehensive public-record
+prior-art/originality audit; paper preparation follows only after that audit.
+See `docs/ROADMAP.md`.
 
-## Session 7 theorem status
+## Session 7 theorem status — historical, superseded globally by Sessions 8 and 18
+
+The statements in this section describe the exact state at the end of Session
+7. In particular, the bounded spatial gap below is historical: Session 8 closed
+it by constant-cost regeneration, and Session 18 completed the conditioning /
+global proof. The local Session 7 rate remains part of the final proof.
 
 The path programme now has a linear-order theorem for the one-sided
 deep-deficit probability.  If `L=ceil(log_2 mu)`,
@@ -221,5 +227,7 @@ epsilon give nonstackability with probability tending to one, while means
 eventually above it by epsilon give stackability with probability tending to
 one. No assertion is made at zero offset.
 
-This theorem is now frozen. The project should move next to formalisation
-design rather than finer asymptotics.
+This theorem is frozen. Sessions 9--17 built the finite formal/computational
+interfaces and local asymptotic input; Session 18 completed the global proof;
+Session 19 records the final proof/formalisation boundary and reproducibility
+closure. No zero-offset sharpening is part of the current programme.
