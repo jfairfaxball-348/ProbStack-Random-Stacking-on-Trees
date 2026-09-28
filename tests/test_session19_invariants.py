@@ -8,7 +8,8 @@ from prob_stack.global_conditioning import (
 from prob_stack.supercritical import deep_threshold
 
 
-TREE_STACK_PIN = "f4112f08d42a37c0941bf469ac124621b1f54f22"
+TREE_STACK_SEMANTIC_BASE = "f4112f08d42a37c0941bf469ac124621b1f54f22"
+TREE_STACK_PIN = "8fc9fc37a200855ec22579beaeec8f12f94f0310"
 MATHLIB_PIN = "065356127b1dc0016f66b7283ce0ce2c4055aa55"
 LEAN_TOOLCHAIN = "leanprover/lean4:v4.35.0-rc2"
 
@@ -42,6 +43,11 @@ def test_separated_conditioned_blocks_are_concatenated_not_independent():
 
 
 def test_dependency_pins_and_permanent_workflow_semantics_are_frozen():
+    # Session 24 necessarily changed only the TreeStack source pin: Lean's
+    # module system cannot import the legacy f4112... sources from a module.
+    # The compatibility revision is branched directly from that semantic base
+    # and changes only the imported TreeStack module headers/visibility.
+    assert TREE_STACK_SEMANTIC_BASE == "f4112f08d42a37c0941bf469ac124621b1f54f22"
     lakefile = Path("lakefile.lean").read_text()
     manifest = Path("lake-manifest.json").read_text()
     toolchain = Path("lean-toolchain").read_text().strip()
