@@ -249,7 +249,6 @@ private theorem pathPrefixMass_succ
         C (Fin.castLE (Nat.succ_le_iff.mpr hk) (Fin.last (k + 1))) =
       pathPrefixMass C k (by omega) + C ⟨k + 1, hk⟩
   congr 1
-  rw [pathPrefixMass]
 
 private theorem pathPrefixMass_add_last_eq_mass
     {n : Nat} (C : TreeStack.Configuration (Fin n))
@@ -262,7 +261,6 @@ private theorem pathPrefixMass_add_last_eq_mass
     pathPrefixMass C j (by omega) + C ⟨j + 1, by omega⟩ =
       (∑ i : Fin (j + 1), C i.castSucc) + C (Fin.last (j + 1))
   congr 1
-  rw [pathPrefixMass]
 
 noncomputable def leftPrefixDissipation
     {n : Nat} (hn : 0 < n) (C : TreeStack.Configuration (Fin n))
