@@ -7,7 +7,7 @@ public import TreeStack.Message
 public import TreeStack.PebblingMove
 public import TreeStack.RootScore
 
-public section
+@[expose] public section
 
 namespace ProbStack
 
