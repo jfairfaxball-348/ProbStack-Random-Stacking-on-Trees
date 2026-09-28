@@ -71,3 +71,19 @@ from uniform weak compositions; it is not multinomial pebble placement.
 contain at least: `command`, `git_commit`, `parameters`, `seed`, `output`, and
 `interpretation`.  The Git revision means the code revision that generated the
 output, which may precede the later commit that adds the generated data itself.
+
+## Session 18 global conditioning diagnostics
+
+Run the deterministic fixed-offset table with:
+
+```bash
+PYTHONPATH=. python scripts/tabulate_global_conditioning.py \
+  --levels 256,1024,4096,16384 \
+  --offsets=-2,-1,-0.5,0.5,1,2 \
+  --output data/session18_global_balance.csv
+```
+
+The table is symbolic/asymptotic validation only. It checks the frozen minus
+half-log-log sign, the log_2(3e) constant, the factor n in the spatial hazard,
+and the scale separation between the no-success exponent and the exact
+conditioning point-mass cost.
