@@ -3,7 +3,7 @@ module
 public import ProbStack.Path
 public import ProbStack.PathMessage
 
-public section
+@[expose] public section
 
 namespace ProbStack
 
