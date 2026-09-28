@@ -1,9 +1,13 @@
-import TreeStack.Basic
-import TreeStack.Transfer
-import TreeStack.Branch
-import TreeStack.Message
-import TreeStack.PebblingMove
-import TreeStack.RootScore
+module
+
+public import TreeStack.Basic
+public import TreeStack.Transfer
+public import TreeStack.Branch
+public import TreeStack.Message
+public import TreeStack.PebblingMove
+public import TreeStack.RootScore
+
+public section
 
 namespace ProbStack
 
