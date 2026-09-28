@@ -7,7 +7,7 @@ package "probstack" where
 
 require treestack from git
   "https://github.com/jfairfaxball-348/TreeStack-Structural-Certificates-for-Stacking-on-Trees.git" @
-  "f4112f08d42a37c0941bf469ac124621b1f54f22"
+  "8fc9fc37a200855ec22579beaeec8f12f94f0310"
 
 @[default_target]
 lean_lib ProbStack
