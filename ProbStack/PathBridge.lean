@@ -1,5 +1,9 @@
-import ProbStack.PathBranch
-import ProbStack.Deficit
+module
+
+public import ProbStack.PathBranch
+public import ProbStack.Deficit
+
+public section
 
 -- Session 11 path-specific bridge development.
 
