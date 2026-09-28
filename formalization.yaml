@@ -1,0 +1,184 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/mathlib-initiative/formalization.yaml/main/schema/formalization.schema.json
+version: "v0.4"
+
+project:
+  name: "ProbStack — Random Stacking on Trees"
+  description: >-
+    Lean 4 formalization of a deterministic finite-path necessity theorem for
+    graph-pebbling stackability: a positive-mass nonstackable path
+    configuration above an explicit mass threshold must contain an actual
+    directed integer branch message at most -h.  The package also verifies the
+    exact fixed-total corollary at total n*mu, forcing a message at most
+    -(2*mu-1).  The project's two-sided random path threshold theorem is not
+    part of this Palomar result.
+  authors:
+    - "John Fairfax-Ball"
+  license: "Apache-2.0"
+  responsible_maintainers:
+    - "John Fairfax-Ball"
+
+classification:
+  arxiv: ["math.CO"]
+  msc2020: ["05C99"]
+
+sources:
+  - title: "ProbStack Session 5/23 global deep-message necessity theorem"
+    authors:
+      - "John Fairfax-Ball"
+    id: "https://github.com/jfairfaxball-348/ProbStack-Random-Stacking-on-Trees/tree/6b58462042a41125bd8d113168bb51276b2940ef"
+    type: "research notes and formalization"
+    location: "notes/session-23-p6-formalisation.md and the preceding Session 5 proof record"
+    relationship: "formalizes"
+    note: >-
+      This is the project record in which the deterministic P6 statement was
+      developed and then formalized.  This metadata makes no novelty or
+      priority claim.
+    license: "Apache-2.0"
+    author_endorsement: "participated"
+  - title: "TreeStack — Structural Certificates for Stacking on Trees"
+    authors:
+      - "John Fairfax-Ball"
+    id: "https://github.com/jfairfaxball-348/TreeStack-Structural-Certificates-for-Stacking-on-Trees/tree/f4112f08d42a37c0941bf469ac124621b1f54f22"
+    type: "formalization"
+    relationship: "adapts"
+    note: >-
+      ProbStack P6 uses TreeStack's exact stackability, transfer, categorical
+      message, and rooted-score certificate.  TreeStack is a distinct earlier
+      formalization and is not the result advertised here.
+    license: "Apache-2.0"
+    author_endorsement: "participated"
+  - title: "Stacking and clearing in graph pebbling"
+    authors:
+      - "Tamás Csernák"
+      - "Lajos Soukup"
+    id: "arXiv:2604.22341"
+    type: "preprint"
+    relationship: "background"
+    note: >-
+      Provides the exact deterministic support-collapse stackability event and
+      worst-case stacking-number context; it does not state the ProbStack P6
+      directed-message necessity theorem.
+    author_endorsement: "not-contacted"
+  - title: "Thresholds for pebbling on grids"
+    authors:
+      - "Neal Bushaw"
+      - "Nathan Kettle"
+    id: "arXiv:2309.01762"
+    type: "preprint"
+    relationship: "background"
+    note: >-
+      Uses the same uniform fixed-total multiset/weak-composition law and
+      includes sharp path random-pebbling asymptotics, but for solvability
+      rather than support-collapse stackability.
+    author_endorsement: "not-contacted"
+
+related_formalizations:
+  - id: "PALOMAR-2026-09-25-000010"
+    relationship: "builds-on"
+    note: >-
+      Earlier Palomar registration of TreeStack's structural root-score
+      certificate.  The present entry advertises the distinct quantitative P6
+      consequence for finite paths.
+
+status:
+  scope: >-
+    Formalizes the deterministic finite-path P6 necessity theorem and its exact
+    fixed-total corollary.  The Challenge states ordinary legal pebbling
+    stackability directly and the exact two-orientation path message recursion;
+    Solution proves those definitions coincide with the TreeStack/ProbStack
+    implementation before applying the existing P6 theorem.  The random
+    threshold theorem, P5 opposing-front implication, conditioning limit,
+    binary-partition asymptotics, and zero-offset behavior are outside this
+    Palomar package.
+  sorry_count: 0
+  sorry_in_definitions: 0
+  axioms:
+    - "propext"
+    - "Quot.sound"
+    - "Classical.choice"
+  main_results:
+    - declaration: "ProbStack.Palomar.nonstackable_exists_directedMessage_le"
+      file: "Solution.lean"
+      sorry_count: 0
+      axioms:
+        - "propext"
+        - "Quot.sound"
+        - "Classical.choice"
+      comparator_config: "comparator.json"
+    - declaration: "ProbStack.Palomar.nonstackable_total_mul_exists_directedMessage_le"
+      file: "Solution.lean"
+      sorry_count: 0
+      axioms:
+        - "propext"
+        - "Quot.sound"
+        - "Classical.choice"
+      comparator_config: "comparator.json"
+
+automation:
+  methods:
+    - method: "agent"
+      models:
+        - "GPT-5.6 Sol"
+      framework: "ChatGPT"
+      tool_setup: >-
+        Human-directed AI-assisted research and Lean engineering using GitHub,
+        Lean 4, Mathlib, TreeStack, pytest, exhaustive finite checks,
+        Comparator, and Palomar predictive verification.
+      cost:
+        wall_time: "not tracked"
+        spend_usd: "subscription-based / not tracked"
+        hardware: "hosted tools and GitHub Actions"
+      prompting_notes: >-
+        Sessions were constrained by a frozen theorem statement, exact
+        categorical EMPTY semantics, fixed dependency pins, reproducible tests,
+        explicit prior-art checks, and no-sorry/no-project-axiom gates.
+  spend_usd: "subscription-based / not tracked"
+  notes: >-
+    Substantial AI assistance was used throughout conjecture development,
+    computational validation, Lean formalization, repository auditing, and
+    Palomar packaging.  A human directed the programme, selected the target,
+    imposed theorem and semantic freezes, and retains responsibility for the
+    submission.
+
+fidelity:
+  divergences: >-
+    The formal P6 theorem states n >= 2 explicitly because its conclusion
+    requires a directed path edge; this is the natural finite-path domain and
+    does not change the positive-mass mathematical content.  The Palomar
+    Challenge replaces no hypothesis or event: operational stackability and
+    categorical directed-message semantics are restated in a Mathlib-only
+    path surface and bridged exactly in Solution.  The separate random
+    asymptotic theorem is intentionally not claimed as Lean-formalized here.
+
+review:
+  status: "self-assessed"
+  reviewers:
+    - "none"
+  notes: >-
+    The theorem statement, fixed-total coefficient, ordered-edge orientation,
+    and EMPTY-versus-integer distinction were audited against the Session 23
+    formalization.  No independent human peer review is claimed.
+
+alignment:
+  namespace: "ProbStack.Palomar"
+  statements:
+    - source: "ProbStack P6: global deep-message necessity theorem"
+      lean: "ProbStack.Palomar.nonstackable_exists_directedMessage_le"
+      module: "Solution"
+      status: "proved"
+      note: >-
+        Same positive-mass, nonstackability, h >= 2, and
+        (n-1)*(floor(h/2)+1) mass threshold, with both ordered path
+        orientations and an actual integer message at most -h.
+    - source: "ProbStack P6 exact fixed-total corollary"
+      lean: "ProbStack.Palomar.nonstackable_total_mul_exists_directedMessage_le"
+      module: "Solution"
+      status: "proved"
+      note: >-
+        At mass n*mu with mu >= 1, nonstackability forces an actual directed
+        message at most -(2*mu-1).
+
+acknowledgements: >-
+  Thanks to the authors and maintainers of Lean 4, Mathlib, TreeStack,
+  Comparator, lean4export, NanoDa, con-ron, pytest, and the Palomar registry
+  infrastructure, and to the cited graph-pebbling literature.
