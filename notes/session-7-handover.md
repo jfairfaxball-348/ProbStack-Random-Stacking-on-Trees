@@ -1,5 +1,12 @@
 # Session 7 handover
 
+> **Historical handover.** This records the exact end-of-Session-7 state.
+> Its bounded global gap was closed by Session 8 regeneration, and Session 18
+> completed the global conditioned proof. Do not read the “remaining gap” or
+> “next target” below as current. The final status is
+> `docs/FINAL_THEOREM_STATUS.md`.
+
+
 ## Repository boundary
 
 Session 7 started from ProbStack commit
