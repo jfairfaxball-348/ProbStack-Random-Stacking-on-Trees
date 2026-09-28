@@ -1,4 +1,8 @@
-import ProbStack.PathFront
+module
+
+public import ProbStack.PathFront
+
+public section
 
 namespace ProbStack
 
