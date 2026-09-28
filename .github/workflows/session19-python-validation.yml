@@ -20,7 +20,7 @@ jobs:
           set -euxo pipefail
           python -m pip install pytest
           PYTHONPATH=. pytest -q
-          count=$(PYTHONPATH=. pytest --collect-only -q | grep -c '::')
+          count=$(PYTHONPATH=. pytest --collect-only -q -o addopts='' | grep -c '::')
           echo "PYTEST_COLLECTED=$count"
           test "$count" -eq 122
       - name: Deterministic Session 16 diagnostics
