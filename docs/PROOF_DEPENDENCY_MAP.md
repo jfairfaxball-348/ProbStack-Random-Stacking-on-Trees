@@ -34,7 +34,7 @@ There is no claim at `epsilon = 0`.
 | P3 | Low-phase deficit recurrence and dyadic closed form | `ProbStack/Deficit.lean`, `PathBridge.lean` | Formal | exact recurrence tests | P2 |
 | P4 | Deep seed, runaway growth, irreversible certified front; left/right seed-to-front composition | `ProbStack/PathFront.lean`, `FiniteProbability.lean`; `notes/session-13-front.md` | Formal finite interface | exact cap/front tests | P2, P3 |
 | P5 | Opposing irreversible fronts imply path nonstackability | Sessions 4/8 proof architecture; `notes/path-dynamics.md`, `notes/session-18-conditioning-global.md` | **Paper deterministic theorem; no single ProbStack Lean theorem currently packages this global implication** | small exact path validation | P1, P4 |
-| P6 | Session 5 deep-message necessity: nonstackability at total `n*mu` forces a directed message `<= -(2*mu-1)` | `notes/proof-plan.md` Session 5; `prob_stack/supercritical.py` | **Paper deterministic theorem.** Lean `PathDeep.lean` formalises the local weighted consequence of an already-deep message, not this global implication | exact deep-cover tests | P1, P2 |
+| P6 | Session 5 deep-message necessity: nonstackability at total `n*mu` forces a directed message `<= -(2*mu-1)` | `ProbStack/PathNecessity.lean`; `notes/proof-plan.md` Session 5; `prob_stack/supercritical.py` | **Formal.** `nonstackable_exists_directedMessage_le` proves the general `h` statement and `nonstackable_total_mul_exists_directedMessage_le` proves the exact fixed-total corollary | full Lean build + exact finite P6 regression | P1, P2 |
 | P7 | Exact iid-geometric / weak-composition conditioning identity | `notes/session-18-conditioning-global.md`; `ProbStack/FiniteProbability.lean` matched masses | Lean formalises constant product mass on a fixed-total fibre and finite local mass definitions; full normalised event-level conditioning identity remains paper/finite combinatorics | exact Fraction tests | — |
 | P8 | Exact finite local conditioned/product likelihood ratio and bounded-support transfer | `prob_stack/product_chain.py`, `finite_probability.py`, `global_conditioning.py`; `ProbStack/FiniteProbability.lean` | Definitions and fixed-vector algebra formal; logarithmic transfer inequality is paper/Python | exact formula cross-checks and brute force | P7 |
 | P9 | Finite dyadic simplex and binary-partition encoding | `ProbStack/FiniteDyadic.lean`, `prob_stack/finite_dyadic.py`; Sessions 15–16 notes | Formal finite combinatorics | exact integer diagnostics | P3 |
@@ -71,13 +71,13 @@ conditioned/product transfer.
 
 ## Formalisation boundary
 
-Session 19 deliberately does not attempt Stirling/Robbins asymptotics,
+Session 19 deliberately did not attempt Stirling/Robbins asymptotics,
 de Bruijn binary-partition asymptotics, the Session 17 real asymptotic local
-rate, or the final limit theorem in Lean. It also does not manufacture a Lean
-theorem for the Session 5 global deep-message necessity or the global
-opposing-front implication: those are mathematically proved paper-level
-deterministic inputs, while the existing Lean development formalises the
-finite path-message, deep-block, regeneration, seed, runaway and front
-interfaces that feed them.
+rate, or the final limit theorem in Lean. Session 23 subsequently formalised
+the Session 5 global deep-message necessity in `PathNecessity.lean`, without
+reopening any analytic layer. The global opposing-front implication P5 remains
+paper-level deterministic mathematics. The Lean development therefore now
+contains P6 together with the finite path-message, deep-block, regeneration,
+seed, runaway and front interfaces that feed the frozen paper theorem.
 
 This distinction is authoritative and should not be blurred in future stages.
