@@ -20,13 +20,14 @@ jobs:
           set -euxo pipefail
           python -m pip install pytest
           PYTHONPATH=. pytest -q
+          PYTHONPATH=. pytest --collect-only -q | tail -n 1
       - name: Deterministic Session 16 diagnostics
         shell: bash
         run: |
           set -euxo pipefail
           PYTHONPATH=. python scripts/tabulate_binary_partition_asymptotics.py             --levels 6,8,10,12,14             --phases 9/16,3/4,1             --output /tmp/session16.csv
-          cmp /tmp/session16.csv data/session16_binary_partition_diagnostics.csv
-          sha256sum /tmp/session16.csv
+          diff --strip-trailing-cr /tmp/session16.csv data/session16_binary_partition_diagnostics.csv
+          sed 's/\r$//' /tmp/session16.csv | sha256sum
       - name: Deterministic Session 17 diagnostics
         shell: bash
         run: |
@@ -40,5 +41,5 @@ jobs:
         run: |
           set -euxo pipefail
           PYTHONPATH=. python scripts/tabulate_global_conditioning.py             --levels 256,1024,4096,16384             --offsets=-2,-1,-0.5,0.5,1,2             --output /tmp/session18.csv
-          cmp /tmp/session18.csv data/session18_global_balance.csv
-          sha256sum /tmp/session18.csv
+          diff --strip-trailing-cr /tmp/session18.csv data/session18_global_balance.csv
+          sed 's/\r$//' /tmp/session18.csv | sha256sum
