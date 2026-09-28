@@ -1,0 +1,110 @@
+name: Session 24 Palomar validation
+
+on:
+  push:
+    branches:
+      - session-24-palomar-packaging
+  workflow_dispatch:
+
+concurrency:
+  group: session-24-palomar-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  project-validation:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check submitted Lean source module headers
+        shell: bash
+        run: |
+          set -euxo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          bad = []
+          for p in Path(".").rglob("*.lean"):
+              parts = set(p.parts)
+              if ".git" in parts or ".lake" in parts:
+                  continue
+              if p.name == "lakefile.lean":
+                  continue
+              text = p.read_text()
+              lines = text.splitlines()
+              i = 0
+              in_block = False
+              while i < len(lines):
+                  s = lines[i].lstrip()
+                  if in_block:
+                      if "-/" in s:
+                          in_block = False
+                          s = s.split("-/", 1)[1].lstrip()
+                          if not s:
+                              i += 1
+                              continue
+                      else:
+                          i += 1
+                          continue
+                  if not s or s.startswith("--"):
+                      i += 1
+                      continue
+                  if s.startswith("/-"):
+                      if "-/" not in s[2:]:
+                          in_block = True
+                          i += 1
+                          continue
+                      s = s.split("-/", 1)[1].lstrip()
+                      if not s:
+                          i += 1
+                          continue
+                  if s != "module":
+                      bad.append((str(p), i + 1, lines[i]))
+                  break
+              else:
+                  bad.append((str(p), 0, "empty file"))
+          if bad:
+              for item in bad:
+                  print("MODULE_HEADER_ERROR", item)
+              raise SystemExit(1)
+          print("All regular submitted Lean sources begin with module.")
+          PY
+
+      - name: Install exact Lean toolchain
+        shell: bash
+        run: |
+          set -euxo pipefail
+          curl -sSf https://elan.lean-lang.org/elan-init.sh | sh -s -- -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+
+      - name: Build pinned TreeStack dependency and full ProbStack package
+        shell: bash
+        run: |
+          set -euxo pipefail
+          lean --version
+          lake --version
+          lake update
+          lake build @treestack/+TreeStack.RootScore
+          lake build
+          lake build Challenge Solution
+          if grep -R -n -E '(^|[^A-Za-z])(sorry|axiom)([^A-Za-z]|$)' --include='*.lean' ProbStack ProbStack.lean; then
+            echo "Found forbidden sorry/axiom in ProbStack Lean sources"
+            exit 1
+          fi
+
+      - name: Run Python regression suite
+        shell: bash
+        run: |
+          set -euxo pipefail
+          python -m pip install --disable-pip-version-check pytest
+          PYTHONPATH=. pytest -q
+
+  palomar-full-preflight:
+    needs: project-validation
+    uses: PalomarRegistry/PalomarSubmission/.github/workflows/submission.yml@65f0154ed776cd26c224254aa57b379137f28b0d
+    with:
+      repository: ${{ github.repository }}
+      commit: ${{ github.sha }}
+      pipeline_commit: 65f0154ed776cd26c224254aa57b379137f28b0d
+      request_id: session24full
+      mode: full
+      options: '{"comparator_config_path":"comparator.json","authorization_relationship":"I am a responsible author or maintainer"}'
