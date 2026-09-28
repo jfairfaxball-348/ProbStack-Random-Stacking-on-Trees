@@ -1,6 +1,6 @@
 # ProbStack — Random Stacking on Trees
 
-**Status: frozen path theorem; formalisation design / verification in progress.**
+**Status: frozen path theorem with complete mathematical proof; formalisation / reproducibility closure in progress.**
 
 ProbStack studies random pebble configurations on deterministic trees.  The
 first target is the path sequence \(P_n\).  This repository is intentionally
@@ -10,6 +10,12 @@ source of the deterministic structural theorem described below.
 
 No novelty, priority, publication, formal-verification, or Palomar claim is
 made here.  Numerical evidence is recorded as evidence, not as proof.
+
+Session 18 closes the global conditioning-transfer step: the stabilized local
+product-law excursion rate is now connected rigorously to the fixed-total
+weak-composition path theorem.  The global asymptotic proof remains paper
+mathematics; the Lean development records the exact finite deterministic and
+probability interfaces without `sorry` or new axioms.
 
 ## Random model
 

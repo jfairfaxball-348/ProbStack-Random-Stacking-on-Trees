@@ -1,0 +1,12 @@
+{
+  "session": 18,
+  "kind": "deterministic symbolic asymptotic diagnostics",
+  "generator": "scripts/tabulate_global_conditioning.py",
+  "command": "PYTHONPATH=. python scripts/tabulate_global_conditioning.py --levels 256,1024,4096,16384 --offsets=-2,-1,-0.5,0.5,1,2 --output data/session18_global_balance.csv",
+  "log2_n_values": [256, 1024, 4096, 16384],
+  "offsets": [-2, -1, -0.5, 0.5, 1, 2],
+  "frozen_center": "sqrt(N) - 0.5*log2(N) + log2(3e)",
+  "local_rate_main": "x^2 + 2*x*log2(x) - 2*log2(3e)*x",
+  "purpose": "Regression-check the fixed-offset global balance, conditioning-cost scale, minus half-log-log sign, and log2(3e) constant. This table is validation, not proof.",
+  "monte_carlo": false
+}
