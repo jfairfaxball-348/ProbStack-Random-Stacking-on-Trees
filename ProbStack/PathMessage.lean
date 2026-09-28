@@ -2,7 +2,7 @@ module
 
 public import ProbStack.TreeStackBoundary
 
-public section
+@[expose] public section
 
 namespace ProbStack
 
