@@ -38,7 +38,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: .lake/packages/treestack/.lake/build
-          key: treestack-f4112f08d42a37c0941bf469ac124621b1f54f22-lean-4.35.0-rc2
+          key: treestack-8fc9fc37a200855ec22579beaeec8f12f94f0310-lean-4.35.0-rc2
       - name: Dependency and package build
         shell: bash
         run: |
