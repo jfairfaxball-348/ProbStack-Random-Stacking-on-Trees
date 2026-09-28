@@ -5,33 +5,27 @@ for the theorem/proof/formalisation/reproducibility stage.
 
 ## Frozen theorem
 
-For positive integer (mu_n), let (C_n) be uniformly distributed over the
-weak compositions of total (nmu_n) on (P_n). Put
+For positive integer `mu_n`, let `C_n` be uniformly distributed over the
+weak compositions of total `n*mu_n` on `P_n`. Put
 
-[
-c_n=sqrt{log_2 n}
--rac12log_2log_2 n
-+log_2(3e).
-]
+```
+c_n = sqrt(log_2 n)
+      - (1/2) log_2 log_2 n
+      + log_2(3e).
+```
 
-For every fixed (arepsilon>0),
+For every fixed `epsilon > 0`:
 
-[
-log_2mu_nle c_n-arepsilon 	ext{eventually}
-quadLongrightarrowquad
-Pr(C_n	ext{ is stackable})	o0,
-]
+```
+log_2 mu_n <= c_n - epsilon eventually
+    => P(C_n is stackable) -> 0,
 
-and
-
-[
-log_2mu_nge c_n+arepsilon 	ext{eventually}
-quadLongrightarrowquad
-Pr(C_n	ext{ is stackable})	o1.
-]
+log_2 mu_n >= c_n + epsilon eventually
+    => P(C_n is stackable) -> 1.
+```
 
 The half-log-log sign is **MINUS** and the additive constant is
-(log_2(3e)).
+`log_2(3e)`. There is no claim at `epsilon = 0`.
 
 ## What is fully proved mathematically
 
@@ -42,14 +36,14 @@ The rigorous paper proof includes:
 - exact left/right path-message and deficit recurrences;
 - finite irreversible-front and runaway machinery;
 - the deterministic opposing-front obstruction;
-- the Session 5 deep-message necessity with exact target (-(2mu-1));
+- the Session 5 deep-message necessity with exact target `-(2*mu-1)`;
 - the exact iid-geometric representation of uniform weak compositions by
   conditioning on the total;
 - finite local conditioned/product likelihood ratios;
 - finite dyadic/binary-partition reductions;
 - the binary-partition asymptotic used in the required regimes;
 - the Session 17 one-sided local excursion theorem, uniform over dyadic phase
-  and all integer starts (min[mu,2mu]);
+  and all integer starts `m in [mu,2mu]`;
 - Session 8 constant-cost regeneration;
 - the Session 18 subcritical spatial-abundance argument;
 - the Session 18 supercritical terminal-specific upper cover;
@@ -59,14 +53,14 @@ The complete dependency map is `docs/PROOF_DEPENDENCY_MAP.md`.
 
 ## What is Lean-formalised
 
-The pinned Lean layer formalises the exact finite interfaces that are useful at
-the paper/Lean boundary:
+The pinned Lean layer formalises the exact finite interfaces useful at the
+paper/Lean boundary:
 
 - `ProbStack.empty_ne_some_zero`;
 - `pathStep` and exact EMPTY behaviour in `PathMessage.lean`;
 - actual left/right TreeStack branch-message recurrences in
   `PathBranch.lean` and `PathBridge.lean`;
-- `activeStep`, `deficit`, `LowRun`, `dyadicInputCost`, and the exact
+- `activeStep`, `deficit`, `LowRun`, `dyadicInputCost`, and exact
   low-phase deficit identities in `Deficit.lean`;
 - `F_le_half`, steering arithmetic, `F_mem_mu_two_mu`, and
   `regeneration_transfer_window` in `TransferBounds.lean`;
@@ -88,11 +82,15 @@ the paper/Lean boundary:
 
 The current ProbStack Lean source does **not** package the full Session 5
 global implication
-`nonstackable => some directed message <= -(2*mu-1)`, nor a single global
-`opposing fronts => nonstackable` theorem. Those are rigorous deterministic
-paper mathematics. Session 19 leaves them there rather than adding
-nontrivial path/root-score infrastructure merely to increase formal theorem
-count.
+
+```
+nonstackable => some directed message <= -(2*mu-1),
+```
+
+nor a single global `opposing fronts => nonstackable` theorem. Those are
+rigorous deterministic paper mathematics. Session 19 leaves them there rather
+than adding nontrivial path/root-score infrastructure merely to increase
+formal theorem count.
 
 ## What remains paper mathematics rather than Lean
 
@@ -133,7 +131,7 @@ The project makes no claim of:
 
 - a theorem at zero offset;
 - a critical limiting distribution or Poisson front law;
-- finite-(n) monotonicity in total mass;
+- finite-`n` monotonicity in total mass;
 - an arbitrary-tree extension of the path threshold;
 - novelty, priority, publication, or submission status.
 
