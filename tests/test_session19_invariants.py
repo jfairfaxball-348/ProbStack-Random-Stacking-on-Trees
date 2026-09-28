@@ -14,7 +14,7 @@ LEAN_TOOLCHAIN = "leanprover/lean4:v4.35.0-rc2"
 
 
 def test_exact_supercritical_deep_target_is_two_mu_minus_one():
-    for mean in (1, 2, 16, 31, 64, 257):
+    for mean in (2, 16, 31, 64, 257):
         assert deep_threshold(mean) == 2 * mean - 1
         assert deep_threshold(mean) != mean
 
