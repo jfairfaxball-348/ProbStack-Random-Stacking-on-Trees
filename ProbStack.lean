@@ -7,5 +7,6 @@ import ProbStack.Deficit
 import ProbStack.PathBridge
 import ProbStack.PathDeep
 import ProbStack.PathFront
+import ProbStack.PathNecessity
 import ProbStack.FiniteProbability
 import ProbStack.FiniteDyadic
