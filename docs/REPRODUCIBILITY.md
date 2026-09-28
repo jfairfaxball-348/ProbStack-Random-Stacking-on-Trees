@@ -45,7 +45,7 @@ PYTHONPATH=. python scripts/tabulate_binary_partition_asymptotics.py \
   --levels 6,8,10,12,14 \
   --phases 9/16,3/4,1 \
   --output /tmp/session16_binary_partition_diagnostics.csv
-cmp /tmp/session16_binary_partition_diagnostics.csv \
+diff --strip-trailing-cr /tmp/session16_binary_partition_diagnostics.csv \
   data/session16_binary_partition_diagnostics.csv
 ```
 
@@ -69,7 +69,7 @@ PYTHONPATH=. python scripts/tabulate_product_geometric_asymptotics.py \
 ```
 
 For a byte-level determinism check, run the same command to a second path and
-`cmp` the two outputs. The table separates exact counts, the geometric
+`cmp` the two generated outputs. The table separates exact counts, the geometric
 `p^k` atom factor, tilt, total probability, sharp-seed coefficient and
 optimized local coefficient. It validates the implementation; the Session 17
 local asymptotic theorem is paper mathematics.
@@ -83,7 +83,8 @@ PYTHONPATH=. python scripts/tabulate_global_conditioning.py \
   --levels 256,1024,4096,16384 \
   --offsets=-2,-1,-0.5,0.5,1,2 \
   --output /tmp/session18_global_balance.csv
-cmp /tmp/session18_global_balance.csv data/session18_global_balance.csv
+diff --strip-trailing-cr /tmp/session18_global_balance.csv \
+  data/session18_global_balance.csv
 ```
 
 The sidecar `data/session18_global_balance.csv.meta.json` records the exact
