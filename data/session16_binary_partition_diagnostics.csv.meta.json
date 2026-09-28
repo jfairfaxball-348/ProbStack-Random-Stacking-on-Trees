@@ -1,0 +1,10 @@
+{
+  "session": 16,
+  "kind": "deterministic exact binary-partition asymptotic diagnostics",
+  "generator": "scripts/tabulate_binary_partition_asymptotics.py",
+  "command": "PYTHONPATH=. python scripts/tabulate_binary_partition_asymptotics.py --levels 6,8,10,12,14 --phases 9/16,3/4,1 --output data/session16_binary_partition_diagnostics.csv",
+  "levels": [6, 8, 10, 12, 14],
+  "phases": ["9/16", "3/4", "1"],
+  "purpose": "Regression-check exact finite counts, cutoff/truncation handling, the negative L log_2 L sign, and the derived linear coefficients. This table validates indexing/signs; it is not the proof of the de Bruijn asymptotic.",
+  "monte_carlo": false
+}
