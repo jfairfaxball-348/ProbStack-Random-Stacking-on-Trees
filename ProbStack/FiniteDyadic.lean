@@ -151,4 +151,39 @@ theorem lowPhaseSimplex_final_ge
   rw [pow_succ]
   linarith
 
+
+/--
+Ordinary coordinate mass is bounded by forward dyadic cost. This is the exact
+finite inequality behind the Session-17 geometric-tilt sandwich:
+every dyadic weight is at least one.
+-/
+theorem ordinaryMass_le_forwardDyadicInputCost (xs : List Nat) :
+    xs.sum <= forwardDyadicInputCost xs := by
+  induction xs with
+  | nil =>
+      simp [forwardDyadicInputCost]
+  | cons x xs ih =>
+      simp only [List.sum_cons, forwardDyadicInputCost]
+      omega
+
+/--
+Coordinate reversal preserves ordinary mass. Product-geometric atom weights
+therefore agree under the forward/reversed simplex bijection.
+-/
+@[simp] theorem ordinaryMass_reverse (xs : List Nat) :
+    xs.reverse.sum = xs.sum := by
+  induction xs with
+  | nil =>
+      simp
+  | cons x xs ih =>
+      simp [ih, Nat.add_comm]
+
+/--
+The ordinary-mass bound is unchanged after reversing the dyadic coordinates.
+-/
+theorem ordinaryMass_le_reversedForwardDyadicInputCost (xs : List Nat) :
+    xs.sum <= forwardDyadicInputCost xs.reverse := by
+  rw [← ordinaryMass_reverse xs]
+  exact ordinaryMass_le_forwardDyadicInputCost xs.reverse
+
 end ProbStack
