@@ -3,7 +3,7 @@ module
 public import ProbStack.PathBranch
 public import ProbStack.Deficit
 
-public section
+@[expose] public section
 
 -- Session 11 path-specific bridge development.
 
