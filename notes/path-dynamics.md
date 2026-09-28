@@ -831,3 +831,25 @@ The global translation is not yet a single center: the refined upper cover and
 the best current state-independent lower certificate leave an explicit
 `0.5 log_2 3` gap in `log_2 mu`.  See
 `notes/session-7-linear-order.md` for the proof and validation details.
+
+
+## Session 8/17/18 supersession — final path theorem
+
+The Session 7 bounded spatial gap displayed immediately above is historical.
+Session 8 introduced the exact one-coordinate regeneration
+
+`-mu < M <= 2mu,quad 2mu+2-M <= X <= 4mu-M`,
+
+which sends the next message into `[mu,2mu]` at constant probability. Session
+17 then stabilised the one-sided local rate, uniformly over dyadic phase and
+starting messages, as
+
+`-log_2 q_mu(m) = x^2 + 2x log_2 x - 2log_2(3e)x + o(x)`.
+
+Session 18 transferred the resulting product-law argument to the fixed-total
+weak-composition model without conditioned independence and completed both
+global directions. The final frozen center is
+
+`sqrt(log_2 n) - 0.5 log_2 log_2 n + log_2(3e)`,
+
+with fixed nonzero offsets only.
