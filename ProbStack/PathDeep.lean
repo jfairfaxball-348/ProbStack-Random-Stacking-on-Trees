@@ -1,5 +1,9 @@
-import ProbStack.PathBridge
-import ProbStack.TransferBounds
+module
+
+public import ProbStack.PathBridge
+public import ProbStack.TransferBounds
+
+public section
 
 namespace ProbStack
 
