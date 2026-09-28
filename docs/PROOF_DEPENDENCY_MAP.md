@@ -8,7 +8,7 @@ actually proves, formalises, and validates.
 ## Frozen headline theorem
 
 Let `C_n` be uniform over the weak compositions of total `n*mu_n` on the
-path `P_n`, with positive integer `mu_n), and define
+path `P_n`, with positive integer `mu_n`, and define
 
 ```
 c_n = sqrt(log_2 n)
