@@ -1,0 +1,27 @@
+{
+  "challenge_module": "Challenge",
+  "solution_module": "Solution",
+  "theorem_names": [
+    "ProbStack.Palomar.nonstackable_exists_directedMessage_le",
+    "ProbStack.Palomar.nonstackable_total_mul_exists_directedMessage_le"
+  ],
+  "definition_names": [
+    "ProbStack.Palomar.Configuration",
+    "ProbStack.Palomar.mass",
+    "ProbStack.Palomar.transfer",
+    "ProbStack.Palomar.Message",
+    "ProbStack.Palomar.EMPTY",
+    "ProbStack.Palomar.pathStep",
+    "ProbStack.Palomar.prefixScan",
+    "ProbStack.Palomar.reverseConfig",
+    "ProbStack.Palomar.directedMessage",
+    "ProbStack.Palomar.move",
+    "ProbStack.Palomar.PebbleStep",
+    "ProbStack.Palomar.Reach",
+    "ProbStack.Palomar.StackedAt",
+    "ProbStack.Palomar.StackableAt",
+    "ProbStack.Palomar.Stackable"
+  ],
+  "permitted_axioms": ["propext", "Quot.sound", "Classical.choice"],
+  "enable_nanoda": true
+}
