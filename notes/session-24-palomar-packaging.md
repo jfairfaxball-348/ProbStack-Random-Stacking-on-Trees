@@ -305,13 +305,14 @@ preflight.
 
 No Palomar registration is performed automatically.
 
-## Protected-Challenge alias diagnostic
+## Official module-resolution diagnostic and correction
 
 Official FULL predictive run `36544012411` against
 `93fdd4a02269f7b9e3c196bf77257333e9556b7c` passed intake, capacity,
-toolchain installation, pinned Bubblewrap setup, and reached Palomar's
-authoritative Challenge-provenance / Comparator execution.  The mechanical
-report then rejected the package at Challenge export with:
+toolchain installation, pinned Bubblewrap setup, trusted Challenge compilation,
+Challenge-provenance auditing, and reached authoritative Challenge export.
+
+Its mechanical report then rejected the package with:
 
 `comparator.json names ProbStack.Palomar.nonstackable_exists_directedMessage_le, which the Challenge does not define`
 
@@ -319,26 +320,28 @@ The report artifact was `mechanical-report-sess24full01`, artifact id
 `11021604162`, SHA-256
 `83ef3f8aa038b9c193afe09636017ea680151943f6855220192314056e98136c`.
 
-The issue was a module-alias packaging surface, not a P6 theorem or proof
-failure.  Palomar compiles the Challenge under a verifier-owned top-level
-module alias.  The current PalomarTemplate spells dotted exported declaration
-names directly (for example `theorem PalomarTemplate.main_result`) rather
-than placing them inside a namespace block.
+The report exposed the exact cause: Palomar resolved the configured module
+`Challenge` to the TreeStack dependency path
 
-Accordingly, The mechanical report exposed the decisive module-resolution evidence:
-`challenge.path = .lake/packages/treestack/Challenge.lean` and
-`solution.path = .lake/packages/treestack/Solution.lean`.  The generic module
-names `Challenge` and `Solution` collided with TreeStack's earlier Palomar
-package, so Palomar exported TreeStack's files rather than ProbStack's.
+`.lake/packages/treestack/Challenge.lean`
 
-The ProbStack package therefore uses unique module identities
-`ProbStackPalomar.Challenge` and `ProbStackPalomar.Solution`, stored at
-`ProbStackPalomar/Challenge.lean` and `ProbStackPalomar/Solution.lean`.
-The old colliding root files were removed.  All advertised declaration names
-remain `ProbStack.Palomar.*`, and no mathematical hypothesis, event,
-coefficient, message semantics, orientation, theorem statement, or proof was
-changed.
+and likewise resolved `Solution` to the TreeStack dependency, because both
+repositories contained those generic top-level module names.
 
-This correction must receive a fresh exact-SHA FULL preflight.  No file is to
-change after that successful run.
+The package therefore moved to collision-resistant submitted modules:
+
+- `ProbStackPalomar.Challenge` at `ProbStackPalomar/Challenge.lean`;
+- `ProbStackPalomar.Solution` at `ProbStackPalomar/Solution.lean`.
+
+`comparator.json`, Lake roots, metadata paths, and validation commands were
+updated accordingly.  The exported mathematical declarations remain exactly
+the same `ProbStack.Palomar.*` names and theorem types.  The Challenge now
+spells those dotted declaration names directly, following the current
+PalomarTemplate pattern.
+
+No mathematical hypothesis, event, coefficient, message semantics, or
+orientation changed.
+
+This correction requires a fresh exact-SHA FULL preflight.  No file may change
+after that successful run.
 
