@@ -98,7 +98,7 @@ status:
     - "Classical.choice"
   main_results:
     - declaration: "ProbStack.Palomar.nonstackable_exists_directedMessage_le"
-      file: "Solution.lean"
+      file: "ProbStackPalomar/Solution.lean"
       sorry_count: 0
       axioms:
         - "propext"
@@ -106,7 +106,7 @@ status:
         - "Classical.choice"
       comparator_config: "comparator.json"
     - declaration: "ProbStack.Palomar.nonstackable_total_mul_exists_directedMessage_le"
-      file: "Solution.lean"
+      file: "ProbStackPalomar/Solution.lean"
       sorry_count: 0
       axioms:
         - "propext"
@@ -164,7 +164,7 @@ alignment:
   statements:
     - source: "ProbStack P6: global deep-message necessity theorem"
       lean: "ProbStack.Palomar.nonstackable_exists_directedMessage_le"
-      module: "Solution"
+      module: "ProbStackPalomar.Solution"
       status: "proved"
       note: >-
         Same positive-mass, nonstackability, h >= 2, and
@@ -172,7 +172,7 @@ alignment:
         orientations and an actual integer message at most -h.
     - source: "ProbStack P6 exact fixed-total corollary"
       lean: "ProbStack.Palomar.nonstackable_total_mul_exists_directedMessage_le"
-      module: "Solution"
+      module: "ProbStackPalomar.Solution"
       status: "proved"
       note: >-
         At mass n*mu with mu >= 1, nonstackability forces an actual directed
