@@ -14,14 +14,14 @@ lemmas identifying the path-only message scan and ordinary pebbling
 stackability with the TreeStack/ProbStack implementation.
 -/
 
-namespace ProbStack.Palomar
+abbrev ProbStack.Palomar.Configuration (n : Nat) := Fin n → Nat
 
-abbrev Configuration (n : Nat) := Fin n → Nat
+open ProbStack.Palomar
 
-def mass {n : Nat} (C : Configuration n) : Nat :=
+def ProbStack.Palomar.mass {n : Nat} (C : Configuration n) : Nat :=
   ∑ v, C v
 
-def transfer (x : Int) : Int :=
+def ProbStack.Palomar.transfer (x : Int) : Int :=
   if x <= 1 then
     2 * x - 3
   else if x = 2 then
@@ -33,18 +33,18 @@ def transfer (x : Int) : Int :=
   else
     (x - 3) / 2
 
-abbrev Message := Option Int
+abbrev ProbStack.Palomar.Message := Option Int
 
-def EMPTY : Message := none
+def ProbStack.Palomar.EMPTY : Message := none
 
-def pathStep (m : Message) (x : Nat) : Message :=
+def ProbStack.Palomar.pathStep (m : Message) (x : Nat) : Message :=
   match m with
   | none =>
       if x = 0 then EMPTY
       else some (transfer (x : Int))
   | some z => some (transfer (z + (x : Int)))
 
-def prefixScan {n : Nat} (C : Configuration n) :
+def ProbStack.Palomar.prefixScan {n : Nat} (C : Configuration n) :
     (k : Nat) → k < n → Message
   | 0, hk => pathStep EMPTY (C ⟨0, hk⟩)
   | j + 1, hk =>
@@ -52,10 +52,10 @@ def prefixScan {n : Nat} (C : Configuration n) :
         (prefixScan C j (by omega))
         (C ⟨j + 1, hk⟩)
 
-def reverseConfig {n : Nat} (C : Configuration n) : Configuration n :=
+def ProbStack.Palomar.reverseConfig {n : Nat} (C : Configuration n) : Configuration n :=
   fun i => C i.rev
 
-def directedMessage {n : Nat} (C : Configuration n) (u r : Fin n) : Message :=
+def ProbStack.Palomar.directedMessage {n : Nat} (C : Configuration n) (u r : Fin n) : Message :=
   if hleft : u.val + 1 = r.val then
     prefixScan C u.val u.isLt
   else if hright : r.val + 1 = u.val then
@@ -63,25 +63,25 @@ def directedMessage {n : Nat} (C : Configuration n) (u r : Fin n) : Message :=
   else
     EMPTY
 
-def move {n : Nat} (C : Configuration n) (u v : Fin n) : Configuration n :=
+def ProbStack.Palomar.move {n : Nat} (C : Configuration n) (u v : Fin n) : Configuration n :=
   Function.update (Function.update C u (C u - 2)) v (C v + 1)
 
-def PebbleStep {n : Nat} (C D : Configuration n) : Prop :=
+def ProbStack.Palomar.PebbleStep {n : Nat} (C D : Configuration n) : Prop :=
   ∃ u v : Fin n,
     (SimpleGraph.pathGraph n).Adj u v ∧
       2 <= C u ∧
       D = move C u v
 
-def Reach {n : Nat} (C D : Configuration n) : Prop :=
+def ProbStack.Palomar.Reach {n : Nat} (C D : Configuration n) : Prop :=
   Relation.ReflTransGen PebbleStep C D
 
-def StackedAt {n : Nat} (C : Configuration n) (r : Fin n) : Prop :=
+def ProbStack.Palomar.StackedAt {n : Nat} (C : Configuration n) (r : Fin n) : Prop :=
   0 < C r ∧ ∀ v, v ≠ r → C v = 0
 
-def StackableAt {n : Nat} (C : Configuration n) (r : Fin n) : Prop :=
+def ProbStack.Palomar.StackableAt {n : Nat} (C : Configuration n) (r : Fin n) : Prop :=
   ∃ D, Reach C D ∧ StackedAt D r
 
-def Stackable {n : Nat} (C : Configuration n) : Prop :=
+def ProbStack.Palomar.Stackable {n : Nat} (C : Configuration n) : Prop :=
   ∃ r, StackableAt C r
 
 private theorem mass_eq_treeStack {n : Nat} (C : Configuration n) :
@@ -260,4 +260,3 @@ theorem nonstackable_total_mul_exists_directedMessage_le
   rw [directedMessage_eq_incident (by omega) C r u hu]
   exact hmsg
 
-end ProbStack.Palomar
