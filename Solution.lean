@@ -81,7 +81,7 @@ abbrev ProbStack.Palomar.Message := Option Int
 @[expose] def ProbStack.Palomar.StackableAt {n : Nat} (C : Configuration n) (r : Fin n) : Prop :=
   ∃ D, Reach C D ∧ StackedAt D r
 
-def ProbStack.Palomar.Stackable {n : Nat} (C : Configuration n) : Prop :=
+@[expose] def ProbStack.Palomar.Stackable {n : Nat} (C : Configuration n) : Prop :=
   ∃ r, StackableAt C r
 
 private theorem mass_eq_treeStack {n : Nat} (C : Configuration n) :
@@ -200,7 +200,7 @@ private theorem directedMessage_eq_incident
           (TreeStack.incidentBranch (ProbStack.pathTree n hn) r u hu).branchMessage C := by
             rw [hB]
 
-theorem nonstackable_exists_directedMessage_le
+theorem ProbStack.Palomar.nonstackable_exists_directedMessage_le
     {n h : Nat} (hn2 : 2 <= n)
     (C : Configuration n)
     (hmassPos : 0 < mass C)
@@ -231,7 +231,7 @@ theorem nonstackable_exists_directedMessage_le
   rw [directedMessage_eq_incident (by omega) C r u hu]
   exact hmsg
 
-theorem nonstackable_total_mul_exists_directedMessage_le
+theorem ProbStack.Palomar.nonstackable_total_mul_exists_directedMessage_le
     {n mu : Nat} (hn2 : 2 <= n)
     (C : Configuration n)
     (hmu : 1 <= mu)
