@@ -138,22 +138,26 @@ predictive preflight, the next task is:
 ## Latest official diagnostic and correction
 
 Official FULL run `36544012411` on
-`93fdd4a02269f7b9e3c196bf77257333e9556b7c` reached the authoritative
-Palomar execution but failed at protected Challenge export because the
-verifier-owned module alias could not export the configured
-`ProbStack.Palomar.nonstackable_exists_directedMessage_le` declaration.
+`93fdd4a02269f7b9e3c196bf77257333e9556b7c` reached authoritative
+Palomar execution and failed at Challenge export.
 
-The report's resolved source paths showed the exact cause:
-`.lake/packages/treestack/Challenge.lean` and
-`.lake/packages/treestack/Solution.lean`.  The generic module identities
-collided with TreeStack's earlier Palomar package.
+The mechanical report showed that Palomar had resolved generic module
+`Challenge` to TreeStack's dependency source
+`.lake/packages/treestack/Challenge.lean`, so the configured
+`ProbStack.Palomar.*` declarations were absent.  This was a module-name
+collision, not a P6 theorem or proof failure.
 
-ProbStack's Palomar files were therefore moved to the unique modules
-`ProbStackPalomar.Challenge` and `ProbStackPalomar.Solution`; Comparator,
-Lake targets, validation workflow, and metadata were updated, and the old
-colliding root files were deleted.  The advertised `ProbStack.Palomar.*`
-declaration names and theorem types are unchanged.
+The Palomar surface now uses unique modules:
+
+- `ProbStackPalomar.Challenge`;
+- `ProbStackPalomar.Solution`.
+
+Their source files are
+`ProbStackPalomar/Challenge.lean` and
+`ProbStackPalomar/Solution.lean`.
+
+Comparator, Lake targets, workflow validation, and metadata paths were updated
+to those modules.  Declaration names and theorem types are unchanged.
 
 A fresh FULL predictive run on the final commit is required.  If it passes,
 there must be no further repository change before manual registration.
-
