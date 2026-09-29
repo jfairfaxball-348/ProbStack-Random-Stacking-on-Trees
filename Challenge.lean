@@ -95,7 +95,7 @@ function; every theorem below quantifies an adjacency proof.
 @[expose] def ProbStack.Palomar.StackableAt {n : Nat} (C : Configuration n) (r : Fin n) : Prop :=
   ∃ D, Reach C D ∧ StackedAt D r
 
-def ProbStack.Palomar.Stackable {n : Nat} (C : Configuration n) : Prop :=
+@[expose] def ProbStack.Palomar.Stackable {n : Nat} (C : Configuration n) : Prop :=
   ∃ r, StackableAt C r
 
 /--
@@ -105,7 +105,7 @@ For a positive-mass nonstackable configuration on `P_n`, if `h >= 2` and
 the mass is larger than `(n-1) * (floor(h/2)+1)`, some actual directed path
 message is an integer at most `-h`.
 -/
-theorem nonstackable_exists_directedMessage_le
+theorem ProbStack.Palomar.nonstackable_exists_directedMessage_le
     {n h : Nat} (hn2 : 2 <= n)
     (C : Configuration n)
     (hmassPos : 0 < mass C)
@@ -126,7 +126,7 @@ If `mass C = n * mu` with `mu >= 1` and the path configuration is
 nonstackable, some actual directed path message is at most
 `-(2*mu-1)`.
 -/
-theorem nonstackable_total_mul_exists_directedMessage_le
+theorem ProbStack.Palomar.nonstackable_total_mul_exists_directedMessage_le
     {n mu : Nat} (hn2 : 2 <= n)
     (C : Configuration n)
     (hmu : 1 <= mu)
