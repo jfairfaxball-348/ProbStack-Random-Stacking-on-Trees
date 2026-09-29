@@ -133,7 +133,7 @@ jobs:
           pathlib.Path(destination).write_text(json.dumps(config, indent=2) + "\n")
           PY
           lake exe cache get
-          lake comparator --config "$cfg"
+          COMPARATOR_BWRAP="$PALOMAR_BWRAP" lake comparator --config "$cfg"
 
   palomar-full-preflight:
     needs: project-validation
