@@ -48,7 +48,7 @@ dependencies.  The selected Challenge therefore imports Mathlib only.
 
 ## Challenge design
 
-The protected Challenge is `Challenge.lean`.
+The protected Challenge is `ProbStackPalomar/Challenge.lean`.
 
 Exact import:
 
@@ -112,12 +112,12 @@ theorem nonstackable_total_mul_exists_directedMessage_le
 
 The Challenge is 142 lines, below Palomar's 1,000-line / 100-KiB limit.
 
-Its transitive submitted-source closure is just `Challenge.lean`; imported
+Its transitive submitted-source closure is just `ProbStackPalomar/Challenge.lean`; imported
 statement dependencies are Mathlib.  It does not import ProbStack or TreeStack.
 
 ## Solution design
 
-`Solution.lean` imports `ProbStack` and duplicates the protected definitions
+`ProbStackPalomar/Solution.lean` imports `ProbStack` and duplicates the protected definitions
 under the same advertised namespace for Comparator.
 
 It proves explicit bridge facts:
@@ -183,7 +183,7 @@ The files migrated are:
 - `ProbStack/FiniteProbability.lean`
 - `ProbStack/FiniteDyadic.lean`
 
-The new `Challenge.lean` and `Solution.lean` are modules from creation.
+The new `ProbStackPalomar/Challenge.lean` and `ProbStackPalomar/Solution.lean` are modules from creation.
 
 ### TreeStack compatibility exception
 
@@ -264,7 +264,7 @@ Mechanical diagnostic run `36485272916` failed before the module-compatible
 TreeStack pin, with the exact non-module import error above.
 
 Diagnostic run `36485944085` passed the module-compatible ProbStack build
-through P6 and exposed only `Solution.lean` bridge-proof errors.
+through P6 and exposed only `ProbStackPalomar/Solution.lean` bridge-proof errors.
 
 Those bridge proofs were repaired without changing the advertised theorem
 types.
@@ -274,7 +274,7 @@ Diagnostic run `36486967431` then passed:
 - the module-header check;
 - the exact pinned TreeStack target build;
 - full `lake build`;
-- `lake build Challenge Solution`;
+- `lake build ProbStackPalomarChallenge ProbStackPalomarSolution`;
 - the no-`sorry` / no-project-`axiom` check over `ProbStack/` and
   `ProbStack.lean`.
 
@@ -325,10 +325,19 @@ module alias.  The current PalomarTemplate spells dotted exported declaration
 names directly (for example `theorem PalomarTemplate.main_result`) rather
 than placing them inside a namespace block.
 
-Accordingly, Challenge and Solution now spell every existing
-`ProbStack.Palomar.*` API declaration directly, while keeping all declaration
-names and theorem types unchanged.  No mathematical hypothesis, event,
-coefficient, message semantics, or orientation changed.
+Accordingly, The mechanical report exposed the decisive module-resolution evidence:
+`challenge.path = .lake/packages/treestack/Challenge.lean` and
+`solution.path = .lake/packages/treestack/Solution.lean`.  The generic module
+names `Challenge` and `Solution` collided with TreeStack's earlier Palomar
+package, so Palomar exported TreeStack's files rather than ProbStack's.
+
+The ProbStack package therefore uses unique module identities
+`ProbStackPalomar.Challenge` and `ProbStackPalomar.Solution`, stored at
+`ProbStackPalomar/Challenge.lean` and `ProbStackPalomar/Solution.lean`.
+The old colliding root files were removed.  All advertised declaration names
+remain `ProbStack.Palomar.*`, and no mathematical hypothesis, event,
+coefficient, message semantics, orientation, theorem statement, or proof was
+changed.
 
 This correction must receive a fresh exact-SHA FULL preflight.  No file is to
 change after that successful run.
