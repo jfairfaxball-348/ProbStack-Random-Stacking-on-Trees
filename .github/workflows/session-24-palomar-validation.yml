@@ -85,7 +85,7 @@ jobs:
           lake update
           lake build @treestack/+TreeStack.RootScore
           lake build
-          lake build Challenge Solution
+          lake build ProbStackPalomarChallenge ProbStackPalomarSolution
           if grep -R -n -E '(^|[^A-Za-z])(sorry|axiom)([^A-Za-z]|$)' --include='*.lean' ProbStack ProbStack.lean; then
             echo "Found forbidden sorry/axiom in ProbStack Lean sources"
             exit 1
