@@ -47,8 +47,8 @@ future GitHub Actions run ID.
 
 Added:
 
-- `Challenge.lean`
-- `Solution.lean`
+- `ProbStackPalomar/Challenge.lean`
+- `ProbStackPalomar/Solution.lean`
 - `comparator.json`
 - `formalization.yaml`
 - `.github/workflows/session-24-palomar-validation.yml`
@@ -143,10 +143,16 @@ Palomar execution but failed at protected Challenge export because the
 verifier-owned module alias could not export the configured
 `ProbStack.Palomar.nonstackable_exists_directedMessage_le` declaration.
 
-Challenge and Solution were corrected to follow the current PalomarTemplate
-module pattern: the same dotted `ProbStack.Palomar.*` names are now declared
-directly rather than through a namespace block.  Declaration names and theorem
-types are unchanged.
+The report's resolved source paths showed the exact cause:
+`.lake/packages/treestack/Challenge.lean` and
+`.lake/packages/treestack/Solution.lean`.  The generic module identities
+collided with TreeStack's earlier Palomar package.
+
+ProbStack's Palomar files were therefore moved to the unique modules
+`ProbStackPalomar.Challenge` and `ProbStackPalomar.Solution`; Comparator,
+Lake targets, validation workflow, and metadata were updated, and the old
+colliding root files were deleted.  The advertised `ProbStack.Palomar.*`
+declaration names and theorem types are unchanged.
 
 A fresh FULL predictive run on the final commit is required.  If it passes,
 there must be no further repository change before manual registration.
