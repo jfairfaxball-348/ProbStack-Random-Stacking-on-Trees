@@ -13,9 +13,9 @@ require treestack from git
 lean_lib ProbStack
 
 /-- Palomar's protected Mathlib-only statement surface. -/
-lean_lib Challenge where
-  roots := #[`Challenge]
+lean_lib ProbStackPalomarChallenge where
+  roots := #[`ProbStackPalomar.Challenge]
 
 /-- Palomar's proved solution surface. -/
-lean_lib Solution where
-  roots := #[`Solution]
+lean_lib ProbStackPalomarSolution where
+  roots := #[`ProbStackPalomar.Solution]
