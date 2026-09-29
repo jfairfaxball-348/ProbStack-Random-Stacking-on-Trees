@@ -304,3 +304,32 @@ after the final immutable run.  No repository file is changed after that final
 preflight.
 
 No Palomar registration is performed automatically.
+
+## Protected-Challenge alias diagnostic
+
+Official FULL predictive run `36544012411` against
+`93fdd4a02269f7b9e3c196bf77257333e9556b7c` passed intake, capacity,
+toolchain installation, pinned Bubblewrap setup, and reached Palomar's
+authoritative Challenge-provenance / Comparator execution.  The mechanical
+report then rejected the package at Challenge export with:
+
+`comparator.json names ProbStack.Palomar.nonstackable_exists_directedMessage_le, which the Challenge does not define`
+
+The report artifact was `mechanical-report-sess24full01`, artifact id
+`11021604162`, SHA-256
+`83ef3f8aa038b9c193afe09636017ea680151943f6855220192314056e98136c`.
+
+The issue was a module-alias packaging surface, not a P6 theorem or proof
+failure.  Palomar compiles the Challenge under a verifier-owned top-level
+module alias.  The current PalomarTemplate spells dotted exported declaration
+names directly (for example `theorem PalomarTemplate.main_result`) rather
+than placing them inside a namespace block.
+
+Accordingly, Challenge and Solution now spell every existing
+`ProbStack.Palomar.*` API declaration directly, while keeping all declaration
+names and theorem types unchanged.  No mathematical hypothesis, event,
+coefficient, message semantics, or orientation changed.
+
+This correction must receive a fresh exact-SHA FULL preflight.  No file is to
+change after that successful run.
+
