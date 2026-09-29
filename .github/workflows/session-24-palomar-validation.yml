@@ -111,9 +111,13 @@ jobs:
         shell: bash
         run: |
           set -euxo pipefail
-          sudo apt-get update -qq
-          sudo apt-get install -y -qq bubblewrap
-          sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0
+          sudo apt-get update -qq >/dev/null
+          sudo apt-get install -y -qq meson ninja-build libcap-dev pkg-config >/dev/null
+          curl -fsSL \
+            https://raw.githubusercontent.com/PalomarRegistry/PalomarSubmission/65f0154ed776cd26c224254aa57b379137f28b0d/scripts/install_bwrap.sh \
+            -o /tmp/install-palomar-bwrap.sh
+          chmod +x /tmp/install-palomar-bwrap.sh
+          PALOMAR_BWRAP="$(/tmp/install-palomar-bwrap.sh "$RUNNER_TEMP/palomar-bwrap-bin")"
           prefix="$(lean --print-prefix)"
           for tool in lake leanexport leanchecker nanoda_bin con-ron; do
             test -x "$prefix/bin/$tool"
