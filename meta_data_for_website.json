@@ -5,6 +5,7 @@
   "status": "Proof complete",
   "headline": "A proved fixed-offset threshold theorem for random stackability on paths, with key finite deterministic interfaces formalised in Lean 4.",
   "year": 2026,
+  "date": "2026-09-29",
   "description": "ProbStack studies support-collapse stackability for uniformly random weak compositions of pebbles on paths and trees. For paths, the project proves a two-sided fixed-offset threshold centred at $\\sqrt{\\log_2 n}-\\tfrac12\\log_2\\log_2 n+\\log_2(3e)$, with no claim at zero offset. The full asymptotic argument remains paper mathematics; Lean 4 formalises the exact finite TreeStack/path interfaces and the P6 deep-message necessity theorem, including the fixed-total $-(2\\mu-1)$ corollary.",
   "topics": [
     "Probabilistic combinatorics",
