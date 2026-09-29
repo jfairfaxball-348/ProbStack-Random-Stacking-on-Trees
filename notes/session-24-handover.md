@@ -134,3 +134,20 @@ If and only if the exact final candidate SHA passes the official FULL
 predictive preflight, the next task is:
 
 **MANUAL PALOMAR REGISTRATION**
+
+## Latest official diagnostic and correction
+
+Official FULL run `36544012411` on
+`93fdd4a02269f7b9e3c196bf77257333e9556b7c` reached the authoritative
+Palomar execution but failed at protected Challenge export because the
+verifier-owned module alias could not export the configured
+`ProbStack.Palomar.nonstackable_exists_directedMessage_le` declaration.
+
+Challenge and Solution were corrected to follow the current PalomarTemplate
+module pattern: the same dotted `ProbStack.Palomar.*` names are now declared
+directly rather than through a namespace block.  Declaration names and theorem
+types are unchanged.
+
+A fresh FULL predictive run on the final commit is required.  If it passes,
+there must be no further repository change before manual registration.
+
