@@ -1,6 +1,6 @@
 {
-  "challenge_module": "Challenge",
-  "solution_module": "Solution",
+  "challenge_module": "ProbStackPalomar.Challenge",
+  "solution_module": "ProbStackPalomar.Solution",
   "theorem_names": [
     "ProbStack.Palomar.nonstackable_exists_directedMessage_le",
     "ProbStack.Palomar.nonstackable_total_mul_exists_directedMessage_le"
