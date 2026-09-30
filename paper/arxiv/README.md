@@ -60,3 +60,16 @@ Official references:
 - https://info.arxiv.org/help/faq/texlive.html
 - https://info.arxiv.org/help/prep.html
 - https://info.arxiv.org/help/license/index.html
+
+## Validated archive identity
+
+The committed upload archive is 17,213 bytes and contains only `main.tex`.
+
+SHA-256:
+
+    96473ef3f4f1b8f924b09bafc9c7aa837b7cf5f5470acd630155ef235c0c1688
+
+The checksum is also stored in `archive.sha256`. The preflight rebuilds the
+archive deterministically and rejects any byte-level mismatch with the
+committed tarball before extracting and compiling it.
+
