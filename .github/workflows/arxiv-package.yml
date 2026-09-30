@@ -16,6 +16,9 @@ on:
       - ".github/workflows/arxiv-package.yml"
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   preflight:
     runs-on: ubuntu-24.04
@@ -45,6 +48,21 @@ jobs:
           cat paper/arxiv/archive.sha256
           cat paper/.build/arxiv/preflight.json
           tar -tzvf paper/arxiv/ProbStack-arxiv.tar.gz
+
+      - name: Commit validated upload archive
+        if: github.event_name == 'push' && github.ref == 'refs/heads/arxiv-preparation'
+        shell: bash
+        run: |
+          set -euxo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add paper/arxiv/ProbStack-arxiv.tar.gz paper/arxiv/archive.sha256
+          if git diff --cached --quiet; then
+            echo "Validated archive already committed."
+          else
+            git commit -m "Commit validated arXiv upload archive"
+            git push origin HEAD:arxiv-preparation
+          fi
 
       - name: Upload validated artifacts
         uses: actions/upload-artifact@v4
