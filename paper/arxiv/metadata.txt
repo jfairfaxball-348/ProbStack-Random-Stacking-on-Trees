@@ -1,0 +1,15 @@
+Title: A Fixed-Offset Transition for Random Stackability on Paths
+Authors: John Fairfax-Ball
+Abstract: We study a support-collapse version of graph pebbling on the path. A configuration is stackable if a sequence of legal pebbling moves can produce a nonzero configuration supported on a single vertex. On the path $P_n$, choose a configuration uniformly from all weak compositions of the fixed total $n\mu_n$, where $\mu_n$ is a positive integer. Set $c_n=\sqrt{\log_2 n}-\frac12\log_2\log_2 n+\log_2(3e)$. We prove a two-sided fixed-offset transition: for every fixed $\varepsilon>0$, the stackability probability tends to $0$ if $\log_2\mu_n\le c_n-\varepsilon$ eventually, and tends to $1$ if $\log_2\mu_n\ge c_n+\varepsilon$ eventually. No assertion is made at zero offset. The proof starts from an exact recursive stackability score on trees, reduces path messages to a one-dimensional integer recurrence, and identifies rare dyadic deficit excursions. Classical binary-partition asymptotics give the one-sided excursion rate $-\log_2 q_\mu=x^2+2x\log_2x-2\log_2(3e)x+o(x)$, where $x=\log_2\mu$. A constant-cost regeneration step turns this local estimate into a spatial front mechanism, while an exact deep-message necessity theorem controls the opposite side. Conditioning independent geometric occupancies on their sum then returns the uniform fixed-total model. The finite deterministic necessity theorem and its fixed-total corollary are formalised in Lean and are registered with Palomar; the asymptotic transition theorem itself is not part of that registration.
+Comments: 16 pages, 0 figures. A finite deterministic deep-message necessity theorem and its exact fixed-total corollary are formalised in Lean and registered with Palomar (PALOMAR-2026-09-30-000023, version 1); the full probabilistic asymptotic theorem is not part of that registration.
+Primary category: math.CO
+Cross-list: None
+MSC-class: 05C99
+Intended license: CC BY 4.0 (to be confirmed during the actual arXiv submission)
+Report-no:
+Journal-ref:
+DOI:
+Palomar verification: https://palomar-registry.org/entry.html?id=PALOMAR-2026-09-30-000023&version=1
+Palomar scope: Registers the deterministic finite-path deep-message necessity theorem and its exact fixed-total corollary only; it does not register the full probabilistic fixed-offset transition theorem.
+Repository: https://github.com/jfairfaxball-348/ProbStack-Random-Stacking-on-Trees
+Standalone source commit: f37d04ee93168b1f3ab1ff271fc850e8dad2955c

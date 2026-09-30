@@ -1,0 +1,62 @@
+name: arXiv package preflight
+
+on:
+  push:
+    branches:
+      - arxiv-preparation
+      - main
+    paths:
+      - "paper/**"
+      - ".github/workflows/arxiv-package.yml"
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "paper/**"
+      - ".github/workflows/arxiv-package.yml"
+  workflow_dispatch:
+
+jobs:
+  preflight:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install TeX and PDF tools
+        shell: bash
+        run: |
+          set -euxo pipefail
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            texlive-latex-base \
+            texlive-latex-recommended \
+            texlive-latex-extra \
+            texlive-fonts-recommended \
+            poppler-utils
+          pdflatex --version
+          pdfinfo -v
+          python3 --version
+
+      - name: Build and validate exact arXiv package
+        shell: bash
+        run: |
+          set -euxo pipefail
+          python3 paper/build_arxiv.py
+          cat paper/arxiv/archive.sha256
+          cat paper/.build/arxiv/preflight.json
+          tar -tzvf paper/arxiv/ProbStack-arxiv.tar.gz
+
+      - name: Upload validated artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: probstack-arxiv-package
+          if-no-files-found: error
+          path: |
+            paper/arxiv/ProbStack-arxiv.tar.gz
+            paper/arxiv/archive.sha256
+            paper/arxiv/metadata.txt
+            paper/arxiv/README.md
+            paper/.build/arxiv/ProbStack-arxiv.pdf
+            paper/.build/arxiv/extracted/rebuild/main.log
+            paper/.build/arxiv/extracted/rebuild/main.txt
+            paper/.build/arxiv/preflight.json
