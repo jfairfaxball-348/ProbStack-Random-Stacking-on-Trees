@@ -2,7 +2,7 @@
   "schema_version": 1,
   "title": "ProbStack — Random Stacking on Trees",
   "slug": "probstack-random-stacking-on-trees",
-  "status": "Preprint posted",
+  "status": "arXiv preprint",
   "headline": "A proved fixed-offset threshold theorem for random stackability on paths, with key finite deterministic interfaces formalised in Lean 4 and a public arXiv preprint.",
   "year": 2026,
   "date": "2026-09-30",
