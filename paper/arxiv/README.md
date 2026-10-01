@@ -1,7 +1,9 @@
 # ProbStack arXiv preparation package
 
-This directory records the exact source intended for a later arXiv submission.
-Nothing in this workflow submits to arXiv.
+This directory records the exact validated source package used for the public
+ProbStack arXiv v1. The package workflow itself performed no submission; the
+validated source was subsequently submitted through arXiv and is publicly
+available as arXiv:2609.39633.
 
 ## Upload artifact
 
@@ -36,12 +38,22 @@ artifact and is not committed as an arXiv source input.
 
 ## Submission metadata
 
-See metadata.txt. Proposed primary category: math.CO; no cross-list.
+metadata.txt is retained as the historical pre-submission metadata snapshot
+used during package validation. It is not rewritten after publication because
+the final submission interface made metadata-only changes that were not part
+of the validated source archive.
 
-The intended article license is CC BY 4.0, to be confirmed by the author in the
-actual submission interface after checking any applicable future journal or
-funder policy. The repository's Apache-2.0 license does not determine the
-article license.
+The authoritative public record is:
+
+- arXiv:2609.39633, version 1, submitted 30 September 2026;
+- primary category math.CO (Combinatorics);
+- cross-list math.PR (Probability);
+- DOI https://doi.org/10.48550/arXiv.2609.39633;
+- article license CC BY 4.0.
+
+The final arXiv abstract uses ASCII-only metadata wording. These metadata-only
+submission changes do not alter main.tex or the validated source archive. The
+repository's Apache-2.0 license does not determine the article license.
 
 Palomar record PALOMAR-2026-09-30-000023, version 1, covers only the finite
 deterministic deep-message necessity theorem and its exact fixed-total

@@ -18,20 +18,25 @@ Build the standalone manuscript with:
 The completed standalone-paper source commit is
 f37d04ee93168b1f3ab1ff271fc850e8dad2955c.
 
-## arXiv preparation
+## arXiv package and public record
 
-The arXiv-preparation material is under arxiv/. Run the complete clean-package
-preflight from the repository root with:
+The validated arXiv-preparation material is under arxiv/. The exact upload
+archive is paper/arxiv/ProbStack-arxiv.tar.gz and its checksum is recorded in
+paper/arxiv/archive.sha256. The generated PDF was an inspection artifact and
+was not an upload input.
 
-    python3 paper/build_arxiv.py
+That validated source was subsequently posted publicly as
+arXiv:2609.39633, version 1, on 30 September 2026:
+https://arxiv.org/abs/2609.39633
 
-The exact upload archive is paper/arxiv/ProbStack-arxiv.tar.gz. Its checksum is
-written to paper/arxiv/archive.sha256; the generated PDF is not an upload input
-and is not committed. See arxiv/README.md and arxiv/metadata.txt for the package
-record and proposed submission metadata.
+The final public classification is primary math.CO with a math.PR cross-list.
+The arXiv-issued DOI is https://doi.org/10.48550/arXiv.2609.39633 and the
+article license is CC BY 4.0.
 
-This workflow prepares and validates source only. It does not submit anything
-to arXiv.
+paper/arxiv/metadata.txt is retained as the pre-submission metadata snapshot
+used during packaging. The final submission interface required an ASCII-only
+abstract and added the math.PR cross-list, so the public arXiv record is
+authoritative for final metadata.
 
 ## Verification boundary
 
