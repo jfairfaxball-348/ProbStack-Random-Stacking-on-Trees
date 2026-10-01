@@ -1,6 +1,6 @@
 # ProbStack — Random Stacking on Trees
 
-**Status: frozen path theorem mathematically complete; finite Lean interfaces and reproducibility closure complete. Next stage: public-record prior-art/originality audit.**
+**Status: fixed-offset path theorem complete; finite Lean boundary validated; Palomar registration complete; standalone paper complete; arXiv v1 publicly posted as arXiv:2609.39633.**
 
 ProbStack studies random pebble configurations on deterministic trees.  The
 first target is the path sequence \(P_n\).  This repository is intentionally
@@ -8,9 +8,28 @@ independent of TreeStack: it has its own Git history, tests, experiments, notes,
 and future proof development.  TreeStack is used only as the authoritative
 source of the deterministic structural theorem described below.
 
-No novelty, priority, publication, or Palomar claim is made here. The final
-asymptotic theorem is rigorous paper mathematics, not a fully Lean-formalised
-limit theorem. Numerical evidence is recorded as evidence, not as proof.
+No unconditional novelty or priority claim is made. The full asymptotic
+theorem is rigorous paper mathematics, not a fully Lean-formalised limit
+theorem, and numerical evidence is recorded as evidence rather than proof.
+The finite deterministic P6 theorem and its exact fixed-total corollary are
+registered with Palomar; the full probabilistic theorem is not part of that
+registration.
+
+## Public records
+
+The standalone paper **A Fixed-Offset Transition for Random Stackability on
+Paths** by John Fairfax-Ball is publicly posted as
+[arXiv:2609.39633](https://arxiv.org/abs/2609.39633), version 1, submitted
+30 September 2026. Its primary category is Combinatorics (`math.CO`) with a
+Probability (`math.PR`) cross-list. The arXiv-issued DOI is
+[10.48550/arXiv.2609.39633](https://doi.org/10.48550/arXiv.2609.39633).
+The article is licensed CC BY 4.0.
+
+The finite deterministic deep-message necessity theorem and exact fixed-total
+corollary are separately registered as
+[PALOMAR-2026-09-30-000023, version 1](https://palomar-registry.org/entry.html?id=PALOMAR-2026-09-30-000023&version=1).
+That Palomar record does **not** register the full probabilistic fixed-offset
+transition theorem and is not a substitute for peer review.
 
 Session 18 closes the global conditioning-transfer step: the stabilized local
 product-law excursion rate is now connected rigorously to the fixed-total
@@ -140,9 +159,10 @@ recorded in `docs/FINAL_THEOREM_STATUS.md`, and the authoritative proof DAG is
 
 The project must not reopen the theorem merely for a finer critical window,
 zero-offset law, finite-n monotonicity, Poisson front process, or arbitrary-tree
-extension. The next separate stage is a comprehensive public-record
-prior-art/originality audit; paper preparation follows only after that audit.
-See `docs/ROADMAP.md`.
+extension. The prior-art audit, Palomar registration, standalone paper, arXiv
+packaging and public arXiv v1 are complete. Further work is post-publication
+maintenance or a deliberately separate new research stage. See
+`docs/ROADMAP.md`.
 
 ## Session 7 theorem status — historical, superseded globally by Sessions 8 and 18
 

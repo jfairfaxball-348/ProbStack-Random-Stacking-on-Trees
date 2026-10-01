@@ -5,6 +5,18 @@ frozen theorem is rigorous paper mathematics supported by exact finite Lean
 interfaces and deterministic computation; Monte Carlo is not part of the
 proof validation.
 
+## Public paper record
+
+The paper is publicly posted as
+[arXiv:2609.39633](https://arxiv.org/abs/2609.39633), version 1, submitted
+30 September 2026, under primary category `math.CO` with cross-list
+`math.PR`. The arXiv-issued DOI is
+[10.48550/arXiv.2609.39633](https://doi.org/10.48550/arXiv.2609.39633).
+
+The finite P6 necessity theorem and exact fixed-total corollary are separately
+registered as PALOMAR-2026-09-30-000023, version 1. That registration does not
+cover the full probabilistic asymptotic theorem.
+
 ## Environment
 
 Python 3.11+ is supported. The project has no runtime dependencies outside the

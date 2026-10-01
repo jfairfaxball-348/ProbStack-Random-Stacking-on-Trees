@@ -1,76 +1,79 @@
 # ProbStack roadmap
 
-## Stage 1 — complete: conjecture discovery and mathematical proof
+The original ProbStack research-and-release roadmap is complete for the current
+fixed-offset path theorem. The theorem remains frozen at the following
+precision:
 
-The frozen path theorem is
-
-\[
-c_n=\sqrt{\log_2 n}
+[
+c_n=sqrt{\log_2 n}
 -\frac12\log_2\log_2 n
 +\log_2(3e).
-\]
+]
 
-For every fixed \(\varepsilon>0\), the stackability probability tends to zero
-when \(\log_2\mu_n\le c_n-\varepsilon\) eventually and tends to one when
-\(\log_2\mu_n\ge c_n+\varepsilon\) eventually. There is no zero-offset claim.
+For every fixed (arepsilon>0), the stackability probability tends to zero
+when (log_2mu_nle c_n-arepsilon) eventually and tends to one when
+(log_2mu_nge c_n+arepsilon) eventually. There is no zero-offset claim.
 
-Session 18 completed the global mathematical proof. Do not reopen this stage
-for a critical-window law, finer \(o(1)\) centering, finite-\(n\) monotonicity,
-Poisson front counts, limiting distributions, or arbitrary-tree extensions.
+## Stage 1 — complete: conjecture discovery and mathematical proof
+
+Sessions 1--18 developed and closed the rigorous paper proof of the fixed-offset
+path theorem. The theorem is not to be reopened merely for a finer critical
+window, zero-offset law, finite-(n) monotonicity, Poisson front process, or
+arbitrary-tree extension.
 
 ## Stage 2 — complete: finite formalisation boundary and reproducibility
 
-Sessions 9--19 established and validated the exact finite Lean boundary used by
-the proof: pinned TreeStack semantics, categorical EMPTY, left/right path
-messages, low-phase deficit identities, regeneration, explicit finite
-seed/runaway/front interfaces, finite geometric and weak-composition algebra,
-and finite dyadic combinatorics.
+Sessions 9--19 established and validated the exact finite Lean interfaces used
+at the paper/formalisation boundary. The full analytic asymptotic theorem
+remains paper mathematics rather than a Lean limit theorem. No `sorry` or new
+project axiom is used to hide that distinction.
 
-The full analytic asymptotic theorem is deliberately paper mathematics rather
-than a Lean limit theorem. In particular, Robbins/Stirling asymptotics,
-de Bruijn binary-partition asymptotics, the Session 17 local probability
-asymptotic, and the Session 18 global limiting argument are not hidden behind
-`sorry` or new axioms.
+Authoritative closure documents include
+`docs/FINAL_THEOREM_STATUS.md`,
+`docs/PROOF_DEPENDENCY_MAP.md`, and
+`docs/REPRODUCIBILITY.md`.
 
-The authoritative closure documents are:
+## Stage 3 — complete: public-record prior-art/originality audit
 
-- `docs/FINAL_THEOREM_STATUS.md`;
-- `docs/PROOF_DEPENDENCY_MAP.md`;
-- `docs/REPRODUCIBILITY.md`;
-- `notes/session-19-closure.md`.
+Sessions 20--21 completed the documented public-record audit. The audit found
+no exact match in the searched public record for the ProbStack random
+fixed-total support-collapse stackability theorem on paths. This is an
+originality finding for the searched record, not an unconditional historical
+priority claim.
 
-Historical formalisation plans such as `notes/session-9-formalisation-design.md`
-remain records of the state at the time; they are not the current completion
-checklist.
+## Stage 4 — complete: Palomar registration
 
-## Stage 3 — next: comprehensive public-record prior-art/originality audit
+The finite deterministic deep-message necessity theorem and its exact
+fixed-total corollary are registered as
+[PALOMAR-2026-09-30-000023, version 1](https://palomar-registry.org/entry.html?id=PALOMAR-2026-09-30-000023&version=1).
 
-Search well beyond arXiv: journals, MathSciNet/zbMATH where accessible,
-Scholar-style citation trails, graph-pebbling bibliographies, author pages,
-proceedings, theses, terminology variants, cited/citing papers, and
-mathematically equivalent formulations.
+The registered source commit is
+`1897a76956168fba047f5943fa7998601f4fe459`. The registration does not cover
+the full probabilistic fixed-offset transition theorem.
 
-The audit should cover at least random weak compositions / conditioned
-geometrics, pebbling or stacking on paths and trees, TreeStack-style structural
-certificates, binary-partition asymptotics, random message/affine recurrences
-and rare deficit fronts, and thresholds at stretched-logarithmic densities.
+## Stage 5 — complete: standalone paper
 
-Log search terms, dates, databases and findings. A negative public-record audit
-cannot establish novelty or rule out private, unpublished, or unindexed work.
-Do not make novelty or priority claims during the audit.
+The standalone manuscript
+_A Fixed-Offset Transition for Random Stackability on Paths_
+was completed at source commit
+`f37d04ee93168b1f3ab1ff271fc850e8dad2955c`.
 
-## Stage 4 — standalone paper
+## Stage 6 — complete: arXiv packaging and public posting
 
-Only after Stage 3, write a self-contained article explaining the model,
-deterministic TreeStack input, uniform weak-composition probability space,
-frozen theorem, rigorous paper proof, exact finite Lean boundary, reproducible
-deterministic validation, and the literature audit. Do not oversell the degree
-of formalisation or originality.
+The source package was independently validated on the
+`arxiv-preparation` branch. The paper is publicly posted as
+[arXiv:2609.39633](https://arxiv.org/abs/2609.39633), version 1, submitted
+30 September 2026, with primary category `math.CO` and cross-list
+`math.PR`.
 
-## Stage 5 — submission and packaging decisions
+The arXiv-issued DOI is
+[10.48550/arXiv.2609.39633](https://doi.org/10.48550/arXiv.2609.39633).
+The article license is CC BY 4.0.
 
-Only after the theorem is proved, the finite formalisation/reproducibility
-boundary is stable, the public-record audit is complete, and the standalone
-paper is written should the project decide on arXiv, Palomar, journal
-submission, or other packaging. Inspect then-current specifications rather
-than reusing historical assumptions.
+## Current state
+
+The current research-and-release programme is complete. Routine corrections,
+metadata maintenance, citation updates, or later journal decisions may be made
+without reopening the mathematics or rerunning Palomar. Any genuinely new
+mathematical objective should be treated as a separate research stage with its
+own scope and validation boundary.

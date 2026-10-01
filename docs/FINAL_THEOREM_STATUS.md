@@ -1,7 +1,24 @@
 # Final theorem status
 
-**Session 19 closure document.** This file is the concise authoritative status
-for the theorem/proof/formalisation/reproducibility stage.
+**Session 19 closure document, updated after public release.** This file is the
+concise authoritative status for the theorem/proof/formalisation/reproducibility
+boundary and records the later Palomar and arXiv public identifiers.
+
+## Public records
+
+The paper **A Fixed-Offset Transition for Random Stackability on Paths** by
+John Fairfax-Ball is publicly posted as
+[arXiv:2609.39633](https://arxiv.org/abs/2609.39633), version 1, submitted
+30 September 2026. The primary category is `math.CO` and the cross-list is
+`math.PR`. The arXiv-issued DOI is
+[10.48550/arXiv.2609.39633](https://doi.org/10.48550/arXiv.2609.39633).
+The article license is CC BY 4.0.
+
+The finite deterministic P6 theorem and its exact fixed-total corollary are
+registered separately as
+[PALOMAR-2026-09-30-000023, version 1](https://palomar-registry.org/entry.html?id=PALOMAR-2026-09-30-000023&version=1).
+That registration does not cover the full probabilistic theorem. Neither an
+arXiv posting nor Palomar registration is represented here as peer review.
 
 ## Frozen theorem
 
@@ -130,10 +147,13 @@ The project makes no claim of:
 - a critical limiting distribution or Poisson front law;
 - finite-`n` monotonicity in total mass;
 - an arbitrary-tree extension of the path threshold;
-- novelty, priority, publication, or submission status.
+- unconditional historical novelty or priority;
+- full Lean formalisation of the asymptotic theorem;
+- peer review or journal acceptance merely from the arXiv posting or Palomar
+  registration.
 
-Sessions 20–21 completed the public-record prior-art audit at the documented
-non-novelty-claim level. Session 23 has now formalised P6 and passed the
-Palomar target gate. The next stage is Palomar packaging, module-system
-migration, and full predictive preflight; it must not reopen the frozen
-random theorem.
+Sessions 20–21 completed the public-record prior-art audit. Session 23
+formalised P6; the finite theorem and fixed-total corollary were subsequently
+registered with Palomar. The standalone paper was then completed, packaged and
+posted publicly as arXiv:2609.39633. These release stages do not alter the
+frozen mathematical or formalisation boundary recorded above.
